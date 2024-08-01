@@ -3,8 +3,7 @@
 import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { useState } from "react";
-import { useFormik, Formik } from "formik";
+import { useFormik } from "formik";
 
 const Login = () => {
   const formik = useFormik({
@@ -69,14 +68,14 @@ const Login = () => {
               {formik.errors.password ? (
                 <p className="text-red-500">{formik.errors.password}</p>
               ) : null}
-              {/* <Link href={`/geldwait`}> */}
-              <Button
-                type="submit"
-                className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
-              >
-                Log in
-              </Button>
-              {/* </Link> */}
+              <Link href={`/geldwait`}>
+                <Button
+                  type="submit"
+                  className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
+                >
+                  Log in
+                </Button>
+              </Link>
             </form>
           </div>
           <div className="flex justify-center">

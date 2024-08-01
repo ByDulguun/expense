@@ -9,12 +9,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { AddCategory } from "@/assets/icon/AddCategory";
-import { Home } from "@/assets/icon/Home";
-import { Gift } from "@/assets/icon/Gift";
-import { Food } from "@/assets/icon/Food";
-import { Drink } from "@/assets/icon/Drink";
-import { Taxi } from "@/assets/icon/Taxi";
-import { Shopping } from "@/assets/icon/Shopping";
+
 import * as React from "react";
 
 import RecordsCategory from "./RecordsCategory";
@@ -26,21 +21,6 @@ import { Button } from "./ui/button";
 export const RecordBar = () => {
   const [click, setClick] = useState(true);
   const [openAdd, setOpenAdd] = useState(true);
-  const [accounts, setAccounts] = useState([]);
-  const [date, setDate] = useState();
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/accounts");
-
-        setAccounts(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -80,6 +60,36 @@ export const RecordBar = () => {
       return errors;
     },
   });
+
+  const [title, setTitle] = useState("");
+
+  const createAccount = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/accounts",
+        newAccount
+      );
+      setAccounts([...accounts, response.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const newAccount = {
+    title,
+  };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/accounts");
+        setAccounts(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getData();
+  }, []);
+  const [accounts, setAccounts] = useState([]);
+
   return (
     <div className="bg-[#FFFFFF] w-[750px] h-fit m-auto my-[260px] rounded-xl">
       <div className="flex justify-between py-5 px-6 border-b-[1px] border-[#D1D5DB]">
@@ -146,20 +156,22 @@ export const RecordBar = () => {
 
             <div className="grid h-fit gap-2">
               <p>Category</p>
-              <Select>
-                <SelectTrigger className="w-full border border-[#D1D5DB] rounded-[8px]">
-                  <SelectValue
+              <div>
+                <div className="w-full border border-[#D1D5DB] rounded-[8px]">
+                  <div
                     placeholder={`${
                       click ? "Choose" : "  Find or choose category"
                     }`}
                     onClick={() => setClick(!click)}
                   />
-                </SelectTrigger>
-                <SelectContent className="bg-white   border border-[#D1D5DB] rounded-[8px]">
+                </div>
+                <div className="bg-white   border border-[#D1D5DB] rounded-[8px]">
                   <button className="border-b-[1px] border-[#D1D5DB] w-full p-4">
                     <div
                       className="flex align-baseline gap-2  "
                       onClick={() => setOpenAdd(!openAdd)}
+                      value={title}
+                      onChange={(event) => setTitle(event.target.value)}
                     >
                       <div>
                         <AddCategory />
@@ -167,67 +179,22 @@ export const RecordBar = () => {
                       <p>Add Category</p>
                     </div>
                   </button>
+                  <p>
+                    {accounts.map((account, index) => {
+                      return (
+                        <div key={account.title + index}>
+                          <p>{account.title}</p>
+                        </div>
+                      );
+                    })}
+                  </p>
                   <div
-                    value={(accounts.title, formik.values.amount)}
+                    value={formik.values.amount}
                     className="flex gap-2 py-1 "
                     onChange={formik.handleChange}
-                  >
-                    {accounts.map((account, index) => {
-                      <div key={account.title + index}>
-                        return <p className="text-black">{account.title}</p>;
-                      </div>;
-                    })}
-                  </div>
-                  <SelectItem value="Shopping">
-                    <div className="flex gap-2 py-1 ">
-                      <div>
-                        <Home />
-                      </div>
-                      <p>Home</p>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Transportation">
-                    <div className="flex gap-2 py-1 ">
-                      <div>
-                        <Gift />
-                      </div>
-                      <p>Gift</p>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Vehicle">
-                    <div className="flex gap-2 py-1 ">
-                      <div>
-                        <Food />
-                      </div>
-                      <p>Food</p>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Life & Entertainment">
-                    <div className="flex gap-2 py-1 ">
-                      <div>
-                        <Drink />
-                      </div>
-                      <p>Drink</p>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Communication, PC">
-                    <div className="flex gap-2 py-1 ">
-                      <div>
-                        <Taxi />
-                      </div>
-                      <p>Taxi</p>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="Financial expenses">
-                    <div className="flex gap-2 py-1 ">
-                      <div>
-                        <Shopping />
-                      </div>
-                      <p>Shopping</p>
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+                  ></div>
+                </div>
+              </div>
               {formik.errors.category ? (
                 <p className="text-red-500">{formik.errors.category} </p>
               ) : null}
