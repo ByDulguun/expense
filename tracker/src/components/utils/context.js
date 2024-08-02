@@ -5,9 +5,9 @@ import { useState, createContext } from "react";
 export const Context = createContext(null);
 
 export const ContextProvider = ({ children }) => {
-  const [visible, setVisible] = useState("invisible");
+  const [newCategory, setNewCategory] = useState("");
   return (
-    <Context.Provider value={{ visible, setVisible }}>
+    <Context.Provider value={{ newCategory, setNewCategory }}>
       {children}
     </Context.Provider>
   );

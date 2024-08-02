@@ -157,43 +157,48 @@ export const RecordBar = () => {
             <div className="grid h-fit gap-2">
               <p>Category</p>
               <div>
-                <div className="w-full border border-[#D1D5DB] rounded-[8px]">
-                  <div
-                    placeholder={`${
-                      click ? "Choose" : "  Find or choose category"
-                    }`}
-                    onClick={() => setClick(!click)}
-                  />
-                </div>
-                <div className="bg-white   border border-[#D1D5DB] rounded-[8px]">
-                  <button className="border-b-[1px] border-[#D1D5DB] w-full p-4">
-                    <div
-                      className="flex align-baseline gap-2  "
-                      onClick={() => setOpenAdd(!openAdd)}
-                      value={title}
-                      onChange={(event) => setTitle(event.target.value)}
-                    >
-                      <div>
-                        <AddCategory />
-                      </div>
-                      <p>Add Category</p>
-                    </div>
-                  </button>
-                  <p>
-                    {accounts.map((account, index) => {
-                      return (
-                        <div key={account.title + index}>
-                          <p>{account.title}</p>
+                <Select>
+                  <SelectTrigger className="border border-[#D1D5DB] rounded-[8px] ">
+                    <SelectValue
+                      placeholder={`${
+                        click ? "Choose" : "  Find or choose category"
+                      }`}
+                      onClick={() => setClick(!click)}
+                    />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border border-[#D1D5DB] rounded-[8px] ">
+                    <button className="border-b-[1px] border-[#D1D5DB] w-full p-4">
+                      <div
+                        className="flex align-baseline gap-2  "
+                        onClick={() => setOpenAdd(!openAdd)}
+                        value={title}
+                        onChange={(event) => setTitle(event.target.value)}
+                      >
+                        <div>
+                          <AddCategory />
                         </div>
-                      );
-                    })}
-                  </p>
-                  <div
-                    value={formik.values.amount}
-                    className="flex gap-2 py-1 "
-                    onChange={formik.handleChange}
-                  ></div>
-                </div>
+                        <p>Add Category</p>
+                      </div>
+                    </button>
+                    <div>
+                      {accounts.map((account, index) => {
+                        return (
+                          <SelectItem value={account.title}>
+                            <div key={account.title + index}>
+                              <p className="py-2 px-4">{account.title}</p>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </div>
+                  </SelectContent>
+                </Select>
+
+                <div
+                  value={formik.values.amount}
+                  className="flex gap-2 py-1 "
+                  onChange={formik.handleChange}
+                ></div>
               </div>
               {formik.errors.category ? (
                 <p className="text-red-500">{formik.errors.category} </p>
@@ -237,7 +242,7 @@ export const RecordBar = () => {
             </Button>
           </div>
 
-          <div className="flex-1  w-full border  px-6 grid h-fit gap-8">
+          <div className="flex-1  w-full   px-6 grid h-fit gap-8">
             <div className="mt-5 w-full">
               <p className="mb-1">Payee</p>
               <input

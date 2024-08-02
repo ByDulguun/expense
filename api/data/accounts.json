@@ -1,58 +1,57 @@
 [
   {
+    "value": "FoodDrinks",
     "title": "Food & Drinks",
     "amount": ""
   },
   {
+    "value": "Shopping",
     "title": "Shopping",
     "amount": ""
   },
   {
+    "value": "house",
     "title": "Housing",
     "amount": ""
   },
   {
+    "value": "trans",
     "title": "Transportation",
     "amount": ""
   },
   {
+    "value": "veh",
     "title": "Vehicle",
     "amount": ""
   },
   {
+    "value": "Slog",
     "title": "Life & Entertainment",
     "amount": ""
   },
   {
+    "value": "asd",
     "title": "Communication, PC",
     "amount": ""
   },
   {
+    "value": "finan",
     "title": "Financial expenses",
     "amount": ""
   },
   {
+    "value": "intewds",
     "title": "Investments",
     "amount": ""
   },
   {
+    "value": "income",
     "title": "Income",
     "amount": ""
   },
   {
+    "value": "Sothe",
     "title": "Others",
     "amount": ""
-  },
-  {
-    "title": "asd"
-  },
-  {
-    "title": "asdad"
-  },
-  {
-    "title": "asdadsd"
-  },
-  {
-    "title": "ads"
   }
 ]
