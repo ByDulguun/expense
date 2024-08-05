@@ -13,10 +13,12 @@ import { AddIcon } from "./AddIcon";
 const AddCategory = () => {
   const [accounts, setAccounts] = useState([]);
   const [title, setTitle] = useState("");
+  const [icon, setICon] = useState("");
 
   const createAccount = async () => {
     const newAccount = {
       title,
+      icon,
     };
 
     try {
@@ -59,7 +61,12 @@ const AddCategory = () => {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="border border-[#D1D5DB] rounded-[8px] bg-white">
-                  <AddIcon />
+                  <div
+                    value={icon}
+                    onChange={(event) => setICon(event.target.value)}
+                  >
+                    <AddIcon />
+                  </div>
                 </SelectContent>
               </Select>
             </div>
@@ -76,6 +83,7 @@ const AddCategory = () => {
           <Button
             className="bg-[#16A34A] hover:bg-green-500 rounded-[20px] text-white"
             onClick={createAccount}
+            type="submit"
           >
             <p>Add Category</p>
           </Button>

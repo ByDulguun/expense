@@ -12,7 +12,7 @@ const RecordAdd = ({ open, setOpen }) => {
     >
       <div>
         <div className="relative">
-          <RecordBar />
+          <RecordBar  />
         </div>
         <div
           onClick={() => setOpen(!open)}

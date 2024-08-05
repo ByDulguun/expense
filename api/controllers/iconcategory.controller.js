@@ -1,12 +1,27 @@
 const fs = require("fs");
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
+
+const filePath = path.join(__dirname, "..", "data", "iconcategories.json");
+
+// Function to ensure the data directory and file exist
+const ensureFileExists = () => {
+  const dirPath = path.dirname(filePath);
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, JSON.stringify([]));
+  }
+};
 
 const getAllIconCategory = async (req, res) => {
   try {
-    const filePath = path.join(__dirname, "..", "data", "iconcategories.json");
+    ensureFileExists();
 
-    const rawData = fs.readFileSync(filePath);
+    const rawData = fs.readFileSync(filePath, "utf8");
     const iconcategories = JSON.parse(rawData);
+
     res.json(iconcategories);
   } catch (error) {
     console.error(error);
@@ -16,10 +31,12 @@ const getAllIconCategory = async (req, res) => {
 
 const createIconCategory = async (req, res) => {
   try {
-    const filePath = path.join(__dirname, "..", "data", "iconcategories.json");
-    const rowData = fs.readFileSync(filePath);
-    const categories = JSON.parse(rowData);
-    const newIconCategory = req.body;
+    ensureFileExists();
+
+    const rawData = fs.readFileSync(filePath, "utf8");
+    const categories = JSON.parse(rawData);
+    const newIconCategory = { ...req.body, id: uuidv4() };
+
     categories.push(newIconCategory);
     fs.writeFileSync(filePath, JSON.stringify(categories, null, 2));
     res.json(newIconCategory);

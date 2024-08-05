@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { v4: uuidv4 } = require("uuid");
 
 const getAllAccounts = async (req, res) => {
   try {
@@ -19,7 +20,7 @@ const createAccount = async (req, res) => {
     const filePath = path.join(__dirname, "..", "data", "accounts.json");
     const rowData = fs.readFileSync(filePath);
     const accounts = JSON.parse(rowData);
-    const newAccount = req.body;
+    const newAccount = { ...req.body, id: uuidv4() };
     accounts.push(newAccount);
     fs.writeFileSync(filePath, JSON.stringify(accounts, null, 2));
     res.json(newAccount);

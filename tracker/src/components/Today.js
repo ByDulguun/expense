@@ -1,36 +1,42 @@
-import { FoodIcon } from "@/assets/icon/FoodICon";
-import { HouseIcon } from "@/assets/icon/HouseIcon";
-import { useState } from "react";
+"use client";
 
-export const Today = () => {
-  const [categories, setCategories] = useState([]);
+export const Today = ({ categories }) => {
+  // Debugging logs
+  console.log("categories", categories);
+
   return (
     <div>
       <p className="mb-3 font-semibold text-[16px]">Today</p>
       <div className="h-fit grid gap-3">
-        <div className="bg-white border border-[#E5E7EB] rounded-xl">
-          <div className="flex justify-between mx-6 my-3">
-            <div className="flex gap-3 ">
-              <div className="mt-2  ">
-                <input type="Checkbox" className="w-6 h-6 "></input>
-              </div>
+        {categories.map((item) => {
+          return (
+            <div
+              className="bg-white border border-[#E5E7EB] rounded-xl px-6 py-3"
+              key={item.id}
+            >
               <div className="flex gap-3">
-                <HouseIcon />
-                <div>
-                  {categories.map((categories, index) => {
-                    return (
-                      <div key={categories.title + index}>
-                        <p>{categories.title}</p>
+                <div className="mt-2">
+                  <input type="checkbox" className="w-6 h-6" />
+                </div>
+                <div className="flex gap-3">
+                  <div>
+                    <div className="flex justify-between w-full">
+                      <div className="h-fit grid">
+                        <p className="text-black border h-12 w-12">
+                          {item.category}
+                          {/* Adjust based on the actual structure */}
+                        </p>
+                        <p className="text-black text-[12px]">{item.time}</p>
+                        <p>{item.payee}</p>
                       </div>
-                    );
-                  })}
-                  <p className="text-[12px] text-[#6B7280]">14:00</p>
+                      <div className="text-[#EAB308]">{item.amount}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="text-[#23E01F] mt-2">- 1,000₮</div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </div>
   );

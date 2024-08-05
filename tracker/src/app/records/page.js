@@ -29,7 +29,7 @@ const records = () => {
   const [open, setOpen] = useState(true);
   const [accounts, setAccounts] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
-  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -42,27 +42,12 @@ const records = () => {
     getData();
   }, []);
 
-  const createCategories = async () => {
-    const newCategory = {
-      title,
-    };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/iconcategories",
-        newCategory
-      );
-      setCategories([...categories, response.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/iconcategories"
+          `http://localhost:3001/iconcategories`
         );
 
         setCategories(response.data);
@@ -73,6 +58,7 @@ const records = () => {
 
     getData();
   }, []);
+
   return (
     <div className="w-screen bg-[#F3F4F6] ">
       <Header />
@@ -219,10 +205,7 @@ const records = () => {
             </div>
           </div>
           <div>
-            <Today />
-            <div>
-              
-            </div>
+            <Today categories={categories} />
           </div>
           <div>
             <Yesterday />
@@ -230,7 +213,7 @@ const records = () => {
         </div>
       </div>
       <RecordsCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />
-      <RecordAdd open={open} setOpen={setOpen} />
+      <RecordAdd open={open} setOpen={setOpen} setCategories={setCategories} />
     </div>
   );
 };

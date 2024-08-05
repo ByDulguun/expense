@@ -53,5 +53,15 @@
     "value": "Sothe",
     "title": "Others",
     "amount": ""
+  },
+  {
+    "title": "ada",
+    "icon": "",
+    "id": "fc3581bd-a588-46b0-a812-137d03e68178"
+  },
+  {
+    "title": "dulguun",
+    "icon": "",
+    "id": "d053d1ac-48ab-4f35-b087-0cd88694225d"
   }
 ]

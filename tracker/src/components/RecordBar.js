@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -21,59 +22,54 @@ import { Button } from "./ui/button";
 export const RecordBar = () => {
   const [click, setClick] = useState(true);
   const [openAdd, setOpenAdd] = useState(true);
+  const [categories, setCategories] = useState([]);
+  const [amount, setAmount] = useState([]);
+  const [category, setCategory] = useState({});
+  const [date, setDate] = useState([]);
+  const [time, setTime] = useState([]);
+  const [payee, setPayee] = useState([]);
+  const [note, setNote] = useState([]);
 
-  const formik = useFormik({
-    initialValues: {
-      amount: "",
-      category: "",
-      date: "",
-      time: "",
-    },
-    onSubmit: (values) => {
-      alert(
-        `hello ${formik.values.amount} ${formik.values.category} ${formik.values.date} ${formik.values.time} ${formik.values.payee} ${formik.values.note}`
-      );
-      console.log("first message ", formik.values);
-    },
-    validate: (values) => {
-      let errors = {};
+  // const formik = useFormik({
+  //   initialValues: {
+  //     amount: "",
+  //     date: "",
+  //     time: "",
+  //   },
+  //   // onSubmit: (values) => {
+  //   //   alert(
+  //   //     `hello ${formik.values.amount} ${formik.values.category} ${formik.values.date} ${formik.values.time} ${formik.values.payee} ${formik.values.note}`
+  //   //   );
+  //   //   console.log("first message ", formik.values);
+  //   // },
+  //   // validate: (values) => {
+  //   //   let errors = {};
 
-      if (!values.amount) {
-        errors.amount = "Amount oruulna uu!";
-      }
-      if (!values.category) {
-        errors.category = "Category oruulna uu!";
-      }
-      if (!values.date) {
-        errors.date = "Date oruulna uu!";
-      }
-      if (!values.time) {
-        errors.time = "Time oruulna uu!";
-      }
-      if (!values.payee) {
-        errors.payee = "Payee bicne uu!";
-      }
-      if (!values.note) {
-        errors.note = "Note bicne uu!";
-      }
+  //   //   if (!values.amount) {
+  //   //     errors.amount = "Amount oruulna uu!";
+  //   //   }
+  //   //   if (!values.category) {
+  //   //     errors.category = "Category oruulna uu!";
+  //   //   }
+  //   //   if (!values.date) {
+  //   //     errors.date = "Date oruulna uu!";
+  //   //   }
+  //   //   if (!values.time) {
+  //   //     errors.time = "Time oruulna uu!";
+  //   //   }
+  //   //   if (!values.payee) {
+  //   //     errors.payee = "Payee bicne uu!";
+  //   //   }
+  //   //   if (!values.note) {
+  //   //     errors.note = "Note bicne uu!";
+  //   //   }
 
-      return errors;
-    },
-  });
+  //   //   return errors;
+  //   // },
+  // });
 
   const [title, setTitle] = useState("");
 
-  const createAccount = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/accounts",
-        newAccount
-      );
-      setAccounts([...accounts, response.data]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const newAccount = {
     title,
   };
@@ -90,6 +86,42 @@ export const RecordBar = () => {
   }, []);
   const [accounts, setAccounts] = useState([]);
 
+  const createCategories = async () => {
+    const newCategory = {
+      amount,
+      category,
+      date,
+      time,
+      payee,
+      note,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/iconcategories",
+        newCategory
+      );
+      setCategories([...categories, response.data]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3001/iconcategories"
+        );
+
+        setCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getData();
+  }, []);
   return (
     <div className="bg-[#FFFFFF] w-[750px] h-fit m-auto my-[260px] rounded-xl">
       <div className="flex justify-between py-5 px-6 border-b-[1px] border-[#D1D5DB]">
@@ -97,7 +129,7 @@ export const RecordBar = () => {
         <div></div>
       </div>
       <div>
-        <form className="flex w-full" onSubmit={formik.handleSubmit}>
+        <form className="flex flex-wrap w-full">
           <div className="flex-1  px-6 h-fit grid gap-6 my-6">
             <div
               className="flex  rounded-[20px] bg-[#F3F4F6]  relative "
@@ -144,76 +176,80 @@ export const RecordBar = () => {
                   id="money"
                   name="amount"
                   placeholder="000.00"
-                  className="pl-7 pr-3 py-2 text-[#9CA3AF]     w-full outline-none"
-                  value={formik.values.amount}
-                  onChange={formik.handleChange}
+                  className="pl-7 pr-3 py-2 text-[#9CA3AF]  w-full outline-none"
+                  value={amount}
+                  onChange={(event) => setAmount(event.target.value)}
                 />
               </div>
             </div>
-            {formik.errors.amount ? (
+            {/* {formik.errors.amount ? (
               <p className="text-red-500">{formik.errors.amount}</p>
-            ) : null}
+            ) : null} */}
 
             <div className="grid h-fit gap-2">
               <p>Category</p>
               <div>
-                <Select>
-                  <SelectTrigger className="border border-[#D1D5DB] rounded-[8px] ">
+                <Select onValueChange={(value) => setCategory(value)}>
+                  <SelectTrigger className="border border-[#D1D5DB] rounded-[8px]">
                     <SelectValue
-                      placeholder={`${
-                        click ? "Choose" : "  Find or choose category"
-                      }`}
+                      placeholder={click ? "Choose" : "Find or choose category"}
                       onClick={() => setClick(!click)}
                     />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border border-[#D1D5DB] rounded-[8px] ">
-                    <button className="border-b-[1px] border-[#D1D5DB] w-full p-4">
-                      <div
-                        className="flex align-baseline gap-2  "
+                  <SelectContent className="bg-white border border-[#D1D5DB] rounded-[8px]">
+                    <SelectGroup>
+                      <button
+                        className="border-b-[1px] border-[#D1D5DB] w-full p-4 flex items-center"
                         onClick={() => setOpenAdd(!openAdd)}
-                        value={title}
-                        onChange={(event) => setTitle(event.target.value)}
                       >
-                        <div>
-                          <AddCategory />
-                        </div>
-                        <p>Add Category</p>
-                      </div>
-                    </button>
-                    <div>
-                      {accounts.map((account, index) => {
-                        return (
-                          <SelectItem value={account.title}>
-                            <div key={account.title + index}>
-                              <p className="py-2 px-4">{account.title}</p>
+                        <AddCategory />
+                        <p className="ml-2">Add Category</p>
+                      </button>
+                      <div className="text-black">
+                        {accounts.map((account, index) => (
+                          <SelectItem
+                            key={account.title + index}
+                            value={account.title}
+                          >
+                            <div className="flex items-center text-black">
+                              <div className="bg-transparent">
+                                {account.icon}
+                              </div>
+                              <div className="py-2 px-4 border">
+                                {account.title}
+                              </div>
                             </div>
                           </SelectItem>
-                        );
-                      })}
-                    </div>
+                        ))}
+                      </div>
+                    </SelectGroup>
                   </SelectContent>
                 </Select>
 
                 <div
-                  value={formik.values.amount}
+                  // value={formik.values.amount}
                   className="flex gap-2 py-1 "
-                  onChange={formik.handleChange}
+                  // onChange={formik.handleChange}
                 ></div>
               </div>
-              {formik.errors.category ? (
+              {/* {formik.errors.category ? (
                 <p className="text-red-500">{formik.errors.category} </p>
-              ) : null}
+              ) : null} */}
             </div>
             <div className="flex w-full gap-4">
-              <div className="flex-1 grid h-fit gap-2 ">
+              <div
+                className="flex-1 grid h-fit gap-2 "
+                value={date}
+                onChange={(event) => setDate(event.target.value)}
+              >
                 <p>Date</p>
                 <Date
-                  value={formik.values.amount}
-                  onChange={formik.handleChange}
+                // value={formik.values.amount}
+                // onChange={formik.handleChange}
                 />
-                {formik.errors.date ? (
+                {/* {formik.errors.date ? (
                   <p className="text-red-500">{formik.errors.date}</p>
-                ) : null}
+                ) : null} */}
               </div>
               <div className="flex-1  ">
                 <div class="w-full grid h-fit gap-2 ">
@@ -222,24 +258,16 @@ export const RecordBar = () => {
                     type="time"
                     id="time"
                     name="time"
-                    class="pl-3 pr-3 py-1.5 border border-[#D1D5DB]  rounded-[8px] outline-none w-full bg-white"
-                    value={formik.values.time}
-                    onChange={formik.handleChange}
+                    class="pl-3 pr-3 py-1.5 border border-[#D1D5DB]  rounded-[8px] outline-none w-full bg-white text-gray-500"
+                    value={time}
+                    onChange={(event) => setTime(event.target.value)}
                   />
-                  {formik.errors.time ? (
+                  {/* {formik.errors.time ? (
                     <p className="text-red-500">{formik.errors.time}</p>
-                  ) : null}
+                  ) : null} */}
                 </div>
               </div>
             </div>
-            <Button
-              className={`bg-[#0166FF] text-white w-full flex gap-1 rounded-[20px] text-[16px] hover:bg-[#0166FF]  px-28  ${
-                click ? "bg-[#0166FF] " : "bg-[#16A34A] "
-              }`}
-              type="submit"
-            >
-              Add record
-            </Button>
           </div>
 
           <div className="flex-1  w-full   px-6 grid h-fit gap-8">
@@ -250,12 +278,12 @@ export const RecordBar = () => {
                 type="text"
                 name="payee"
                 placeholder="write here"
-                value={formik.values.payee}
-                onChange={formik.handleChange}
+                value={payee}
+                onChange={(event) => setPayee(event.target.value)}
               />
-              {formik.errors.payee ? (
+              {/* {formik.errors.payee ? (
                 <p className="text-red-500">{formik.errors.payee}</p>
-              ) : null}
+              ) : null} */}
             </div>
             <div>
               <p className="mb-1">Note</p>
@@ -264,14 +292,22 @@ export const RecordBar = () => {
                 placeholder="Write here"
                 className="border w-full pb-[240px] pt-2 mb-6 pl-2 border-[#D1D5DB] rounded-[8px] bg-[#F9FAFB] outline-none"
                 name="note"
-                value={formik.values.note}
-                onChange={formik.handleChange}
+                value={note}
+                onChange={(event) => setNote(event.target.value)}
               />
-              {formik.errors.note ? (
+              {/* {formik.errors.note ? (
                 <p className="text-red-500">{formik.errors.note}</p>
-              ) : null}
+              ) : null} */}
             </div>
           </div>
+          <Button
+            className={`bg-[#0166FF] text-white w-fit relative bottom-4 left-12 flex gap-1 rounded-[20px] text-[16px] hover:bg-[#0166FF]  px-28  ${
+              click ? "bg-[#0166FF] " : "bg-[#16A34A] "
+            }`}
+            onClick={createCategories}
+          >
+            Add record
+          </Button>
         </form>
       </div>
 
