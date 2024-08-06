@@ -96,17 +96,13 @@ const AddCategory = () => {
         >
           <div className="flex gap-2">
             <div className="flex-1">
-              <Select
-                onValueChange={(FaHouseChimneyWindow) =>
-                  setIcon(FaHouseChimneyWindow)
-                }
-              >
+              <Select onValueChange={(value) => setIcon(value)}>
                 <SelectTrigger className="border border-[#D1D5DB] rounded-[8px]">
                   <SelectValue placeholder="icon" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-[#D1D5DB] rounded-[8px] grid grid-cols-3">
                   <div className="h-fit">
-                    <div className="grid grid-cols-6">
+                    <div className="grid grid-cols-6 gap-2 p-2">
                       {iconValues.map((value) => (
                         <SelectItem key={value} value={value.toString()}>
                           <FaHouseChimneyWindow

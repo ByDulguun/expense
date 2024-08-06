@@ -15,10 +15,9 @@ import * as React from "react";
 
 import RecordsCategory from "./RecordsCategory";
 import axios from "axios";
-import { useFormik, formik } from "formik";
 import { Date } from "./Date";
 import { Button } from "./ui/button";
-import { AddIcon } from "./AddIcon";
+import { FaHouseChimneyWindow } from "react-icons/fa6";
 
 export const RecordBar = () => {
   const [click, setClick] = useState(true);

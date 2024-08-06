@@ -29,4 +29,17 @@ const createAccount = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-module.exports = { getAllAccounts, createAccount };
+const deleteAccount = async (req, res) => {
+  try {
+    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const { id } = req.params;
+    const rawData = fs.readFileSync(filePath);
+    let account = JSON.parse(rawData);
+
+    account = account.filter((account) => account.id != id);
+
+    fs.writeFileSync(filePath, JSON.stringify(account, null, 2));
+    res.status(204).end();
+  } catch (error) {}
+};
+module.exports = { getAllAccounts, createAccount, deleteAccount };

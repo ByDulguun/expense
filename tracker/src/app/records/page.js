@@ -29,7 +29,17 @@ const records = () => {
   const [open, setOpen] = useState(true);
   const [accounts, setAccounts] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
+  const [selectedAccountId, setSelectedAccountId] = useState(null);
 
+  const deleteAccount = async () => {
+    if (selectedAccountId) {
+      await axios.delete(`http://localhost:3001/accounts/${selectedAccountId}`);
+      setAccounts(
+        accounts.filter((account) => account.id !== selectedAccountId)
+      );
+      setSelectedAccountId(null); // Clear selection after deletion
+    }
+  };
   useEffect(() => {
     const getData = async () => {
       try {
@@ -111,7 +121,13 @@ const records = () => {
           <div>
             <div className="flex justify-between my-4 ">
               <p className="text-[16px] font-semibold ">Category</p>
-              <p className="opacity-20">Clear</p>
+              <p
+                className="opacity-20"
+                onClick={deleteAccount}
+                disabled={!selectedAccountId}
+              >
+                Clear
+              </p>
             </div>
             <div className="px-1 ">
               <div className="gap-2 mx-1 grid  h-[450px] overflow-scroll">
@@ -121,6 +137,14 @@ const records = () => {
                       <div
                         key={account.title + index}
                         className="flex justify-between items-baseline align-baseline h-fit"
+                        onClick={() => setSelectedAccountId(account.id)}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor:
+                            selectedAccountId === account.id
+                              ? "#f0f0f0"
+                              : "white",
+                        }}
                       >
                         <div className="flex gap-2 ">
                           <div>
