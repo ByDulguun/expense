@@ -1,67 +1,17 @@
 [
   {
-    "value": "FoodDrinks",
-    "title": "Food & Drinks",
-    "amount": ""
+    "title": "2",
+    "icon": "2",
+    "id": "8d44d395-f4f4-49a1-805d-7f9eeb939e07"
   },
   {
-    "value": "Shopping",
-    "title": "Shopping",
-    "amount": ""
+    "title": "3",
+    "icon": "14",
+    "id": "c41ae9a5-dd3f-4288-ba74-9c878ef8db04"
   },
   {
-    "value": "house",
-    "title": "Housing",
-    "amount": ""
-  },
-  {
-    "value": "trans",
-    "title": "Transportation",
-    "amount": ""
-  },
-  {
-    "value": "veh",
-    "title": "Vehicle",
-    "amount": ""
-  },
-  {
-    "value": "Slog",
-    "title": "Life & Entertainment",
-    "amount": ""
-  },
-  {
-    "value": "asd",
-    "title": "Communication, PC",
-    "amount": ""
-  },
-  {
-    "value": "finan",
-    "title": "Financial expenses",
-    "amount": ""
-  },
-  {
-    "value": "intewds",
-    "title": "Investments",
-    "amount": ""
-  },
-  {
-    "value": "income",
-    "title": "Income",
-    "amount": ""
-  },
-  {
-    "value": "Sothe",
-    "title": "Others",
-    "amount": ""
-  },
-  {
-    "title": "ada",
-    "icon": "",
-    "id": "fc3581bd-a588-46b0-a812-137d03e68178"
-  },
-  {
-    "title": "dulguun",
-    "icon": "",
-    "id": "d053d1ac-48ab-4f35-b087-0cd88694225d"
+    "title": "asdad",
+    "icon": "14",
+    "id": "ca9c9fc2-197d-48ff-bfd3-9a2998ffd3ea"
   }
 ]

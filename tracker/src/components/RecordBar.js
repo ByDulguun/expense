@@ -18,6 +18,7 @@ import axios from "axios";
 import { useFormik, formik } from "formik";
 import { Date } from "./Date";
 import { Button } from "./ui/button";
+import { AddIcon } from "./AddIcon";
 
 export const RecordBar = () => {
   const [click, setClick] = useState(true);
@@ -29,6 +30,7 @@ export const RecordBar = () => {
   const [time, setTime] = useState([]);
   const [payee, setPayee] = useState([]);
   const [note, setNote] = useState([]);
+  const [icon, setIcon] = useState([]);
 
   // const formik = useFormik({
   //   initialValues: {
@@ -72,6 +74,7 @@ export const RecordBar = () => {
 
   const newAccount = {
     title,
+    icon,
   };
   useEffect(() => {
     const getData = async () => {
@@ -205,6 +208,7 @@ export const RecordBar = () => {
                         <AddCategory />
                         <p className="ml-2">Add Category</p>
                       </button>
+                      <div></div>
                       <div className="text-black">
                         {accounts.map((account, index) => (
                           <SelectItem
@@ -212,9 +216,7 @@ export const RecordBar = () => {
                             value={account.title}
                           >
                             <div className="flex items-center text-black">
-                              <div className="bg-transparent">
-                                {account.icon}
-                              </div>
+                              {account.icon}
                               <div className="py-2 px-4 border">
                                 {account.title}
                               </div>

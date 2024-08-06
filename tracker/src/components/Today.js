@@ -20,16 +20,14 @@ export const Today = ({ categories }) => {
                 </div>
                 <div className="flex gap-3">
                   <div>
-                    <div className="flex justify-between w-full">
-                      <div className="h-fit grid">
-                        <p className="text-black border h-12 w-12">
-                          {item.category}
-                          {/* Adjust based on the actual structure */}
-                        </p>
+                    <div className="flex justify-around w-full border">
+                      <div className="h-fit w-fit grid">
+                        <div>{item.icon}</div>
+                        <p className="text-black">{item.category}</p>
                         <p className="text-black text-[12px]">{item.time}</p>
                         <p>{item.payee}</p>
                       </div>
-                      <div className="text-[#EAB308]">{item.amount}</div>
+                      <div className="text-[#EAB308] w-fit">{item.amount}</div>
                     </div>
                   </div>
                 </div>
