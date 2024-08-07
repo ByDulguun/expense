@@ -18,6 +18,7 @@ import axios from "axios";
 import { Date } from "./Date";
 import { Button } from "./ui/button";
 import { FaHouseChimneyWindow } from "react-icons/fa6";
+import * as Icons from "react-icons/ai";
 
 export const RecordBar = () => {
   const [click, setClick] = useState(true);
@@ -209,19 +210,24 @@ export const RecordBar = () => {
                       </button>
                       <div></div>
                       <div className="text-black">
-                        {accounts.map((account, index) => (
-                          <SelectItem
-                            key={account.title + index}
-                            value={account.title}
-                          >
-                            <div className="flex items-center text-black">
-                              {account.icon}
-                              <div className="py-2 px-4 border">
-                                {account.title}
+                        {accounts.map((account, index) => {
+                          const IconComponent = Icons[account.icon];
+                          return (
+                            <SelectItem
+                              key={account.title + index}
+                              value={account.id}
+                            >
+                              <div className="flex items-center text-black">
+                                <div>
+                                  <IconComponent />
+                                </div>
+                                <div className="py-2 px-4 border">
+                                  {account.title}
+                                </div>
                               </div>
-                            </div>
-                          </SelectItem>
-                        ))}
+                            </SelectItem>
+                          );
+                        })}
                       </div>
                     </SelectGroup>
                   </SelectContent>

@@ -10,8 +10,9 @@ import {
 import { Button } from "./ui/button";
 import { useFormik } from "formik";
 import classNames from "classnames";
-import { FaHouseChimneyWindow } from "react-icons/fa6";
+import { FaHouse, FaHouseChimneyWindow } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
+import * as Icons from "react-icons/ai";
 
 const AddCategory = () => {
   const [accounts, setAccounts] = useState([]);
@@ -84,6 +85,11 @@ const AddCategory = () => {
     setSelectedColor(color);
   };
   const iconValues = Array.from({ length: 30 }, (_, index) => index + 1);
+  const hardDataIcons = [
+    { iconName: "AiFillAlert" },
+    { iconName: "AiFillCodepenSquare" },
+    // { iconName: "AiFillAlert" },
+  ];
 
   return (
     <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto my-[260px] rounded-xl">
@@ -103,16 +109,19 @@ const AddCategory = () => {
                 <SelectContent className="bg-white border border-[#D1D5DB] rounded-[8px] grid grid-cols-3">
                   <div className="h-fit">
                     <div className="grid grid-cols-6 gap-2 p-2">
-                      {iconValues.map((value) => (
-                        <SelectItem key={value} value={value.toString()}>
-                          <FaHouseChimneyWindow
-                            className={classNames(
-                              "cursor-pointer w-6 h-6",
-                              selectedColor
-                            )}
-                          />
-                        </SelectItem>
-                      ))}
+                      {hardDataIcons.map((el) => {
+                        const IconComponent = Icons[el.iconName];
+                        return (
+                          <SelectItem key={el} value={el.iconName}>
+                            <IconComponent
+                              className={classNames(
+                                "cursor-pointer w-6 h-6",
+                                selectedColor
+                              )}
+                            />
+                          </SelectItem>
+                        );
+                      })}
                     </div>
                     <div className="border-t-[1px] border-[#D1d5db]">
                       <div className="flex gap-4 mx-16 my-4">

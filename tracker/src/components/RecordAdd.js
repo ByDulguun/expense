@@ -1,6 +1,6 @@
 import { CloseIcon } from "@/assets/icon/CloseIcon";
-import { RecordBar } from "./RecordBar";
 import { useState } from "react";
+import { RecordBar } from "./RecordBar";
 
 const RecordAdd = ({ open, setOpen }) => {
   return (
@@ -12,7 +12,7 @@ const RecordAdd = ({ open, setOpen }) => {
     >
       <div>
         <div className="relative">
-          <RecordBar  />
+          <RecordBar />
         </div>
         <div
           onClick={() => setOpen(!open)}
