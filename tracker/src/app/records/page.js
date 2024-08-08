@@ -37,7 +37,7 @@ const records = () => {
       setAccounts(
         accounts.filter((account) => account.id !== selectedAccountId)
       );
-      setSelectedAccountId(null); // Clear selection after deletion
+      setSelectedAccountId(null);
     }
   };
   useEffect(() => {
@@ -129,8 +129,9 @@ const records = () => {
                 Clear
               </p>
             </div>
+
             <div className="px-1 ">
-              <div className="gap-2 mx-1 grid  h-[450px] overflow-scroll">
+              <div className="gap-2 mx-1 grid  h-fit overflow-scroll">
                 <ul>
                   {accounts.map((account, index) => {
                     return (

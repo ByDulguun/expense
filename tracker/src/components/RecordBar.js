@@ -17,10 +17,10 @@ import RecordsCategory from "./RecordsCategory";
 import axios from "axios";
 import { Date } from "./Date";
 import { Button } from "./ui/button";
-import { FaHouseChimneyWindow } from "react-icons/fa6";
-import * as Icons from "react-icons/ai";
+import * as Icons from "react-icons/pi";
+import classNames from "classnames";
 
-export const RecordBar = () => {
+export const RecordBar = ({ selectedColor }) => {
   const [click, setClick] = useState(true);
   const [openAdd, setOpenAdd] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -101,7 +101,7 @@ export const RecordBar = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/iconcategories",
+        `http://localhost:3001/iconcategories/`,
         newCategory
       );
       setCategories([...categories, response.data]);
@@ -219,7 +219,12 @@ export const RecordBar = () => {
                             >
                               <div className="flex items-center text-black">
                                 <div>
-                                  <IconComponent />
+                                  <IconComponent
+                                    className={classNames(
+                                      "cursor-pointer w-6 h-6 "
+                                    )}
+                                    color={account.iconColor}
+                                  />
                                 </div>
                                 <div className="py-2 px-4 border">
                                   {account.title}
