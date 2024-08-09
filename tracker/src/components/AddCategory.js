@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Select,
@@ -13,9 +13,10 @@ import classNames from "classnames";
 import { FaHouse, FaHouseChimneyWindow } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
 import * as Icons from "react-icons/pi";
+import { Context } from "./utils/context";
 
 const AddCategory = ({ setOpenAdd, openAdd }) => {
-  // const [accounts, setAccounts] = useState([]);
+  const {accounts, setAccounts, getData} = useContext(Context);
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState("");
 
@@ -32,7 +33,9 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
         newAccount
       );
       setOpenAdd(true);
-      // setAccounts([...accounts, response.data]);
+      getData()
+      setAccounts([...accounts, response.data]);
+
     } catch (error) {
       console.error(error);
     }
@@ -43,7 +46,7 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
       try {
         const response = await axios.get("http://localhost:3001/accounts");
 
-        // setAccounts(response.data);
+        setAccounts(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -122,8 +125,6 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
   return (
     <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto my-[260px] rounded-xl">
       <p className="py-5 px-6 border-b-[1px] border-[#D1D5DB]">Add Category</p>
-      {/* <form> */}
-      {/* onSubmit={formik.handleSubmit} */}
       <div
         className={` gap-[32px] px-6 py-5 h-fit grid 
            `}
@@ -198,7 +199,6 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
           <p>Add Category</p>
         </Button>
       </div>
-      {/* </form> */}
     </div>
   );
 };

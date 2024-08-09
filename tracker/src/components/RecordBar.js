@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   Select,
   SelectContent,
@@ -19,8 +19,11 @@ import { Date } from "./Date";
 import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
+import { Context } from "./utils/context";
 
 export const RecordBar = ({ selectedColor }) => {
+  const { accounts } = useContext(Context);
+
   const [click, setClick] = useState(true);
   const [openAdd, setOpenAdd] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -76,19 +79,8 @@ export const RecordBar = ({ selectedColor }) => {
     title,
     icon,
   };
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/accounts");
-        setAccounts(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
-  const [accounts, setAccounts] = useState([]);
 
+  // const [accounts, setAccounts] = useState([]);
   const createCategories = async () => {
     const newCategory = {
       amount,
@@ -96,6 +88,7 @@ export const RecordBar = ({ selectedColor }) => {
       date,
       time,
       payee,
+      status: click ? "expense" : "income",
       note,
     };
 
@@ -178,8 +171,8 @@ export const RecordBar = ({ selectedColor }) => {
                   type="number"
                   id="money"
                   name="amount"
-                  placeholder="000.00"
-                  className="pl-7 pr-3 py-2 text-[#9CA3AF]  w-full outline-none"
+                  placeholder={`000.00 `}
+                  className={`pl-7 pr-3 py-2   w-full outline-none`}
                   value={amount}
                   onChange={(event) => setAmount(event.target.value)}
                 />
@@ -210,29 +203,31 @@ export const RecordBar = ({ selectedColor }) => {
                       </button>
                       <div></div>
                       <div className="text-black">
-                        {accounts.map((account, index) => {
-                          const IconComponent = Icons[account.icon];
-                          return (
-                            <SelectItem
-                              key={account.title + index}
-                              value={account.id}
-                            >
-                              <div className="flex items-center text-black">
-                                <div>
-                                  <IconComponent
-                                    className={classNames(
-                                      "cursor-pointer w-6 h-6 "
-                                    )}
-                                    color={account.iconColor}
-                                  />
+                        <>
+                          {accounts?.map((account, index) => {
+                            const IconComponent = Icons[account.icon];
+                            return (
+                              <SelectItem
+                                key={account.title + index}
+                                value={account.id}
+                              >
+                                <div className="flex items-center text-black">
+                                  <div>
+                                    <IconComponent
+                                      className={classNames(
+                                        "cursor-pointer w-6 h-6 "
+                                      )}
+                                      color={account.iconColor}
+                                    />
+                                  </div>
+                                  <div className="py-2 px-4 ">
+                                    {account.title}
+                                  </div>
                                 </div>
-                                <div className="py-2 px-4 border">
-                                  {account.title}
-                                </div>
-                              </div>
-                            </SelectItem>
-                          );
-                        })}
+                              </SelectItem>
+                            );
+                          })}
+                        </>
                       </div>
                     </SelectGroup>
                   </SelectContent>

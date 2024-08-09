@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "amount": "1000",
+    "category": "58d8c870-6164-4cc2-9cfe-9745fcfe689c",
+    "date": [],
+    "time": "14:00",
+    "payee": [],
+    "status": "income",
+    "note": [],
+    "id": "62ff5236-c106-4428-bb6d-4dd0492910bd"
+  },
+  {
+    "amount": "1000",
+    "category": "1a1a0393-6556-40a8-92d7-1939fa3a9dbf",
+    "date": [],
+    "time": "14:00",
+    "payee": [],
+    "status": "expense",
+    "note": [],
+    "id": "3e9c317b-0822-4102-a98b-b586f1cd1f26"
+  }
+]
