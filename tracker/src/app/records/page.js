@@ -30,6 +30,7 @@ const records = () => {
   const [accounts, setAccounts] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
+  const [filterType, setFilterType] = useState("all");
 
   const deleteAccount = async () => {
     if (selectedAccountId) {
@@ -96,22 +97,29 @@ const records = () => {
             </div>
 
             <div className="px-4  ">
-              <RadioGroup defaultValue="option-one h-fit grid gap-6">
+              <RadioGroup
+                defaultValue="all h-fit grid gap-6 "
+                value={filterType}
+                onValueChange={(value) => setFilterType(value)}
+              >
                 <div className="flex items-center space-x-2 ">
-                  <RadioGroupItem value="option-one" id="option-one" />
-                  <label htmlFor="option-one" className="leading-6">
+                  <RadioGroupItem value="all" id="all" />
+                  <label htmlFor="all" className="leading-6">
                     All
                   </label>
                 </div>
                 <div className="flex items-center space-x-2 ">
-                  <RadioGroupItem value="option-two" id="option-two" />
-                  <label htmlFor="option-two" className="leading-6">
+                  <RadioGroupItem value="income" id="income" />
+                  <label htmlFor="income" className="leading-6">
                     Income
                   </label>
                 </div>
-                <div className="flex items-center space-x-2 ">
-                  <RadioGroupItem value="option-three" id="option-three" />
-                  <label htmlFor="option-two" className="leading-6">
+                <div
+                  className={`flex items-center space-x-2 
+                  `}
+                >
+                  <RadioGroupItem value="expense" id="expense" />
+                  <label htmlFor="expense" className="leading-6">
                     Expense
                   </label>
                 </div>
@@ -230,10 +238,10 @@ const records = () => {
             </div>
           </div>
           <div>
-            <Today categories={categories} />
+            <Today filterType={filterType} />
           </div>
           <div>
-            <Yesterday />
+            <Yesterday filterType={filterType} />
           </div>
         </div>
       </div>

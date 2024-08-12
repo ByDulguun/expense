@@ -88,8 +88,8 @@ export const RecordBar = ({ selectedColor }) => {
       date,
       time,
       payee,
-      status: click ? "expense" : "income",
       note,
+      status: click ? "expense" : "income",
     };
 
     try {

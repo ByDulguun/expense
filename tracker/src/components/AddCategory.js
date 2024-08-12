@@ -16,7 +16,7 @@ import * as Icons from "react-icons/pi";
 import { Context } from "./utils/context";
 
 const AddCategory = ({ setOpenAdd, openAdd }) => {
-  const {accounts, setAccounts, getData} = useContext(Context);
+  const { accounts, setAccounts, getData } = useContext(Context);
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState("");
 
@@ -33,9 +33,8 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
         newAccount
       );
       setOpenAdd(true);
-      getData()
+      getData();
       setAccounts([...accounts, response.data]);
-
     } catch (error) {
       console.error(error);
     }
