@@ -7,6 +7,25 @@ export const Today = ({ filterType }) => {
   const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
 
+  const renderIcon = (recordCategoryId) => {
+    const account = accounts?.find((el) => el.id === recordCategoryId);
+
+    if (account) {
+      const IconComponent = Icons[account.icon];
+      return (
+        <div className="flex">
+          <IconComponent
+            className={classNames("cursor-pointer w-10 h-10")}
+            color={account.iconColor}
+          />
+          {account.title}
+        </div>
+      );
+    }
+
+    return null; // Return null or a fallback icon if not found
+  };
+
   useEffect(() => {
     const getCategoriesData = async () => {
       try {
@@ -31,70 +50,27 @@ export const Today = ({ filterType }) => {
     getCategoriesData();
     getAccountsData();
   }, []);
-  const filteredCategories = categories.filter((category) => {
+  const filteredCategories = categories?.filter((category) => {
     if (filterType === "all") return true;
     return category.status === filterType;
   });
+
   return (
-    <div className="my-3">
-      <p className="mb-3 font-semibold text-[16px]">Today</p>
-      <div className="h-fit grid gap-3">
-        {categories.length > 0 ? (
-          filteredCategories.map((category) => (
-            <div key={category.id}>
-              {accounts.map((account) => {
-                const IconComponent = Icons[account.icon];
-                return (
-                  <div className="bg-white border border-[#E5E7EB] rounded-xl my-2">
-                    <div
-                      key={account.id}
-                      className="flex justify-between mx-6 my-3"
-                    >
-                      <div className="flex gap-3">
-                        <div className="mt-2">
-                          <input type="checkbox" className="w-6 h-6" />
-                        </div>
-                        <div className="flex gap-3">
-                          <div className="flex items-center gap-2">
-                            {IconComponent && (
-                              <IconComponent
-                                className={classNames(
-                                  "cursor-pointer w-10 h-10"
-                                )}
-                                color={account.iconColor}
-                              />
-                            )}
-                            <div>
-                              {account.title}
-                              <p className="text-[12px] text-[#6B7280]">
-                                {category.time}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className={`${
-                          category.status === "income"
-                            ? "text-[#23E01F]"
-                            : "text-[#F54949]"
-                        }`}
-                      >
-                        {category.status === "income"
-                          ? `+ ${category.amount}`
-                          : `- ${category.amount}`}
-                        ₮
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+    <div className="border">
+      {filteredCategories?.map((el) => (
+        <div className="bg-white border border-[#E5E7EB] rounded-xl my-2">
+          <div className=" flex justify-between mx-4 align-baseline">
+            <div className="flex">
+              <input type="checkbox" className="w-6 h-6" />
+
+              {renderIcon(el.category)}
             </div>
-          ))
-        ) : (
-          <p>No categories available.</p>
-        )}
-      </div>
+            <div>
+              <p>{el.amount}</p>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

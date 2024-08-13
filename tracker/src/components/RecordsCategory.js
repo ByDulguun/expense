@@ -1,6 +1,6 @@
 import { CloseIcon } from "@/assets/icon/CloseIcon";
-import AddCategory from "./AddCategory";
 import { Button } from "./ui/button";
+import AddCategory from "./AddCategory";
 
 const RecordsCategory = ({ setOpenAdd, openAdd }) => {
   return (

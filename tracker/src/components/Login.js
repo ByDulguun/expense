@@ -12,7 +12,7 @@ const Login = () => {
       password: "",
     },
     onSubmit: (values) => {
-      alert(`hello ${formik.values.email} ${formik.values.password}`);
+      // alert(`hello ${formik.values.email} ${formik.values.password}`);
       console.log("first message ", formik.values);
     },
     validate: (values) => {
@@ -68,14 +68,14 @@ const Login = () => {
               {formik.errors.password ? (
                 <p className="text-red-500">{formik.errors.password}</p>
               ) : null}
-              <Link href={`/geldwait`}>
-                <Button
-                  type="submit"
-                  className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
-                >
-                  Log in
-                </Button>
-              </Link>
+              {/* <Link href={`/geldwait`}> */}
+              <Button
+                type="submit"
+                className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
+              >
+                Log in
+              </Button>
+              {/* </Link> */}
             </form>
           </div>
           <div className="flex justify-center">

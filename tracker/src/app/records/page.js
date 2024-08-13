@@ -11,6 +11,7 @@ import { Today } from "@/components/Today";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useAuth } from "@/components/utils/AuthProvider";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -26,6 +27,7 @@ import { useEffect, useState } from "react";
 import { SeeIcon } from "@/assets/icon/SeeIcon";
 
 const records = () => {
+  const { logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [accounts, setAccounts] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
@@ -77,6 +79,12 @@ const records = () => {
         <div className="py-6 px-4 flex-none grid h-fit gap-6 bg-white border border-[#E5E7EB] rounded-xl ">
           <div className="h-fit grid gap-6 ">
             <h1 className="text-2xl font-semibold ">Records</h1>
+            {/* <Button
+              className="bg-red-500 text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-red-400 px-28"
+              onClick={logout}
+            >
+              Log Out
+            </Button> */}
 
             <div onClick={() => setOpen(!open)}>
               <Button className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-blue-400  px-28 ">

@@ -42,11 +42,11 @@ export const Yesterday = ({ filterType }) => {
   return (
     <div className="my-3">
       <p className="mb-3 font-semibold text-[16px]">Yesterday</p>
-      {/* <div className="h-fit grid gap-3">
+      <div className="h-fit grid gap-3">
         {categories.length > 0 ? (
           filteredCategories.map((category) => (
             <div key={category.id}>
-              {accounts.map((account) => {
+              {accounts?.map((account) => {
                 const IconComponent = Icons[account.icon];
                 return (
                   <div className="bg-white border border-[#E5E7EB] rounded-xl my-2">
@@ -98,7 +98,7 @@ export const Yesterday = ({ filterType }) => {
         ) : (
           <p>No categories available.</p>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

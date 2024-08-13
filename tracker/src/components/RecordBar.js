@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { AddCategory } from "@/assets/icon/AddCategory";
 
 import * as React from "react";
 
@@ -20,6 +19,7 @@ import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
 import { Context } from "./utils/context";
+import { AddCategory } from "@/assets/icon/AddCategory";
 
 export const RecordBar = ({ selectedColor }) => {
   const { accounts } = useContext(Context);
@@ -156,15 +156,12 @@ export const RecordBar = ({ selectedColor }) => {
               </div>
             </div>
 
-            <div class="w-full  border border-[#D1D5DB] rounded-[8px]">
-              <label
-                for="money"
-                class="block text-sm font-medium text-gray-700  relative top-1 left-3"
-              >
+            <div className="w-full  border border-[#D1D5DB] rounded-[8px]">
+              <label className="block text-sm font-medium text-gray-700  relative top-1 left-3">
                 Amount
               </label>
-              <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-500">
                   ₮
                 </span>
                 <input
@@ -259,13 +256,13 @@ export const RecordBar = ({ selectedColor }) => {
                 ) : null} */}
               </div>
               <div className="flex-1  ">
-                <div class="w-full grid h-fit gap-2 ">
-                  <label for="time">Time</label>
+                <div className="w-full grid h-fit gap-2 ">
+                  <label htmlFor="time">Time</label>
                   <input
                     type="time"
                     id="time"
                     name="time"
-                    class="pl-3 pr-3 py-1.5 border border-[#D1D5DB]  rounded-[8px] outline-none w-full bg-white text-gray-500"
+                    className="pl-3 pr-3 py-1.5 border border-[#D1D5DB]  rounded-[8px] outline-none w-full bg-white text-gray-500"
                     value={time}
                     onChange={(event) => setTime(event.target.value)}
                   />
