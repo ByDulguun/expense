@@ -119,7 +119,7 @@ export const RecordBar = ({ selectedColor }) => {
     getData();
   }, []);
   return (
-    <div className="bg-[#FFFFFF] w-[750px] h-fit m-auto my-[260px] rounded-xl">
+    <div className="bg-[#FFFFFF] w-[750px] h-fit m-auto    rounded-xl">
       <div className="flex justify-between py-5 px-6 border-b-[1px] border-[#D1D5DB]">
         <div> Add Record</div>
         <div></div>

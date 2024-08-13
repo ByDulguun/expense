@@ -13,9 +13,9 @@ export const Today = ({ filterType }) => {
     if (account) {
       const IconComponent = Icons[account.icon];
       return (
-        <div className="flex">
+        <div className="flex gap-2  relative mx-2">
           <IconComponent
-            className={classNames("cursor-pointer w-10 h-10")}
+            className={classNames("cursor-pointer w-10 h-10 my-2")}
             color={account.iconColor}
           />
           {account.title}
@@ -56,17 +56,28 @@ export const Today = ({ filterType }) => {
   });
 
   return (
-    <div className="border">
+    <div>
       {filteredCategories?.map((el) => (
         <div className="bg-white border border-[#E5E7EB] rounded-xl my-2">
-          <div className=" flex justify-between mx-4 align-baseline">
-            <div className="flex">
+          <div className=" flex justify-between mx-4 items-center">
+            <div className="flex relative items-center">
               <input type="checkbox" className="w-6 h-6" />
+              <div className="relative">{renderIcon(el.category)}</div>
 
-              {renderIcon(el.category)}
+              <div>
+                <div className="mx-12 absolute top-6 left-8 text-[12px] text-[#6B7280]">
+                  {el.time}
+                </div>
+              </div>
             </div>
-            <div>
-              <p>{el.amount}</p>
+            <div
+              className={`${
+                el.status === "income" ? "text-[#23E01F]" : "text-[#F54949]"
+              }`}
+            >
+              <p>
+                {el.status === "income" ? `+ ${el.amount}` : `- ${el.amount}`}₮
+              </p>
             </div>
           </div>
         </div>
