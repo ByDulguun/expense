@@ -36,7 +36,7 @@ const records = () => {
 
   const deleteAccount = async () => {
     if (selectedAccountId) {
-      await axios.delete(`http://localhost:3001/accounts/${selectedAccountId}`);
+      await axios.delete(`http://localhost:5000/accounts/${selectedAccountId}`);
       setAccounts(
         accounts.filter((account) => account.id !== selectedAccountId)
       );
@@ -46,7 +46,7 @@ const records = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/accounts");
+        const response = await axios.get("http://localhost:5000/accounts");
         setAccounts(response.data);
       } catch (error) {
         console.error(error);
@@ -60,7 +60,7 @@ const records = () => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/iconcategories`
+          `http://localhost:5000/iconcategories`
         );
 
         setCategories(response.data);

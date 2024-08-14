@@ -10,7 +10,7 @@ export const ContextProvider = ({ children }) => {
   const [accounts, setAccounts] = useState([]);
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/accounts");
+      const response = await axios.get("http://localhost:5000/accounts");
       setAccounts(response.data);
     } catch (error) {
       console.error(error);

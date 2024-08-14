@@ -4,29 +4,35 @@ import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { useFormik } from "formik";
+import { useState } from "react";
+import { useAuth } from "./utils/AuthProvider";
 
 const Login = () => {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      // alert(`hello ${formik.values.email} ${formik.values.password}`);
-      console.log("first message ", formik.values);
-    },
-    validate: (values) => {
-      let errors = {};
+  // const formik = useFormik({
+  //   initialValues: {
+  //     email: "",
+  //     password: "",
+  //   },
+  //   onSubmit: (values) => {
+  //     // alert(`hello ${formik.values.email} ${formik.values.password}`);
+  //     console.log("first message ", formik.values);
+  //   },
+  //   validate: (values) => {
+  //     let errors = {};
 
-      if (!values.email) {
-        errors.email = "Email oruulna uu!";
-      }
-      if (!values.password) {
-        errors.password = "Password oruulna uu!";
-      }
-      return errors;
-    },
-  });
+  //     if (!values.email) {
+  //       errors.email = "Email oruulna uu!";
+  //     }
+  //     if (!values.password) {
+  //       errors.password = "Password oruulna uu!";
+  //     }
+  //     return errors;
+  //   },
+  // });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { login } = useAuth();
 
   return (
     <div className="w-screen  h-screen ">
@@ -44,34 +50,39 @@ const Login = () => {
           <div>
             <form
               className="h-fit grid gap-4 justify-center"
-              onSubmit={formik.handleSubmit}
+              // onSubmit={formik.handleSubmit}
             >
               <input
                 type="email"
                 placeholder="Email"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
                 name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
-              {formik.errors.email ? (
+              {/* {formik.errors.email ? (
                 <p className="text-red-500">{formik.errors.email}</p>
-              ) : null}
+              ) : null} */}
               <input
                 type="password"
                 placeholder="Password"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
                 name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
-              {formik.errors.password ? (
+              {/* {formik.errors.password ? (
                 <p className="text-red-500">{formik.errors.password}</p>
-              ) : null}
+              ) : null} */}
               {/* <Link href={`/geldwait`}> */}
               <Button
                 type="submit"
                 className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
+                onClick={() => login(email, password)}
               >
                 Log in
               </Button>

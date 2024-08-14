@@ -7,17 +7,16 @@ const RecordsCategory = ({ setOpenAdd, openAdd }) => {
     <div
       className={`  top-0  w-screen h-screen bg-[#00000080] fixed  border z-20 ${
         openAdd ? "invisible" : "visible"
-      }
-          }  duration-150`}
+      }  duration-150 flex items-center justify-center`}
     >
       <div className="relative">
         <AddCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />
-      </div>
-      <div
-        onClick={() => setOpenAdd(!openAdd)}
-        className="absolute top-[280px] left-[1300px]"
-      >
-        <CloseIcon />
+        <div
+          onClick={() => setOpenAdd(!openAdd)}
+          className="absolute top-3 right-3"
+        >
+          <CloseIcon />
+        </div>
       </div>
     </div>
   );

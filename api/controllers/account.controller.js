@@ -1,14 +1,13 @@
-const fs = require("fs");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const { v4 } = require("uuid");
+const { readJson, saveJson } = require("../utils");
 
-const getAllAccounts = async (req, res) => {
+const getAllAccounts = async (_, res) => {
   try {
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
+    const accounts = readJson("accounts.json");
 
-    const rawData = fs.readFileSync(filePath);
-    const accounts = JSON.parse(rawData);
-    res.json(accounts);
+    const userAccounts = accounts.filter((item) => item.userId === req.user.id);
+
+    res.json(userAccounts);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -17,29 +16,74 @@ const getAllAccounts = async (req, res) => {
 
 const createAccount = async (req, res) => {
   try {
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
-    const rowData = fs.readFileSync(filePath);
-    const accounts = JSON.parse(rowData);
-    const newAccount = { ...req.body, id: uuidv4() };
+    const accounts = readJson("accounts.json");
+
+    const newAccount = {
+      ...req.body,
+      id: v4(),
+    };
+
     accounts.push(newAccount);
-    fs.writeFileSync(filePath, JSON.stringify(accounts, null, 2));
+
+    saveJson("accounts.json", accounts);
+
     res.json(newAccount);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+const updateAccount = async (req, res) => {
+  try {
+    let updateAccount;
+
+    const id = req.params.id;
+
+    const accounts = readJson("accounts.json");
+
+    const updatedAccounts = accounts.map((account) => {
+      if (account.id === id) {
+        updatedAccount = {
+          ...account,
+          ...req.body,
+        };
+
+        return updateAccount;
+      }
+
+      return account;
+    });
+
+    saveJson("accounts.json", updatedAccounts);
+
+    res.json(updatedAccount);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 const deleteAccount = async (req, res) => {
   try {
-    const filePath = path.join(__dirname, "..", "data", "accounts.json");
-    const { id } = req.params;
-    const rawData = fs.readFileSync(filePath);
-    let account = JSON.parse(rawData);
+    const id = req.params.id;
 
-    account = account.filter((account) => account.id != id);
+    const accounts = readJson("accounts.json");
 
-    fs.writeFileSync(filePath, JSON.stringify(account, null, 2));
-    res.status(204).end();
-  } catch (error) {}
+    const updatedAccounts = accounts.filter((account) => account.id !== id);
+
+    saveJson("accounts.json", updatedAccounts);
+
+    res.json({ id });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
-module.exports = { getAllAccounts, createAccount, deleteAccount };
+
+module.exports = {
+  getAllAccounts,
+  createAccount,
+  updateAccount,
+  deleteAccount,
+};

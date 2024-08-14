@@ -94,7 +94,7 @@ export const RecordBar = ({ selectedColor }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3001/iconcategories/`,
+        `http://localhost:5000/iconcategories/`,
         newCategory
       );
       setCategories([...categories, response.data]);
@@ -107,7 +107,7 @@ export const RecordBar = ({ selectedColor }) => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/iconcategories"
+          "http://localhost:5000/iconcategories"
         );
 
         setCategories(response.data);

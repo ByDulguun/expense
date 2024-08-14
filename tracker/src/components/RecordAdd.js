@@ -8,17 +8,18 @@ const RecordAdd = ({ open, setOpen }) => {
       className={`  top-0  w-screen h-screen bg-[#00000080] fixed  border ${
         open ? "invisible" : "visible"
       }
-            }  duration-150`}
+            }  duration-150 flex items-center justify-center`}
     >
       <div>
         <div className="relative">
           <RecordBar />
-        </div>
-        <div
-          onClick={() => setOpen(!open)}
-          className="absolute top-[280px] left-[1450px]"
-        >
-          <CloseIcon />
+
+          <div
+            onClick={() => setOpen(!open)}
+            className="absolute top-3 right-3"
+          >
+            <CloseIcon />
+          </div>
         </div>
       </div>
     </div>

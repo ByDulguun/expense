@@ -13,7 +13,7 @@ export const Yesterday = ({ filterType }) => {
     const getCategoriesData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/iconcategories"
+          "http://localhost:5000/iconcategories"
         );
         setCategories(response.data);
       } catch (error) {
@@ -23,7 +23,7 @@ export const Yesterday = ({ filterType }) => {
 
     const getAccountsData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/accounts");
+        const response = await axios.get("http://localhost:5000/accounts");
         setAccounts(response.data);
       } catch (error) {
         console.error(error);

@@ -29,7 +29,7 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/accounts",
+        "http://localhost:5000/accounts",
         newAccount
       );
       setOpenAdd(true);
@@ -43,7 +43,7 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/accounts");
+        const response = await axios.get("http://localhost:5000/accounts");
 
         setAccounts(response.data);
       } catch (error) {
@@ -122,7 +122,7 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
   ];
 
   return (
-    <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto my-[260px] rounded-xl">
+    <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto   rounded-xl">
       <p className="py-5 px-6 border-b-[1px] border-[#D1D5DB]">Add Category</p>
       <div
         className={` gap-[32px] px-6 py-5 h-fit grid 

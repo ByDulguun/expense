@@ -13,12 +13,12 @@ export const Today = ({ filterType }) => {
     if (account) {
       const IconComponent = Icons[account.icon];
       return (
-        <div className="flex gap-2  relative mx-2">
+        <div className="flex gap-2  relative mx-2 my-2">
           <IconComponent
             className={classNames("cursor-pointer w-10 h-10 my-2")}
             color={account.iconColor}
           />
-          {account.title}
+          <p className="text-lg font-normal"> {account.title}</p>
         </div>
       );
     }
@@ -30,7 +30,7 @@ export const Today = ({ filterType }) => {
     const getCategoriesData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/iconcategories"
+          "http://localhost:5000/iconcategories"
         );
         setCategories(response.data);
       } catch (error) {
@@ -40,7 +40,7 @@ export const Today = ({ filterType }) => {
 
     const getAccountsData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/accounts");
+        const response = await axios.get("http://localhost:5000/accounts");
         setAccounts(response.data);
       } catch (error) {
         console.error(error);
@@ -65,7 +65,7 @@ export const Today = ({ filterType }) => {
               <div className="relative">{renderIcon(el.category)}</div>
 
               <div>
-                <div className="mx-12 absolute top-6 left-8 text-[12px] text-[#6B7280]">
+                <div className="mx-12 absolute top-10 left-8 text-[12px] text-[#6B7280]">
                   {el.time}
                 </div>
               </div>

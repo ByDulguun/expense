@@ -2,40 +2,47 @@
 import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/utils/AuthProvider";
 import { useFormik, Formik } from "formik";
 import Link from "next/link";
+import { useState } from "react";
 
 const Signup = () => {
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      repassword: "",
-    },
-    onSubmit: (values) => {
-      alert(`hello ${formik.values.email} ${formik.values.password}`);
-      console.log("first message ", formik.values);
-    },
-    validate: (values) => {
-      let errors = {};
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-      if (!values.name) {
-        errors.name = "Name oruulna uu!";
-      }
-      if (!values.email) {
-        errors.email = "Email oruulna uu!";
-      }
-      if (!values.password) {
-        errors.password = "Password oruulna uu!";
-      }
-      if (!values.repassword) {
-        errors.repassword = "Re-Password oruulna uu!";
-      }
+  const { register } = useAuth();
+  // const formik = useFormik({
+  //   initialValues: {
+  //     name: "",
+  //     email: "",
+  //     password: "",
+  //     repassword: "",
+  //   },
+  //   onSubmit: (values) => {
+  //     alert(`hello ${formik.values.email} ${formik.values.password}`);
+  //     console.log("first message ", formik.values);
+  //   },
+  //   validate: (values) => {
+  //     let errors = {};
 
-      return errors;
-    },
-  });
+  //     if (!values.name) {
+  //       errors.name = "Name oruulna uu!";
+  //     }
+  //     if (!values.email) {
+  //       errors.email = "Email oruulna uu!";
+  //     }
+  //     if (!values.password) {
+  //       errors.password = "Password oruulna uu!";
+  //     }
+  //     if (!values.repassword) {
+  //       errors.repassword = "Re-Password oruulna uu!";
+  //     }
+
+  //     return errors;
+  //   },
+  // });
   return (
     <div className="w-screen  h-screen ">
       <div className="w-[1440px] shadow-2xl  m-auto flex my-[80px] ">
@@ -51,58 +58,66 @@ const Signup = () => {
           </div>
           <div className="">
             <form
-              onSubmit={formik.handleSubmit}
+              // onSubmit={formik.handleSubmit}
               className="h-fit grid gap-4 justify-center"
             >
               <input
                 type="name"
                 placeholder="Name"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={formik.values.name}
-                onChange={formik.handleChange}
+                value={username}
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
               />
-              {formik.errors.name ? (
+              {/* {formik.errors.name ? (
                 <p className="text-red-500">{formik.errors.name}</p>
-              ) : null}
+              ) : null} */}
 
               <input
                 type="email"
                 placeholder="Email"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={formik.values.email}
-                onChange={formik.handleChange}
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
-              {formik.errors.email ? (
+              {/* {formik.errors.email ? (
                 <p className="text-red-500">{formik.errors.email}</p>
-              ) : null}
+              ) : null} */}
               <input
                 type="password"
                 placeholder="Password"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={formik.values.password}
-                onChange={formik.handleChange}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
-              {formik.errors.password ? (
+              {/* {formik.errors.password ? (
                 <p className="text-red-500">{formik.errors.password}</p>
-              ) : null}
+              ) : null} */}
               <input
                 type="password"
                 placeholder="Re-Password"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={formik.values.repassword}
-                onChange={formik.handleChange}
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
               />
-              {formik.errors.repassword ? (
+              {/* {formik.errors.repassword ? (
                 <p className="text-red-500">{formik.errors.repassword}</p>
-              ) : null}
-              <Link href={`/`}>
-                <Button
-                  className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
-                  type="submit"
-                >
-                  Log in
-                </Button>
-              </Link>
+              ) : null} */}
+              {/* <Link href={`/`}> */}
+              <Button
+                className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
+                onClick={() => register(username, email, password)}
+              >
+                Log in
+              </Button>
+              {/* </Link> */}
             </form>
           </div>
           <div className="flex justify-center">

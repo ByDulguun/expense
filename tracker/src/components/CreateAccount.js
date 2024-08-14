@@ -7,7 +7,7 @@ const CreateAccount = () => {
   const createAccount = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/accounts",
+        "http://localhost:5000/accounts",
         newAccount
       );
       setAccounts([...accounts, response.data]);
@@ -19,7 +19,7 @@ const CreateAccount = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/accounts");
+        const response = await axios.get("http://localhost:5000/accounts");
 
         setAccounts(response.data);
       } catch (error) {

@@ -1,56 +1,93 @@
 "use client";
 
 import { api } from "@/lib/axios";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState, createContext, useContext } from "react";
 import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
+const authPaths = ["/", "/signup"];
+
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
+  const pathname = usePathname();
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
+  const [user, setUser] = useState(null);
+  const [isReady, setIsReady] = useState(false);
 
   const login = async (email, password) => {
+    console.log(email, password, "====");
+    
     try {
-      const response = await api.post("/auth/", { email, password });
-      toast.success("Logged in successfully.");
+      const res = await api.post("/auth/", { email, password });
 
-      setIsLoggedIn(true);
-      localStorage.setItem("token", response.data.token); // Assuming the token is in the response
-      router.push("/");
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed.");
+      localStorage.setItem("token", res.data.token);
+
+      setUser(res.data.user);
+
+      router.replace("/records");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message);
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    toast.success("Logged out successfully.");
-    router.push("/");
+  const register = async (username, email, password) => {
+    try {
+      await api.post("/auth/signup", {
+        username,
+        email,
+        password,
+      });
+
+      router.push("/");
+    } catch (err) {
+      console.log(err);
+      toast.error(err.response.data.message);
+    }
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token);
-    setIsChecking(false);
+    const loadUser = async () => {
+      try {
+        setIsReady(false);
+
+        const token = localStorage.getItem("token");
+
+        if (!token) return;
+
+        const res = await api.get("/users/me", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setUser(res.data);
+      } catch (err) {
+        console.log(err);
+        localStorage.removeItem("token");
+        toast.error("Your session has expired. Please login again.");
+      } finally {
+        setIsReady(true);
+      }
+    };
+
+    loadUser();
   }, []);
 
   useEffect(() => {
-    if (!isChecking) {
-      if (isLoggedIn) {
-        router.push("/");
-      } else {
-        router.push("/records");
-      }
-    }
-  }, [isLoggedIn, isChecking]);
+    if (authPaths.includes(pathname)) return;
+
+    if (!isReady) return;
+
+    if (!user) router.replace("/");
+  }, [pathname, user, isReady]);
+
+  if (!isReady) return null;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, login, register }}>
       {children}
     </AuthContext.Provider>
   );
