@@ -15,7 +15,7 @@ import { FaCircle } from "react-icons/fa";
 import * as Icons from "react-icons/pi";
 import { Context } from "./utils/context";
 
-const AddCategory = ({ setOpenAdd, openAdd }) => {
+const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
   const { accounts, setAccounts, getData } = useContext(Context);
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState("");
@@ -25,6 +25,7 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
       title,
       icon,
       iconColor,
+      userId,
     };
 
     try {

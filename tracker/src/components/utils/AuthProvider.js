@@ -21,9 +21,7 @@ export const AuthProvider = ({ children }) => {
       const res = await api.post("/auth/", { email, password });
 
       localStorage.setItem("token", res.data.token);
-
       setUser(res.data.user);
-
       router.replace("/currency");
     } catch (err) {
       console.log(err);
@@ -33,12 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (username, email, password) => {
     try {
-      await api.post("/auth/signup", {
-        username,
-        email,
-        password,
-      });
-
+      await api.post("/auth/signup", { username, email, password });
       router.push("/");
     } catch (err) {
       console.log(err);
@@ -46,21 +39,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    try {
+      localStorage.removeItem("token");
+      setUser(null);
+      router.replace("/"); // Redirect to homepage or login page
+    } catch (err) {
+      console.log(err);
+      toast.error("An error occurred while logging out.");
+    }
+  };
+
   useEffect(() => {
     const loadUser = async () => {
       try {
         setIsReady(false);
-
         const token = localStorage.getItem("token");
-
         if (!token) return;
-
         const res = await api.get("/users/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -76,16 +76,14 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (authPaths.includes(pathname)) return;
-
     if (!isReady) return;
-
     if (!user) router.replace("/");
   }, [pathname, user, isReady]);
 
   if (!isReady) return null;
 
   return (
-    <AuthContext.Provider value={{ user, login, register }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

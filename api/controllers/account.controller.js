@@ -1,9 +1,9 @@
 const { v4 } = require("uuid");
 const { readJson, saveJson } = require("../utils");
 
-const getAllAccounts = async (_, res) => {
+const getAllAccounts = async (req, res) => {
   try {
-    const accounts = readJson("accounts.json");
+    const accounts = await readJson("accounts.json");
 
     const userAccounts = accounts.filter((item) => item.userId === req.user.id);
 
@@ -16,16 +16,17 @@ const getAllAccounts = async (_, res) => {
 
 const createAccount = async (req, res) => {
   try {
-    const accounts = readJson("accounts.json");
+    const accounts = await readJson("accounts.json");
 
     const newAccount = {
       ...req.body,
       id: v4(),
+      userId: req.user.id, // Associate account with current user
     };
 
     accounts.push(newAccount);
 
-    saveJson("accounts.json", accounts);
+    await saveJson("accounts.json", accounts);
 
     res.json(newAccount);
   } catch (error) {
@@ -36,28 +37,30 @@ const createAccount = async (req, res) => {
 
 const updateAccount = async (req, res) => {
   try {
-    let updateAccount;
-
     const id = req.params.id;
 
-    const accounts = readJson("accounts.json");
+    const accounts = await readJson("accounts.json");
+
+    let updatedAccount;
 
     const updatedAccounts = accounts.map((account) => {
-      if (account.id === id) {
-        updatedAccounts = {
+      if (account.id === id && account.userId === req.user.id) {
+        updatedAccount = {
           ...account,
           ...req.body,
         };
-
-        return updateAccount;
+        return updatedAccount;
       }
-
       return account;
     });
 
-    saveJson("accounts.json", updatedAccounts);
+    await saveJson("accounts.json", updatedAccounts);
 
-    res.json(updatedAccount);
+    if (updatedAccount) {
+      res.json(updatedAccount);
+    } else {
+      res.status(404).json({ error: "Account not found or unauthorized" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -68,11 +71,19 @@ const deleteAccount = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const accounts = readJson("accounts.json");
+    const accounts = await readJson("accounts.json");
 
-    const updatedAccounts = accounts.filter((account) => account.id !== id);
+    const updatedAccounts = accounts.filter(
+      (account) => account.id !== id || account.userId !== req.user.id // Ensure user can only delete their own accounts
+    );
 
-    saveJson("accounts.json", updatedAccounts);
+    if (accounts.length === updatedAccounts.length) {
+      return res
+        .status(404)
+        .json({ error: "Account not found or unauthorized" });
+    }
+
+    await saveJson("accounts.json", updatedAccounts);
 
     res.json({ id });
   } catch (error) {

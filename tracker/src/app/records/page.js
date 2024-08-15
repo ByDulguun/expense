@@ -96,12 +96,12 @@ const records = () => {
         <div className="py-6 px-4 flex-none grid h-fit gap-6 bg-white border border-[#E5E7EB] rounded-xl ">
           <div className="h-fit grid gap-6 ">
             <h1 className="text-2xl font-semibold ">Records</h1>
-            {/* <Button
+            <Button
               className="bg-red-500 text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-red-400 px-28"
               onClick={logout}
             >
               Log Out
-            </Button> */}
+            </Button>
 
             <div onClick={() => setOpen(!open)}>
               <Button className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-blue-400  px-28 ">
