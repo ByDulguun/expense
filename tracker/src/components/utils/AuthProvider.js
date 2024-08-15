@@ -17,8 +17,6 @@ export const AuthProvider = ({ children }) => {
   const [isReady, setIsReady] = useState(false);
 
   const login = async (email, password) => {
-    console.log(email, password, "====");
-    
     try {
       const res = await api.post("/auth/", { email, password });
 
@@ -26,7 +24,7 @@ export const AuthProvider = ({ children }) => {
 
       setUser(res.data.user);
 
-      router.replace("/records");
+      router.replace("/currency");
     } catch (err) {
       console.log(err);
       toast.error(err.message);

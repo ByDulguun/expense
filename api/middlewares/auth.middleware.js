@@ -5,7 +5,12 @@ const authMiddleware = (req, res, next) => {
 
   const auth = req.headers.authorization;
 
+  console.log(auth);
+  
+
   const token = auth?.split(" ")[1];
+  console.log("===", token);
+  
 
   if (!token) return res.status(401).json({ error: "Нэвтрэнэ үү!" });
 
@@ -16,6 +21,8 @@ const authMiddleware = (req, res, next) => {
 
     next();
   } catch (err) {
+    console.log(err);
+    
     return res.status(401).json({ error: "Нэвтрэнэ үү!" });
   }
 };

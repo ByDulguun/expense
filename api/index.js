@@ -14,17 +14,14 @@ app.use(cors());
 app.use(express.json());
 app.use(authMiddleware);
 
-
-
 const port = 5000;
 console.log(process.env.JWT_SECRET);
 
+app.use("/accounts", accountRouter);
+app.use("/iconcategories", iconCategoryRouter);
 
 app.use("/auth", authRouter);
-app.use("/accounts", accountRouter);
 app.use("/users", userRouter);
-
-app.use("/iconcategories", iconCategoryRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

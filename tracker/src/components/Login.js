@@ -48,7 +48,7 @@ const Login = () => {
             </p>
           </div>
           <div>
-            <form
+            <div
               className="h-fit grid gap-4 justify-center"
               // onSubmit={formik.handleSubmit}
             >
@@ -87,7 +87,7 @@ const Login = () => {
                 Log in
               </Button>
               {/* </Link> */}
-            </form>
+            </div>
           </div>
           <div className="flex justify-center">
             <p>{`Don’t have account?`}</p>

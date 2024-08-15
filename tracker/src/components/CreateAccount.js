@@ -1,4 +1,5 @@
 const CreateAccount = () => {
+  const token = localStorage.getItem("token");
   const [accounts, setAccounts] = useState([]);
 
   const newAccount = {
@@ -8,7 +9,12 @@ const CreateAccount = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/accounts",
-        newAccount
+        newAccount,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
       );
       setAccounts([...accounts, response.data]);
     } catch (error) {
@@ -19,7 +25,11 @@ const CreateAccount = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts");
+        const response = await axios.get("http://localhost:5000/accounts", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
 
         setAccounts(response.data);
       } catch (error) {

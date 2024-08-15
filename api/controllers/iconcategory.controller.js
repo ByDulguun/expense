@@ -54,12 +54,10 @@ const deleteIconCategory = async (req, res) => {
     const categories = JSON.parse(rawData);
     const { id } = req.params;
 
-    // Filter out the category to delete
     const updatedCategories = categories.filter(
       (category) => category.id !== id
     );
 
-    // Check if the category was found and deleted
     if (categories.length === updatedCategories.length) {
       return res.status(404).json({ error: "Category not found" });
     }

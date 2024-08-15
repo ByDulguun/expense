@@ -57,7 +57,7 @@ const Signup = () => {
             </p>
           </div>
           <div className="">
-            <form
+            <div
               // onSubmit={formik.handleSubmit}
               className="h-fit grid gap-4 justify-center"
             >
@@ -98,7 +98,7 @@ const Signup = () => {
               {/* {formik.errors.password ? (
                 <p className="text-red-500">{formik.errors.password}</p>
               ) : null} */}
-              <input
+              {/* <input
                 type="password"
                 placeholder="Re-Password"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
@@ -106,7 +106,7 @@ const Signup = () => {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
-              />
+              /> */}
               {/* {formik.errors.repassword ? (
                 <p className="text-red-500">{formik.errors.repassword}</p>
               ) : null} */}
@@ -118,7 +118,7 @@ const Signup = () => {
                 Log in
               </Button>
               {/* </Link> */}
-            </form>
+            </div>
           </div>
           <div className="flex justify-center">
             <p>{`Already have account?`}</p>

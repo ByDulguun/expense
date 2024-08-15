@@ -27,6 +27,7 @@ import { useEffect, useState } from "react";
 import { SeeIcon } from "@/assets/icon/SeeIcon";
 
 const records = () => {
+  const token = localStorage.getItem("token");
   const { logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [accounts, setAccounts] = useState([]);
@@ -36,7 +37,14 @@ const records = () => {
 
   const deleteAccount = async () => {
     if (selectedAccountId) {
-      await axios.delete(`http://localhost:5000/accounts/${selectedAccountId}`);
+      await axios.delete(
+        `http://localhost:5000/accounts/${selectedAccountId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
       setAccounts(
         accounts.filter((account) => account.id !== selectedAccountId)
       );
@@ -46,7 +54,11 @@ const records = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts");
+        const response = await axios.get("http://localhost:5000/accounts", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
         setAccounts(response.data);
       } catch (error) {
         console.error(error);
@@ -60,7 +72,12 @@ const records = () => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/iconcategories`
+          `http://localhost:5000/iconcategories`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
         );
 
         setCategories(response.data);

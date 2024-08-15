@@ -30,7 +30,12 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
     try {
       const response = await axios.post(
         "http://localhost:5000/accounts",
-        newAccount
+        newAccount,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
       );
       setOpenAdd(true);
       getData();
@@ -43,7 +48,11 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts");
+        const response = await axios.get("http://localhost:5000/accounts", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
 
         setAccounts(response.data);
       } catch (error) {
@@ -124,10 +133,7 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
   return (
     <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto   rounded-xl">
       <p className="py-5 px-6 border-b-[1px] border-[#D1D5DB]">Add Category</p>
-      <div
-        className={` gap-[32px] px-6 py-5 h-fit grid 
-           `}
-      >
+      <div className=" gap-[32px] px-6 py-5 h-fit grid ">
         <div className="flex gap-2">
           <div className="flex-1">
             <Select onValueChange={(value) => setIcon(value)}>
@@ -165,9 +171,9 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
               </SelectContent>
             </Select>
 
-            {formik.errors.icon ? (
+            {/* {formik.errors.icon ? (
               <p className="text-red-500">{formik.errors.icon} </p>
-            ) : null}
+            ) : null} */}
           </div>
 
           <div
@@ -182,9 +188,9 @@ const AddCategory = ({ setOpenAdd, openAdd }) => {
               placeholder="name"
               className="outline-none py-2 border border-[#D1D5DB] rounded-[8px] px-4 w-full"
             />
-            {formik.errors.name ? (
+            {/* {formik.errors.name ? (
               <p className="text-red-500">{formik.errors.name} </p>
-            ) : null}
+            ) : null} */}
           </div>
         </div>
 

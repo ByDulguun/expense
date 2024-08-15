@@ -44,7 +44,7 @@ const updateAccount = async (req, res) => {
 
     const updatedAccounts = accounts.map((account) => {
       if (account.id === id) {
-        updatedAccount = {
+        updatedAccounts = {
           ...account,
           ...req.body,
         };

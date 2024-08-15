@@ -6,6 +6,7 @@ import classNames from "classnames";
 export const Today = ({ filterType }) => {
   const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
+  const token = localStorage.getItem("token");
 
   const renderIcon = (recordCategoryId) => {
     const account = accounts?.find((el) => el.id === recordCategoryId);
@@ -30,7 +31,12 @@ export const Today = ({ filterType }) => {
     const getCategoriesData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/iconcategories"
+          "http://localhost:5000/iconcategories",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
         );
         setCategories(response.data);
       } catch (error) {
@@ -40,7 +46,11 @@ export const Today = ({ filterType }) => {
 
     const getAccountsData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts");
+        const response = await axios.get("http://localhost:5000/accounts", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
         setAccounts(response.data);
       } catch (error) {
         console.error(error);
@@ -57,6 +67,7 @@ export const Today = ({ filterType }) => {
 
   return (
     <div>
+      <p className="mb-3 font-semibold text-[16px]">Today</p>
       {filteredCategories?.map((el) => (
         <div className="bg-white border border-[#E5E7EB] rounded-xl my-2">
           <div className=" flex justify-between mx-4 items-center">

@@ -24,6 +24,8 @@ import { AddCategory } from "@/assets/icon/AddCategory";
 export const RecordBar = ({ selectedColor }) => {
   const { accounts } = useContext(Context);
 
+  const token = localStorage.getItem("token");
+
   const [click, setClick] = useState(true);
   const [openAdd, setOpenAdd] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -95,7 +97,12 @@ export const RecordBar = ({ selectedColor }) => {
     try {
       const response = await axios.post(
         `http://localhost:5000/iconcategories/`,
-        newCategory
+        newCategory,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
       );
       setCategories([...categories, response.data]);
     } catch (error) {
@@ -107,7 +114,12 @@ export const RecordBar = ({ selectedColor }) => {
     const getData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/iconcategories"
+          "http://localhost:5000/iconcategories",
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
         );
 
         setCategories(response.data);
