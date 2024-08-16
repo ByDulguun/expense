@@ -9,7 +9,6 @@ const authMiddleware = (req, res, next) => {
   
 
   const token = auth?.split(" ")[1];
-  console.log("===", token);
   
 
   if (!token) return res.status(401).json({ error: "Нэвтрэнэ үү!" });

@@ -14,14 +14,14 @@ import * as React from "react";
 
 import RecordsCategory from "./RecordsCategory";
 import axios from "axios";
-import { Date } from "./Date";
+import { Date } from "./Charts/Date";
 import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
 import { Context } from "./utils/context";
 import { AddCategory } from "@/assets/icon/AddCategory";
 
-export const RecordBar = ({ selectedColor }) => {
+export const RecordBar = ({ userId }) => {
   const { accounts } = useContext(Context);
 
   const token = localStorage.getItem("token");
@@ -87,6 +87,7 @@ export const RecordBar = ({ selectedColor }) => {
     const newCategory = {
       amount,
       category,
+      userId,
       date,
       time,
       payee,

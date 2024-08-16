@@ -5,9 +5,9 @@ import { LeadingDown } from "@/assets/icon/LeadingDown";
 import { LeadingIcon } from "@/assets/icon/LeadingIcon";
 import { Shape } from "@/assets/icon/Shape";
 import { ShapeLogo } from "@/assets/icon/ShapeLogo";
-import { DonutChard, DonutChart } from "@/components/DonutChart";
+import { DonutChard, DonutChart } from "@/components/Charts/DonutChart";
 import { Header } from "@/components/Header";
-import { UpChart } from "@/components/UpChart";
+import { UpChart } from "@/components/Charts/UpChart";
 
 const dashboard = () => {
   return (

@@ -5,7 +5,11 @@ const { readJson, saveJson } = require("../utils");
 const getAllIconCategory = async (req, res) => {
   try {
     const iconcategories = await readJson("iconcategories.json");
-    res.json(iconcategories);
+
+    const userIconCategories = iconcategories.filter(
+      (item) => item.userId === req.user.id
+    );
+    res.json(userIconCategories);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -17,7 +21,7 @@ const createIconCategory = async (req, res) => {
   try {
     const iconcategories = await readJson("iconcategories.json");
 
-    const newIconCategory = { ...req.body, id: v4() };
+    const newIconCategory = { ...req.body, id: v4(), userId: req.user.id };
     iconcategories.push(newIconCategory);
 
     await saveJson("iconcategories.json", iconcategories);
@@ -28,7 +32,8 @@ const createIconCategory = async (req, res) => {
   }
 };
 
-// Function to delete an icon category
+
+
 const deleteIconCategory = async (req, res) => {
   try {
     const id = req.params.id;
