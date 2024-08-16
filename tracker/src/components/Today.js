@@ -62,7 +62,7 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
 
     getCategoriesData();
     getAccountsData();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const newSelectedItems = {};
@@ -119,7 +119,7 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
         <div
           key={el.id + index}
           className={`bg-white border border-[#E5E7EB] rounded-xl my-2 ${
-            visibleEye ? "invisible" : "visible"
+            visibleEye && visibleEye !== el.category ? "invisible" : "visible"
           }`}
         >
           <div className="flex justify-between mx-4 items-center">

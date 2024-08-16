@@ -1,27 +1,10 @@
-const fs = require("fs");
-const path = require("path");
-const { v4: uuidv4 } = require("uuid");
+const { v4 } = require("uuid");
+const { readJson, saveJson } = require("../utils");
 
-const filePath = path.join(__dirname, "..", "data", "iconcategories.json");
-
-// Function to ensure the data directory and file exist
-const ensureFileExists = () => {
-  const dirPath = path.dirname(filePath);
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-  if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, JSON.stringify([]));
-  }
-};
-
+// Function to get all icon categories
 const getAllIconCategory = async (req, res) => {
   try {
-    ensureFileExists();
-
-    const rawData = fs.readFileSync(filePath, "utf8");
-    const iconcategories = JSON.parse(rawData);
-
+    const iconcategories = await readJson("iconcategories.json");
     res.json(iconcategories);
   } catch (error) {
     console.error(error);
@@ -29,16 +12,15 @@ const getAllIconCategory = async (req, res) => {
   }
 };
 
+// Function to create a new icon category
 const createIconCategory = async (req, res) => {
   try {
-    ensureFileExists();
+    const iconcategories = await readJson("iconcategories.json");
 
-    const rawData = fs.readFileSync(filePath, "utf8");
-    const categories = JSON.parse(rawData);
-    const newIconCategory = { ...req.body, id: uuidv4() };
+    const newIconCategory = { ...req.body, id: v4() };
+    iconcategories.push(newIconCategory);
 
-    categories.push(newIconCategory);
-    fs.writeFileSync(filePath, JSON.stringify(categories, null, 2));
+    await saveJson("iconcategories.json", iconcategories);
     res.json(newIconCategory);
   } catch (error) {
     console.error(error);
@@ -46,23 +28,22 @@ const createIconCategory = async (req, res) => {
   }
 };
 
+// Function to delete an icon category
 const deleteIconCategory = async (req, res) => {
   try {
-    ensureFileExists();
+    const id = req.params.id;
 
-    const rawData = fs.readFileSync(filePath, "utf8");
-    const categories = JSON.parse(rawData);
-    const { id } = req.params;
+    const iconcategories = await readJson("iconcategories.json");
 
-    const updatedCategories = categories.filter(
+    const updatedCategories = iconcategories.filter(
       (category) => category.id !== id
     );
 
-    if (categories.length === updatedCategories.length) {
+    if (iconcategories.length === updatedCategories.length) {
       return res.status(404).json({ error: "Category not found" });
     }
 
-    fs.writeFileSync(filePath, JSON.stringify(updatedCategories, null, 2));
+    await saveJson("iconcategories.json", updatedCategories);
     res.status(200).json({ message: "Category deleted successfully" });
   } catch (error) {
     console.error(error);
