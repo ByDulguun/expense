@@ -5,24 +5,24 @@ import classNames from "classnames";
 
 export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
   const [categories, setCategories] = useState([]);
-  const [accounts, setAccounts] = useState([]);
+  const [records, setRecords] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState({});
   const [totalAmount, setTotalAmount] = useState(0);
   const token = localStorage.getItem("token");
 
   const renderIcon = (recordCategoryId) => {
-    const account = accounts?.find((el) => el.id === recordCategoryId);
+    const record = records?.find((el) => el.id === recordCategoryId);
 
-    if (account) {
-      const IconComponent = Icons[account.icon];
+    if (record) {
+      const IconComponent = Icons[record.icon];
       return (
         <div className="flex gap-2 relative mx-2 my-2">
           <IconComponent
             className={classNames("cursor-pointer w-10 h-10 my-2")}
-            color={account.iconColor}
+            color={record.iconColor}
           />
-          <p className="text-lg font-normal">{account.title}</p>
+          <p className="text-lg font-normal">{record.title}</p>
         </div>
       );
     }
@@ -47,21 +47,21 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
       }
     };
 
-    const getAccountsData = async () => {
+    const getRecordsData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts", {
+        const response = await axios.get("http://localhost:5000/records", {
           headers: {
             Authorization: "Bearer " + token,
           },
         });
-        setAccounts(response.data);
+        setRecords(response.data);
       } catch (error) {
         console.error(error);
       }
     };
 
     getCategoriesData();
-    getAccountsData();
+    getRecordsData();
   }, [token]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
           return el.status === "income" ? sum + el.amount : sum - el.amount;
         }
         return sum;
-      }, 0);
+      }, "");
       setTotalAmount(total);
     };
 

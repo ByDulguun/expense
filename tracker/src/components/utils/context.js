@@ -7,15 +7,15 @@ export const Context = createContext(null);
 
 export const ContextProvider = ({ children }) => {
   const [newCategory, setNewCategory] = useState("");
-  const [accounts, setAccounts] = useState([]);
+  const [records, setRecords] = useState([]);
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/accounts", {
+      const response = await axios.get("http://localhost:5000/records", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-      setAccounts(response.data);
+      setRecords(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -23,10 +23,9 @@ export const ContextProvider = ({ children }) => {
   useEffect(() => {
     getData();
   }, []);
+
   return (
-    <Context.Provider
-      value={{ newCategory, setNewCategory, accounts, getData }}
-    >
+    <Context.Provider value={{ newCategory, setNewCategory, records, getData }}>
       {children}
     </Context.Provider>
   );

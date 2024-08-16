@@ -14,7 +14,6 @@ import * as React from "react";
 
 import RecordsCategory from "./RecordsCategory";
 import axios from "axios";
-import { Date } from "./Charts/Date";
 import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
@@ -22,7 +21,7 @@ import { Context } from "./utils/context";
 import { AddCategory } from "@/assets/icon/AddCategory";
 
 export const RecordBar = ({ userId }) => {
-  const { accounts } = useContext(Context);
+  const { records } = useContext(Context);
 
   const token = localStorage.getItem("token");
 
@@ -31,7 +30,7 @@ export const RecordBar = ({ userId }) => {
   const [categories, setCategories] = useState([]);
   const [amount, setAmount] = useState([]);
   const [category, setCategory] = useState({});
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState("");
   const [time, setTime] = useState([]);
   const [payee, setPayee] = useState([]);
   const [note, setNote] = useState([]);
@@ -77,18 +76,18 @@ export const RecordBar = ({ userId }) => {
 
   const [title, setTitle] = useState("");
 
-  const newAccount = {
+  const newRecord = {
     title,
     icon,
   };
+  const formattedDate = new Date(`${date}T${time}:00`);
 
-  // const [accounts, setAccounts] = useState([]);
   const createCategories = async () => {
     const newCategory = {
       amount,
       category,
       userId,
-      date,
+      date: formattedDate,
       time,
       payee,
       note,
@@ -214,12 +213,12 @@ export const RecordBar = ({ userId }) => {
                       <div></div>
                       <div className="text-black">
                         <>
-                          {accounts?.map((account, index) => {
-                            const IconComponent = Icons[account.icon];
+                          {records?.map((record, index) => {
+                            const IconComponent = Icons[record.icon];
                             return (
                               <SelectItem
-                                key={account.title + index}
-                                value={account.id}
+                                key={record.title + index}
+                                value={record.id}
                               >
                                 <div className="flex items-center text-black">
                                   <div>
@@ -227,11 +226,11 @@ export const RecordBar = ({ userId }) => {
                                       className={classNames(
                                         "cursor-pointer w-6 h-6 "
                                       )}
-                                      color={account.iconColor}
+                                      color={record.iconColor}
                                     />
                                   </div>
                                   <div className="py-2 px-4 ">
-                                    {account.title}
+                                    {record.title}
                                   </div>
                                 </div>
                               </SelectItem>
@@ -256,12 +255,15 @@ export const RecordBar = ({ userId }) => {
             <div className="flex w-full gap-4">
               <div className="flex-1 grid h-fit gap-2 ">
                 <p>Date</p>
-                <Date
+                <input
+                  type="date"
                   value={date}
                   onChange={(event) => setDate(event.target.value)}
-                  // value={formik.values.amount}
-                  // onChange={formik.handleChange}
+                  className=" font-normal bg-white border border-[#D1D5DB] rounded-[8px] outline-none pl-3.5 pr-3 py-1.5"
                 />
+
+                {/* // value={formik.values.amount}
+                // onChange={formik.handleChange} */}
                 {/* {formik.errors.date ? (
                   <p className="text-red-500">{formik.errors.date}</p>
                 ) : null} */}

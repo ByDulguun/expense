@@ -27,27 +27,27 @@ import { Slider } from "@/components/ui/slider";
 const Records = () => {
   const token = localStorage.getItem("token");
   const [open, setOpen] = useState(true);
-  const [accounts, setAccounts] = useState([]);
+  const [records, setRecords] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
   const [selectedIconCategoryId, setSelectedIconCategoryId] = useState(null);
-  const [selectedAccountId, setSelectedAccountId] = useState(null);
+  const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [filterType, setFilterType] = useState("all");
   const [visibleEye, setVisibleEye] = useState(null); // Store accountId here
 
-  const deleteAccount = async () => {
-    if (selectedAccountId) {
+  const deleteRecord = async () => {
+    if (selectedRecordId) {
       await axios.delete(
-        `http://localhost:5000/accounts/${selectedAccountId}`,
+        `http://localhost:5000/records/${selectedRecordId}`,
         {
           headers: {
             Authorization: "Bearer " + token,
           },
         }
       );
-      setAccounts(
-        accounts.filter((account) => account.id !== selectedAccountId)
+      setRecords(
+        records.filter((record) => record.id !== selectedRecordId)
       );
-      setSelectedAccountId(null);
+      setSelectedRecordId(null);
     }
   };
 
@@ -71,12 +71,12 @@ const Records = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts", {
+        const response = await axios.get("http://localhost:5000/records", {
           headers: {
             Authorization: "Bearer " + token,
           },
         });
-        setAccounts(response.data);
+        setRecords(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -105,11 +105,11 @@ const Records = () => {
   }, []);
 
   const renderIcon = (recordCategoryId) => {
-    const account = accounts?.find((el) => el.id === recordCategoryId);
-    if (account) {
+    const record = records?.find((el) => el.id === recordCategoryId);
+    if (record) {
       return (
         <div className="flex gap-2 relative mx-2 my-2">
-          <p className="text-lg font-normal">{account.title}</p>
+          <p className="text-lg font-normal">{record.title}</p>
         </div>
       );
     }
@@ -180,21 +180,21 @@ const Records = () => {
             <div className="px-1">
               <div className="gap-2 mx-1 grid h-fit overflow-scroll">
                 <ul>
-                  {accounts.map((account, index) => (
+                  {records.map((record, index) => (
                     <div
-                      key={account.title + index}
+                      key={record.title + index}
                       className="flex justify-between items-baseline align-baseline h-fit"
-                      onClick={() => setVisibleEye(account.id)}
+                      onClick={() => setVisibleEye(record.id)}
                     >
                       <div className="flex gap-2 ">
                         <div className="cursor-pointer">
-                          {visibleEye === account.id ? (
+                          {visibleEye === record.id ? (
                             <IoMdEye size={24} />
                           ) : (
                             <IoEyeOff size={24} />
                           )}
                         </div>
-                        <p>{account.title}</p>
+                        <p>{record.title}</p>
                       </div>
                       <Button
                         variant="outline"

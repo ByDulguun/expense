@@ -15,12 +15,12 @@ import * as Icons from "react-icons/pi";
 import { Context } from "./utils/context";
 
 const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
-  const { accounts, setAccounts, getData } = useContext(Context);
+  const { records, setRecords, getData } = useContext(Context);
   const [title, setTitle] = useState("");
   const [icon, setIcon] = useState("");
 
-  const createAccount = async () => {
-    const newAccount = {
+  const createRecord = async () => {
+    const newRecord = {
       title,
       icon,
       iconColor,
@@ -29,8 +29,8 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/accounts",
-        newAccount,
+        "http://localhost:5000/records",
+        newRecord,
         {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -39,7 +39,7 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
       );
       setOpenAdd(true);
       getData();
-      setAccounts([...accounts, response.data]);
+      setRecords([...records, response.data]);
     } catch (error) {
       console.error(error);
     }
@@ -48,13 +48,13 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/accounts", {
+        const response = await axios.get("http://localhost:5000/records", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },
         });
 
-        setAccounts(response.data);
+        setRecords(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -196,7 +196,7 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
 
         <Button
           className="bg-[#16A34A] hover:bg-green-500 rounded-[20px] text-white"
-          onClick={createAccount}
+          onClick={createRecord}
           type="submit"
           openAdd={openAdd}
           setOpenAdd={setOpenAdd}

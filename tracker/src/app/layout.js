@@ -19,8 +19,7 @@ export default function RootLayout({ children }) {
     }
   }, []);
 
-  const getData = async () => {
-  };
+  const getData = async () => {};
   return (
     <html lang="en">
       <body>
