@@ -10,7 +10,6 @@ import {
 import { Button } from "./ui/button";
 import { useFormik } from "formik";
 import classNames from "classnames";
-import { FaHouse, FaHouseChimneyWindow } from "react-icons/fa6";
 import { FaCircle } from "react-icons/fa";
 import * as Icons from "react-icons/pi";
 import { Context } from "./utils/context";

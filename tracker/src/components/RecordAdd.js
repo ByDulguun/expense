@@ -16,7 +16,7 @@ const RecordAdd = ({ open, setOpen }) => {
 
           <div
             onClick={() => setOpen(!open)}
-            className="absolute top-3 right-3"
+            className="absolute top-3 right-3 cursor-pointer"
           >
             <CloseIcon />
           </div>

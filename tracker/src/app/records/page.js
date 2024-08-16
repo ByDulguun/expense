@@ -11,7 +11,8 @@ import { Today } from "@/components/Today";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
-import { useAuth } from "@/components/utils/AuthProvider";
+import { IoEyeOff } from "react-icons/io5";
+import { IoMdEye } from "react-icons/io";
 
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
@@ -22,18 +23,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Yesterday } from "@/components/Yesterday";
 import { useEffect, useState } from "react";
-import { SeeIcon } from "@/assets/icon/SeeIcon";
 
 const records = () => {
   const token = localStorage.getItem("token");
-  const { logout } = useAuth();
   const [open, setOpen] = useState(true);
   const [accounts, setAccounts] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
+  const [selectedIconCategoryId, setSelectedIconCategoryId] = useState(null);
   const [selectedAccountId, setSelectedAccountId] = useState(null);
   const [filterType, setFilterType] = useState("all");
+  const [visibleEye, setVisibleEye] = useState(null);
 
   const deleteAccount = async () => {
     if (selectedAccountId) {
@@ -49,6 +49,23 @@ const records = () => {
         accounts.filter((account) => account.id !== selectedAccountId)
       );
       setSelectedAccountId(null);
+    }
+  };
+
+  const deleteIconCategory = async () => {
+    if (selectedIconCategoryId) {
+      await axios.delete(
+        `http://localhost:5000/iconcategories/${selectedIconCategoryId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      setCategories(
+        categories.filter((category) => category.id !== selectedIconCategoryId)
+      );
+      setSelectedIconCategoryId(null);
     }
   };
   useEffect(() => {
@@ -88,6 +105,19 @@ const records = () => {
 
     getData();
   }, []);
+  const renderIcon = (recordCategoryId) => {
+    const account = accounts?.find((el) => el.id === recordCategoryId);
+
+    if (account) {
+      return (
+        <div className="flex gap-2 relative mx-2 my-2">
+          <p className="text-lg font-normal">{account.title}</p>
+        </div>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="w-screen bg-[#F3F4F6] ">
@@ -96,12 +126,6 @@ const records = () => {
         <div className="py-6 px-4 flex-none grid h-fit gap-6 bg-white border border-[#E5E7EB] rounded-xl ">
           <div className="h-fit grid gap-6 ">
             <h1 className="text-2xl font-semibold ">Records</h1>
-            <Button
-              className="bg-red-500 text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-red-400 px-28"
-              onClick={logout}
-            >
-              Log Out
-            </Button>
 
             <div onClick={() => setOpen(!open)}>
               <Button className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-blue-400  px-28 ">
@@ -155,9 +179,8 @@ const records = () => {
             <div className="flex justify-between my-4 ">
               <p className="text-[16px] font-semibold ">Category</p>
               <p
-                className="opacity-20"
-                onClick={deleteAccount}
-                disabled={!selectedAccountId}
+                className="opacity-20 cursor-pointer"
+                onClick={() => setVisibleEye(!visibleEye)}
               >
                 Clear
               </p>
@@ -171,18 +194,15 @@ const records = () => {
                       <div
                         key={account.title + index}
                         className="flex justify-between items-baseline align-baseline h-fit"
-                        onClick={() => setSelectedAccountId(account.id)}
-                        style={{
-                          cursor: "pointer",
-                          backgroundColor:
-                            selectedAccountId === account.id
-                              ? "#f0f0f0"
-                              : "white",
-                        }}
+                        onClick={() => setVisibleEye(!visibleEye)}
                       >
                         <div className="flex gap-2 ">
-                          <div>
-                            <SeeIcon />
+                          <div className=" cursor-pointer" key={index}>
+                            {visibleEye ? (
+                              <IoEyeOff size={24} />
+                            ) : (
+                              <IoMdEye size={24} />
+                            )}
                           </div>
                           <p>{account.title}</p>
                         </div>
@@ -199,6 +219,38 @@ const records = () => {
                       // </li>
                     );
                   })}
+                  {/* {categories?.map((el, category, index) => {
+                    return (
+                      <div
+                        key={category.title + index}
+                        className="flex justify-between  align-baseline h-fit "
+                        onClick={() => setSelectedIconCategoryId(category.id)}
+                        style={{
+                          cursor: "pointer",
+                          backgroundColor:
+                            selectedIconCategoryId === category.id
+                              ? "#f0f0f0"
+                              : "white",
+                        }}
+                      >
+                        <div className="flex gap-2 items-center">
+                          <div>
+                            <SeeIcon />
+                          </div>
+                          <div>{renderIcon(el.category)}</div>
+                        </div>
+                        <div>
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="border-none"
+                          >
+                            <ChevronRight className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })} */}
                 </ul>
               </div>
               <div className="flex" onClick={() => setOpenAdd(!openAdd)}>
@@ -253,20 +305,13 @@ const records = () => {
               </Select>
             </div>
           </div>
-          <div className="bg-white my-4  rounded-xl border border-[#E5E7EB]">
-            <div className=" px-6 py-3 flex justify-between">
-              <div className="flex gap-3">
-                <input type="Checkbox" className="w-6 h-6"></input>
-                <p>Select All</p>
-              </div>
-              <p className="text-[#94A3B8]">- 35,500₮</p>
-            </div>
-          </div>
+
           <div>
-            <Today filterType={filterType} />
-          </div>
-          <div>
-            <Yesterday filterType={filterType} />
+            <Today
+              filterType={filterType}
+              setVisibleEye={setVisibleEye}
+              visibleEye={visibleEye}
+            />
           </div>
         </div>
       </div>

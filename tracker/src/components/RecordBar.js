@@ -253,15 +253,13 @@ export const RecordBar = ({ selectedColor }) => {
               ) : null} */}
             </div>
             <div className="flex w-full gap-4">
-              <div
-                className="flex-1 grid h-fit gap-2 "
-                value={date}
-                onChange={(event) => setDate(event.target.value)}
-              >
+              <div className="flex-1 grid h-fit gap-2 ">
                 <p>Date</p>
                 <Date
-                // value={formik.values.amount}
-                // onChange={formik.handleChange}
+                  value={date}
+                  onChange={(event) => setDate(event.target.value)}
+                  // value={formik.values.amount}
+                  // onChange={formik.handleChange}
                 />
                 {/* {formik.errors.date ? (
                   <p className="text-red-500">{formik.errors.date}</p>

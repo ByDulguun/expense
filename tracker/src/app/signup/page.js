@@ -1,53 +1,25 @@
 "use client";
-import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 
+import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/utils/AuthProvider";
-import { useFormik, Formik } from "formik";
 import Link from "next/link";
 import { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [repassword, setRepassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { register } = useAuth();
-  // const formik = useFormik({
-  //   initialValues: {
-  //     name: "",
-  //     email: "",
-  //     password: "",
-  //     repassword: "",
-  //   },
-  //   onSubmit: (values) => {
-  //     alert(`hello ${formik.values.email} ${formik.values.password}`);
-  //     console.log("first message ", formik.values);
-  //   },
-  //   validate: (values) => {
-  //     let errors = {};
 
-  //     if (!values.name) {
-  //       errors.name = "Name oruulna uu!";
-  //     }
-  //     if (!values.email) {
-  //       errors.email = "Email oruulna uu!";
-  //     }
-  //     if (!values.password) {
-  //       errors.password = "Password oruulna uu!";
-  //     }
-  //     if (!values.repassword) {
-  //       errors.repassword = "Re-Password oruulna uu!";
-  //     }
-
-  //     return errors;
-  //   },
-  // });
   return (
-    <div className="w-screen  h-screen ">
-      <div className="w-[1440px] shadow-2xl  m-auto flex my-[80px] ">
-        <div className="w-screen flex-1 my-[200px] h-fit grid gap-10 ">
-          <div className="flex font-semibold text-[18px] justify-center ">
+    <div className="w-screen h-screen">
+      <div className="w-[1440px] shadow-2xl m-auto flex my-[80px]">
+        <div className="w-screen flex-1 my-[200px] h-fit grid gap-10">
+          <div className="flex font-semibold text-[18px] justify-center">
             <HeaderLogo /> <p>Geld</p>
           </div>
           <div className="text-center">
@@ -56,72 +28,66 @@ const Signup = () => {
               Sign up below to create your Wallet account
             </p>
           </div>
-          <div className="">
-            <div
-              // onSubmit={formik.handleSubmit}
-              className="h-fit grid gap-4 justify-center"
-            >
+          <div>
+            <div className="h-fit grid gap-4 justify-center">
               <input
-                type="name"
+                type="text"
                 placeholder="Name"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
                 value={username}
-                onChange={(e) => {
-                  setUsername(e.target.value);
-                }}
+                onChange={(e) => setUsername(e.target.value)}
               />
-              {/* {formik.errors.name ? (
-                <p className="text-red-500">{formik.errors.name}</p>
-              ) : null} */}
 
               <input
                 type="email"
                 placeholder="Email"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
                 value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                onChange={(e) => setEmail(e.target.value)}
               />
-              {/* {formik.errors.email ? (
-                <p className="text-red-500">{formik.errors.email}</p>
-              ) : null} */}
-              <input
-                type="password"
-                placeholder="Password"
-                className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              {/* {formik.errors.password ? (
-                <p className="text-red-500">{formik.errors.password}</p>
-              ) : null} */}
-              {/* <input
-                type="password"
-                placeholder="Re-Password"
-                className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              /> */}
-              {/* {formik.errors.repassword ? (
-                <p className="text-red-500">{formik.errors.repassword}</p>
-              ) : null} */}
-              {/* <Link href={`/`}> */}
+
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </div>
+              </div>
+
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Re-Password"
+                  className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
+                  value={repassword}
+                  onChange={(e) => setRepassword(e.target.value)}
+                />
+                <div
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+                </div>
+              </div>
+
               <Button
                 className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
                 onClick={() => register(username, email, password)}
               >
-                Log in
+                Sign Up
               </Button>
-              {/* </Link> */}
             </div>
           </div>
           <div className="flex justify-center">
-            <p>{`Already have account?`}</p>
+            <p>{`Already have an account?`}</p>
             <Link href={`/`}>
               <button className="text-[#0166FF] hover:text-blue-400">
                 Log in
@@ -134,4 +100,5 @@ const Signup = () => {
     </div>
   );
 };
+
 export default Signup;

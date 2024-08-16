@@ -1,5 +1,4 @@
 import { CloseIcon } from "@/assets/icon/CloseIcon";
-import { Button } from "./ui/button";
 import AddCategory from "./AddCategory";
 
 const RecordsCategory = ({ setOpenAdd, openAdd }) => {
@@ -13,7 +12,7 @@ const RecordsCategory = ({ setOpenAdd, openAdd }) => {
         <AddCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />
         <div
           onClick={() => setOpenAdd(!openAdd)}
-          className="absolute top-3 right-3"
+          className="absolute top-3 right-3 cursor-pointer"
         >
           <CloseIcon />
         </div>

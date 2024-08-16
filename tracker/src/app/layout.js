@@ -20,7 +20,6 @@ export default function RootLayout({ children }) {
   }, []);
 
   const getData = async () => {
-    // Your data fetching logic here
   };
   return (
     <html lang="en">

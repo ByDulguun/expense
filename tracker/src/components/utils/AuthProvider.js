@@ -22,10 +22,11 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem("token", res.data.token);
       setUser(res.data.user);
-      router.replace("/currency");
+      toast.success("Аккоунт нэвтэрсэн");
+      router.replace("/records");
     } catch (err) {
       console.log(err);
-      toast.error(err.message);
+      toast.error("Майл эсвэл код буруу байна");
     }
   };
 
@@ -33,9 +34,10 @@ export const AuthProvider = ({ children }) => {
     try {
       await api.post("/auth/signup", { username, email, password });
       router.push("/");
+      toast.success("Аккоунт нээгдсэн ,Hэвтрнэ үү ");
     } catch (err) {
       console.log(err);
-      toast.error(err.response.data.message);
+      toast.error("Аккоунт бүртгэлгүй байна, Бүртгүүлнэ үү! ");
     }
   };
 
@@ -43,10 +45,10 @@ export const AuthProvider = ({ children }) => {
     try {
       localStorage.removeItem("token");
       setUser(null);
-      router.replace("/"); // Redirect to homepage or login page
+      router.replace("/");
+      toast.error("Аккоунт гарсан");
     } catch (err) {
       console.log(err);
-      toast.error("An error occurred while logging out.");
     }
   };
 
@@ -65,7 +67,6 @@ export const AuthProvider = ({ children }) => {
       } catch (err) {
         console.log(err);
         localStorage.removeItem("token");
-        toast.error("Your session has expired. Please login again.");
       } finally {
         setIsReady(true);
       }

@@ -21,7 +21,7 @@ const createAccount = async (req, res) => {
     const newAccount = {
       ...req.body,
       id: v4(),
-      userId: req.user.id, // Associate account with current user
+      userId: req.user.id,
     };
 
     accounts.push(newAccount);
@@ -74,7 +74,7 @@ const deleteAccount = async (req, res) => {
     const accounts = await readJson("accounts.json");
 
     const updatedAccounts = accounts.filter(
-      (account) => account.id !== id || account.userId !== req.user.id // Ensure user can only delete their own accounts
+      (account) => account.id !== id || account.userId !== req.user.id
     );
 
     if (accounts.length === updatedAccounts.length) {
