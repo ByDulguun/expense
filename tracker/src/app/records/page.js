@@ -36,20 +36,16 @@ const Records = () => {
 
   const deleteRecord = async () => {
     if (selectedRecordId) {
-      await axios.delete(
-        `http://localhost:5000/records/${selectedRecordId}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      setRecords(
-        records.filter((record) => record.id !== selectedRecordId)
-      );
+      await axios.delete(`http://localhost:5000/records/${selectedRecordId}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      setRecords(records.filter((record) => record.id !== selectedRecordId));
       setSelectedRecordId(null);
     }
-  };
+  }; //Сервер рүү УСТГАХ хүсэлтийг ашиглан бүртгэлийг ID-аар нь устгана.
+  //Амжилттай устгасны дараа устгасан бичлэгийг устгахын тулд бичлэгийн төлөвийг шинэчилж, сонгосонRecordId-г дахин тохируулна.
 
   const deleteIconCategory = async () => {
     if (selectedIconCategoryId) {
@@ -66,7 +62,7 @@ const Records = () => {
       );
       setSelectedIconCategoryId(null);
     }
-  };
+  }; //Энэхүү useEffect дэгээ нь бүрэлдэхүүн хэсэг холбогдож, GET хүсэлтийг ашиглан серверээс бичлэгийн жагсаалтыг авч, бичлэгийн төлөвийг тохируулах үед ажилладаг.
 
   useEffect(() => {
     const getData = async () => {
@@ -82,7 +78,7 @@ const Records = () => {
       }
     };
     getData();
-  }, []);
+  }, []); //Энэхүү useEffect дэгээ нь бүрэлдэхүүн хэсэг холбогдож, GET хүсэлтийг ашиглан дүрс ангиллын жагсаалтыг серверээс авч, ангиллын төлөвийг тохируулах үед ажилладаг.
 
   const [categories, setCategories] = useState([]);
   useEffect(() => {
@@ -114,7 +110,7 @@ const Records = () => {
       );
     }
     return null;
-  };
+  }; //Энэ функц нь recordCategoryId-г аргумент болгон авч, бичлэгийн массиваас харгалзах бичлэгийг олж, бичлэгийн гарчгийг харуулсан JSX элементийг буцаана. Хэрэв бичлэг олдохгүй бол энэ нь null утгыг буцаана.
 
   return (
     <div className="w-screen bg-[#F3F4F6] ">
@@ -172,7 +168,7 @@ const Records = () => {
               <p className="text-[16px] font-semibold ">Category</p>
               <p
                 className="opacity-20 cursor-pointer"
-                onClick={() => setVisibleEye(null)} 
+                onClick={() => setVisibleEye(null)}
               >
                 Clear
               </p>
