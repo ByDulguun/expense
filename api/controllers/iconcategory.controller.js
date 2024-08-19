@@ -22,6 +22,7 @@ const createIconCategory = async (req, res) => {
     const iconcategories = await readJson("iconcategories.json"); //Процессын явцад гарсан аливаа алдааг барьж, бүртгэж, серверийн дотоод алдааг илтгэх 500 статусын кодоор хариу өгдөг.
 
     const newIconCategory = { ...req.body, id: v4(), userId: req.user.id };
+
     iconcategories.push(newIconCategory); //req.body-н өгөгдлийг шинэ өвөрмөц ID (uuid.v4() ашиглан) болон одоогийн хэрэглэгчийн ID (req.user.id)-тай нэгтгэж шинэ дүрсний ангилал үүсгэдэг
 
     await saveJson("iconcategories.json", iconcategories); //Дүрс ангиллын шинэчлэгдсэн жагсаалтыг iconcategories.json руу буцааж хадгална.

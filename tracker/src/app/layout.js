@@ -7,6 +7,8 @@ import { AuthProvider } from "@/components/utils/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import LoadingPage from "./loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,10 @@ export default function RootLayout({ children }) {
       setToken(storedToken);
     }
   }, []);
+  const home = dynamic(() => import("../../src/app/page"), {
+    ssr: true,
+    loading: () => <LoadingPage />,
+  });
 
   const getData = async () => {};
   return (

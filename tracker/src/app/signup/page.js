@@ -14,6 +14,16 @@ const Signup = () => {
   const [repassword, setRepassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { register } = useAuth();
+  const [error, setError] = useState("");
+
+  const handleSubmit = () => {
+    if (password !== repassword) {
+      setError("Password таарахгүй байна");
+      return;
+    }
+    setError("");
+    register(username, email, password);
+  };
 
   return (
     <div className="w-screen h-screen">
@@ -77,10 +87,13 @@ const Signup = () => {
                   {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </div>
               </div>
+              {error && (
+                <p className="text-red-500 text-sm text-left">{error}</p>
+              )}
 
               <Button
                 className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
-                onClick={() => register(username, email, password)}
+                onClick={handleSubmit}
               >
                 Sign Up
               </Button>

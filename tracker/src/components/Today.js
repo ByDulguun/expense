@@ -78,6 +78,9 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
         if (selectedItems[el.id]) {
           return el.status === "income" ? sum + el.amount : sum - el.amount;
         }
+        if (selectedItems[el.id]) {
+          return el.status === "expense" ? sum + el.amount : sum - el.amount;
+        }
         return sum;
       }, "");
       setTotalAmount(total);

@@ -1,6 +1,6 @@
 import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 
-const geldwait = () => {
+const LoadingPage = () => {
   return (
     <div className="w-screen py-[400px] h-fit grid gap-3">
       <div className="flex gap-2 font-semibold text-[18px] justify-center  w-[1440px] m-auto">
@@ -16,4 +16,4 @@ const geldwait = () => {
     </div>
   );
 };
-export default geldwait;
+export default LoadingPage;

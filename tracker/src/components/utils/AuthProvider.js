@@ -9,7 +9,7 @@ const AuthContext = createContext();
 
 const authPaths = ["/", "/signup"]; //AuthContext: Энэ нь аппликешн даяар баталгаажуулалтын
 // өгөгдөл болон функцуудыг хуваалцахад хэрэглэгдэх контекст объектыг үүсгэдэг.
-//authPaths: Баталгаажуулалт шаардлагагүй замуудыг ("/" ба "/signup") агуулсан массив. 
+//authPaths: Баталгаажуулалт шаардлагагүй замуудыг ("/" ба "/signup") агуулсан массив.
 //Хэрэглэгч нь баталгаажуулалтгүйгээр эдгээр замд хандах эрхтэй.
 
 export const AuthProvider = ({ children }) => {
@@ -28,11 +28,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await api.post("/auth/", { email, password });
 
-      localStorage.setItem("token", res.data.token); //localStorage.setItem("token", res.data.token);: 
+      localStorage.setItem("token", res.data.token); //localStorage.setItem("token", res.data.token);:
       //Хүлээн авсан токеныг хөтчийн дотоод санах ойд хадгална.
       setUser(res.data.user); //setUser(res.data.user);: Баталгаажсан хэрэглэгчийн өгөгдлийг төлөвт тохируулна.
       toast.success("Аккоунт нэвтэрсэн"); //toast.success болон toast.error: Амжилт эсвэл алдааны мэдэгдлийг харуулах.
-      router.replace("/records"); //router.replace("/records");: Амжилттай нэвтэрсний дараа хэрэглэгчийг /records хуудас руу шилжүүлнэ.
+      router.replace("/dashboard"); //router.replace("/dashboard");: Амжилттай нэвтэрсний дараа хэрэглэгчийг /dashboard хуудас руу шилжүүлнэ.
     } catch (err) {
       console.log(err);
       toast.error("Майл эсвэл код буруу байна");
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
       toast.error("Аккоунт гарсан");
     } catch (err) {
       console.log(err);
-    } //Гарах: Орон нутгийн сангаас токеныг устгаж, хэрэглэгчийн төлөвийг арилгаж, нүүр хуудас руу дахин чиглүүлэх 
+    } //Гарах: Орон нутгийн сангаас токеныг устгаж, хэрэглэгчийн төлөвийг арилгаж, нүүр хуудас руу дахин чиглүүлэх
     //замаар хэрэглэгчийг гаргадаг функц.
   };
 
@@ -81,8 +81,8 @@ export const AuthProvider = ({ children }) => {
       } finally {
         setIsReady(true);
       }
-    }; //useEffect: Энэ дэгээ нь бүрэлдэхүүн хэсгийг холбох үед ажилладаг. 
-    //Энэ нь жетон локал хадгалах санд хадгалагдаж байгаа эсэхийг шалгаж, хэрэв байгаа бол баталгаажуулсан 
+    }; //useEffect: Энэ дэгээ нь бүрэлдэхүүн хэсгийг холбох үед ажилладаг.
+    //Энэ нь жетон локал хадгалах санд хадгалагдаж байгаа эсэхийг шалгаж, хэрэв байгаа бол баталгаажуулсан
     //хэрэглэгчийн өгөгдлийг татаж, төлөвт тохируулна.
     //setIsReady(true);: Хэрэглэгчийн өгөгдлийг ачаалсны дараа isReady-г үнэн
     // болгож тохируулах нь баталгаажуулалтын процесс дууссаныг илтгэнэ.
@@ -98,16 +98,16 @@ export const AuthProvider = ({ children }) => {
     // бол энэ нь хэрэглэгчийг нүүр хуудас руу дахин чиглүүлдэг ("/").
   }, [pathname, user, isReady]);
 
-  if (!isReady) return null; //Энэхүү нөхцөлт дүрслэл нь баталгаажуулалтын процесс 
+  if (!isReady) return null; //Энэхүү нөхцөлт дүрслэл нь баталгаажуулалтын процесс
   //дуустал бүрэлдэхүүн хэсэг нь хүүхдүүдээ үзүүлэхгүй байхыг баталгаажуулдаг.
 
   return (
     <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
-    //AuthContext.Provider: Хүүхдийн бүрэлдэхүүн хэсгүүдийг AuthContext-ээр ороож, 
+    //AuthContext.Provider: Хүүхдийн бүрэлдэхүүн хэсгүүдийг AuthContext-ээр ороож,
     //хэрэглэгч, нэвтрэх, бүртгүүлэх, гарах функцэд хандах боломжийг олгоно.
-    //export const useAuth = () => useContext(AuthContext);: Энэ нь бусад 
+    //export const useAuth = () => useContext(AuthContext);: Энэ нь бусад
     //бүрэлдэхүүн хэсгүүдэд баталгаажуулалтын контекстэд хялбар хандах боломжийг олгодог тусгай дэгээ юм.
   );
 };
