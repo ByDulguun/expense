@@ -256,11 +256,7 @@ const Records = () => {
             </div>
           </div>
           <div>
-            <Today
-              filterType={filterType}
-              setVisibleEye={setVisibleEye}
-              visibleEye={visibleEye}
-            />
+            <Today filterType={filterType} visibleEye={visibleEye} />
           </div>
         </div>
       </div>

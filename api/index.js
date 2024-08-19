@@ -15,7 +15,6 @@ app.use(express.json());
 app.use(authMiddleware);
 
 const port = 5000;
-console.log(process.env.JWT_SECRET);
 
 app.use("/records", recordsRouter);
 app.use("/iconcategories", iconCategoryRouter);

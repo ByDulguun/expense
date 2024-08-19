@@ -3,7 +3,7 @@ import axios from "axios";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
 
-export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
+export const Today = ({ filterType, visibleEye }) => {
   const [categories, setCategories] = useState([]);
   const [records, setRecords] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
@@ -78,9 +78,7 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
         if (selectedItems[el.id]) {
           return el.status === "income" ? sum + el.amount : sum - el.amount;
         }
-        if (selectedItems[el.id]) {
-          return el.status === "expense" ? sum + el.amount : sum - el.amount;
-        }
+
         return sum;
       }, "");
       setTotalAmount(total);
@@ -135,8 +133,9 @@ export const Today = ({ filterType, setVisibleEye, visibleEye }) => {
               />
               <div className="relative">{renderIcon(el.category)}</div>
               <div>
-                <div className="mx-12 absolute top-10 left-8 text-[12px] text-[#6B7280]">
+                <div className="mx-12 absolute top-10 left-8 text-[12px] text-[#6B7280] flex gap-2">
                   {el.time}
+                  {/* {el.date} */}
                 </div>
               </div>
             </div>
