@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import classNames from "classnames";
 import { FaCircle } from "react-icons/fa";
 import * as Icons from "react-icons/pi";
-import { Context } from "./utils/context";
+import { Context } from "./utils/recordContext";
 
 const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
   const { records, setRecords, getData } = useContext(Context);
@@ -171,9 +171,9 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
               </SelectContent>
             </Select>
 
-            {/* {formik.errors.icon ? (
+            {formik.errors.icon ? (
               <p className="text-red-500">{formik.errors.icon} </p>
-            ) : null} */}
+            ) : null}
           </div>
 
           <div
@@ -188,9 +188,9 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
               placeholder="name"
               className="outline-none py-2 border border-[#D1D5DB] rounded-[8px] px-4 w-full"
             />
-            {/* {formik.errors.name ? (
+            {formik.errors.name ? (
               <p className="text-red-500">{formik.errors.name} </p>
-            ) : null} */}
+            ) : null}
           </div>
         </div>
 

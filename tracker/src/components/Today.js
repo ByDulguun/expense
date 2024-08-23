@@ -7,7 +7,7 @@ export const Today = ({ filterType, visibleEye }) => {
   const [categories, setCategories] = useState([]);
   const [records, setRecords] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [selectedItems, setSelectedItems] = useState({});
+  const [selectedItems, setSelectedItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const token = localStorage.getItem("token");
 
@@ -64,34 +64,35 @@ export const Today = ({ filterType, visibleEye }) => {
     getRecordsData();
   }, [token]);
 
-  useEffect(() => {
-    const newSelectedItems = {};
-    categories.forEach((el) => {
-      newSelectedItems[el.id] = selectAll;
-    });
-    setSelectedItems(newSelectedItems);
-  }, [selectAll, categories]);
-
-  useEffect(() => {
-    const calculateTotalAmount = () => {
-      const total = categories.reduce((sum, el) => {
-        if (selectedItems[el.id]) {
-          return el.status === "income" ? sum + el.amount : sum - el.amount;
-        }
-
-        return sum;
-      }, "");
+  const handleSelectAll = () => {
+    //Бүх зүйлийг сонгох эсвэл сонгохгүй байхыг заадаг логик төлөв.
+    if (!selectAll) {
+      const allItemIds = filteredCategories.map((el) => el.id);
+      const total = filteredCategories.reduce((acc, el) => {
+        return el.status === "income" ? acc + +el.amount : acc - +el.amount;
+      }, 0);
+      setSelectedItems(allItemIds);
       setTotalAmount(total);
-    };
+    } else {
+      setSelectedItems([]);
+      setTotalAmount(0);
+    }
+    setSelectAll(!selectAll);
+  };
 
-    calculateTotalAmount();
-  }, [selectedItems, categories]);
+  const handleItemSelect = (id) => {
+    const isSelected = selectedItems.includes(id);
+    const updatedItems = isSelected
+      ? selectedItems.filter((itemId) => itemId !== id)
+      : [...selectedItems, id];
 
-  const handleCheckboxChange = (id) => {
-    setSelectedItems((prevSelectedItems) => ({
-      ...prevSelectedItems,
-      [id]: !prevSelectedItems[id],
-    }));
+    const item = filteredCategories.find((el) => el.id === id);
+    const updatedTotal = isSelected
+      ? totalAmount - (item.status === "income" ? +item.amount : -item.amount)
+      : totalAmount + (item.status === "income" ? +item.amount : -item.amount);
+
+    setSelectedItems(updatedItems);
+    setTotalAmount(updatedTotal);
   };
 
   const filteredCategories = categories?.filter((category) => {
@@ -105,17 +106,20 @@ export const Today = ({ filterType, visibleEye }) => {
         <div className="px-6 py-3 flex justify-between">
           <div className="flex gap-3">
             <input
-              type="Checkbox"
+              type="checkbox"
               className="w-6 h-6"
               checked={selectAll}
-              onChange={() => setSelectAll(!selectAll)}
+              onChange={handleSelectAll}
             />
             <p>Select All</p>
           </div>
-          <p className="text-[#94A3B8]">{totalAmount.toLocaleString()}₮</p>
+          <div>
+            <p>{totalAmount}₮</p>
+          </div>
         </div>
       </div>
       <p className="mb-3 font-semibold text-[16px]">Today</p>
+      <div className="px-6 py-3"></div>
       {filteredCategories?.map((el, index) => (
         <div
           key={el.id + index}
@@ -128,14 +132,13 @@ export const Today = ({ filterType, visibleEye }) => {
               <input
                 type="checkbox"
                 className="w-6 h-6"
-                checked={!!selectedItems[el.id]}
-                onChange={() => handleCheckboxChange(el.id)}
+                checked={selectedItems.includes(el.id)}
+                onChange={() => handleItemSelect(el.id)}
               />
               <div className="relative">{renderIcon(el.category)}</div>
               <div>
                 <div className="mx-12 absolute top-10 left-8 text-[12px] text-[#6B7280] flex gap-2">
                   {el.time}
-                  {/* {el.date} */}
                 </div>
               </div>
             </div>

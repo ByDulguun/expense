@@ -88,7 +88,7 @@ export const Header = () => {
               </div>
               <div
                 onClick={() => setOpenAdd(!openAdd)}
-                className="absolute top-8 right-8"
+                className="absolute top-8 right-8 cursor-pointer  "
               >
                 <CloseIcon />
               </div>

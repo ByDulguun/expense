@@ -203,7 +203,10 @@ const Records = () => {
                   ))}
                 </ul>
               </div>
-              <div className="flex" onClick={() => setOpenAdd(!openAdd)}>
+              <div
+                className="flex cursor-pointer"
+                onClick={() => setOpenAdd(!openAdd)}
+              >
                 <PlusIconBlue />
                 <p>Add Category</p>
               </div>

@@ -2,11 +2,11 @@ const express = require("express");
 require("dotenv").config();
 
 var cors = require("cors");
-const { iconCategoryRouter } = require("./routes/iconcategory.route");
-const { authRouter } = require("./routes/auth.route");
-const { userRouter } = require("./routes/user.route");
-const { authMiddleware } = require("./middlewares/auth.middleware");
-const { recordsRouter } = require("./routes/record.route");
+const { iconCategoryRouter } = require("./src/routes/iconcategory.route");
+const { authRouter } = require("./src/routes/auth.route");
+const { userRouter } = require("./src/routes/user.route");
+const { authMiddleware } = require("./src/middlewares/auth.middleware");
+const { recordsRouter } = require("./src/routes/record.route");
 
 const app = express();
 

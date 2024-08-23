@@ -17,8 +17,9 @@ import axios from "axios";
 import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
-import { Context } from "./utils/context";
 import { AddCategory } from "@/assets/icon/AddCategory";
+import { Context } from "./utils/recordContext";
+import { useFormik } from "formik";
 
 export const RecordBar = ({ userId }) => {
   const { records } = useContext(Context);
@@ -36,43 +37,43 @@ export const RecordBar = ({ userId }) => {
   const [note, setNote] = useState([]);
   const [icon, setIcon] = useState([]);
 
-  // const formik = useFormik({
-  //   initialValues: {
-  //     amount: "",
-  //     date: "",
-  //     time: "",
-  //   },
-  //   // onSubmit: (values) => {
-  //   //   alert(
-  //   //     `hello ${formik.values.amount} ${formik.values.category} ${formik.values.date} ${formik.values.time} ${formik.values.payee} ${formik.values.note}`
-  //   //   );
-  //   //   console.log("first message ", formik.values);
-  //   // },
-  //   // validate: (values) => {
-  //   //   let errors = {};
+  const formik = useFormik({
+    initialValues: {
+      amount: "",
+      date: "",
+      time: "",
+    },
+    onSubmit: (values) => {
+      alert(
+        `hello ${formik.values.amount} ${formik.values.category} ${formik.values.date} ${formik.values.time} ${formik.values.payee} ${formik.values.note}`
+      );
+      console.log("first message ", formik.values);
+    },
+    validate: (values) => {
+      let errors = {};
 
-  //   //   if (!values.amount) {
-  //   //     errors.amount = "Amount oruulna uu!";
-  //   //   }
-  //   //   if (!values.category) {
-  //   //     errors.category = "Category oruulna uu!";
-  //   //   }
-  //   //   if (!values.date) {
-  //   //     errors.date = "Date oruulna uu!";
-  //   //   }
-  //   //   if (!values.time) {
-  //   //     errors.time = "Time oruulna uu!";
-  //   //   }
-  //   //   if (!values.payee) {
-  //   //     errors.payee = "Payee bicne uu!";
-  //   //   }
-  //   //   if (!values.note) {
-  //   //     errors.note = "Note bicne uu!";
-  //   //   }
+      if (!values.amount) {
+        errors.amount = "Amount oruulna uu!";
+      }
+      if (!values.category) {
+        errors.category = "Category oruulna uu!";
+      }
+      if (!values.date) {
+        errors.date = "Date oruulna uu!";
+      }
+      if (!values.time) {
+        errors.time = "Time oruulna uu!";
+      }
+      if (!values.payee) {
+        errors.payee = "Payee bicne uu!";
+      }
+      if (!values.note) {
+        errors.note = "Note bicne uu!";
+      }
 
-  //   //   return errors;
-  //   // },
-  // });
+      return errors;
+    },
+  });
 
   const [title, setTitle] = useState("");
 
@@ -187,9 +188,9 @@ export const RecordBar = ({ userId }) => {
                 />
               </div>
             </div>
-            {/* {formik.errors.amount ? (
+            {formik.errors.amount ? (
               <p className="text-red-500">{formik.errors.amount}</p>
-            ) : null} */}
+            ) : null}
 
             <div className="grid h-fit gap-2">
               <p>Category</p>
@@ -248,9 +249,9 @@ export const RecordBar = ({ userId }) => {
                   // onChange={formik.handleChange}
                 ></div>
               </div>
-              {/* {formik.errors.category ? (
+              {formik.errors.category ? (
                 <p className="text-red-500">{formik.errors.category} </p>
-              ) : null} */}
+              ) : null}
             </div>
             <div className="flex w-full gap-4">
               <div className="flex-1 grid h-fit gap-2 ">
@@ -264,9 +265,9 @@ export const RecordBar = ({ userId }) => {
 
                 {/* // value={formik.values.amount}
                 // onChange={formik.handleChange} */}
-                {/* {formik.errors.date ? (
+                {formik.errors.date ? (
                   <p className="text-red-500">{formik.errors.date}</p>
-                ) : null} */}
+                ) : null}
               </div>
               <div className="flex-1  ">
                 <div className="w-full grid h-fit gap-2 ">
@@ -279,9 +280,9 @@ export const RecordBar = ({ userId }) => {
                     value={time}
                     onChange={(event) => setTime(event.target.value)}
                   />
-                  {/* {formik.errors.time ? (
+                  {formik.errors.time ? (
                     <p className="text-red-500">{formik.errors.time}</p>
-                  ) : null} */}
+                  ) : null}
                 </div>
               </div>
             </div>
@@ -298,9 +299,9 @@ export const RecordBar = ({ userId }) => {
                 value={payee}
                 onChange={(event) => setPayee(event.target.value)}
               />
-              {/* {formik.errors.payee ? (
+              {formik.errors.payee ? (
                 <p className="text-red-500">{formik.errors.payee}</p>
-              ) : null} */}
+              ) : null}
             </div>
             <div>
               <p className="mb-1">Note</p>
@@ -312,9 +313,9 @@ export const RecordBar = ({ userId }) => {
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
               />
-              {/* {formik.errors.note ? (
+              {formik.errors.note ? (
                 <p className="text-red-500">{formik.errors.note}</p>
-              ) : null} */}
+              ) : null}
             </div>
           </div>
           <Button

@@ -44,10 +44,10 @@ export const AuthProvider = ({ children }) => {
       await api.post("/auth/signup", { username, email, password });
       router.push("/"); //бүртгүүлэх: Шинэ хэрэглэгчийг бүртгэхийн тулд POST хүсэлт илгээдэг асинхрон функц.
       //router.push("/"): Амжилттай бүртгүүлсний дараа хэрэглэгчийг нүүр хуудас руу шилжүүлнэ.
-      toast.success("Аккоунт нээгдсэн ,Hэвтрнэ үү ");
+      toast.success("Аккоунт нээгдсэн ,Hэвтэрнэ үү ");
     } catch (err) {
       console.log(err);
-      toast.error("Аккоунт бүртгэлгүй байна, Бүртгүүлнэ үү! ");
+      toast.error("Аккоунт бүртгэлтэй байна, Hэвтэрнэ үү! ");
     }
   };
 

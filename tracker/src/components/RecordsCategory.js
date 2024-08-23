@@ -6,7 +6,7 @@ const RecordsCategory = ({ setOpenAdd, openAdd }) => {
     <div
       className={`  top-0  w-screen h-screen bg-[#00000080] fixed  border z-20 ${
         openAdd ? "invisible" : "visible"
-      }  duration-150 flex items-center justify-center`}
+      }   flex items-center justify-center`}
     >
       <div className="relative">
         <AddCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />

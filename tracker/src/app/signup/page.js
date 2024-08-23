@@ -3,27 +3,56 @@
 import { HeaderLogo } from "@/assets/icon/HeaderLogo";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/utils/AuthProvider";
+import { useFormik } from "formik";
 import Link from "next/link";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Signup = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   const { register } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = () => {
-    if (password !== repassword) {
-      setError("Password таарахгүй байна");
-      return;
-    }
-    setError("");
-    register(username, email, password);
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      repassword: "",
+    },
+    validate: (values) => {
+      const errors = {};
+      if (!values.username) {
+        errors.username = "Нэр заавал оруулна уу ";
+      }
+      if (!values.email) {
+        errors.email = "Имэйл шаардлагатай";
+      } else if (
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      ) {
+        errors.email = "Буруу имэйл хаяг";
+      }
+      if (!values.password) {
+        errors.password = " Нууц үг шаардлагатай";
+      } else if (values.password.length < 8) {
+        errors.password = "Нууц үг хамгийн багадаа 8 тэмдэгтээс бүрдэх ёстой";
+      }
+      if (!values.repassword) {
+        errors.repassword = "Шаардлагатай нууц үгийг баталгаажуулна уу";
+      } else if (values.repassword !== values.password) {
+        errors.repassword = "Password таарахгүй байна";
+      }
+      return errors;
+    },
+    onSubmit: (values) => {
+      setError("");
+      if (values.password !== values.repassword) {
+        setError("Password таарахгүй байна");
+        return;
+      }
+      register(values.username, values.email, values.password);
+    },
+  });
 
   return (
     <div className="w-screen h-screen">
@@ -38,31 +67,47 @@ const Signup = () => {
               Sign up below to create your Wallet account
             </p>
           </div>
-          <div>
+          <form onSubmit={formik.handleSubmit}>
             <div className="h-fit grid gap-4 justify-center">
               <input
                 type="text"
+                name="username"
                 placeholder="Name"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={formik.values.username}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+              {formik.touched.username && formik.errors.username && (
+                <p className="text-red-500 text-sm text-left">
+                  {formik.errors.username}
+                </p>
+              )}
 
               <input
                 type="email"
+                name="email"
                 placeholder="Email"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
+              {formik.touched.email && formik.errors.email && (
+                <p className="text-red-500 text-sm text-left">
+                  {formik.errors.email}
+                </p>
+              )}
 
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="password"
                   placeholder="Password"
                   className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <div
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -71,14 +116,21 @@ const Signup = () => {
                   {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </div>
               </div>
+              {formik.touched.password && formik.errors.password && (
+                <p className="text-red-500 text-sm text-left">
+                  {formik.errors.password}
+                </p>
+              )}
 
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
+                  name="repassword"
                   placeholder="Re-Password"
                   className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                  value={repassword}
-                  onChange={(e) => setRepassword(e.target.value)}
+                  value={formik.values.repassword}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
                 <div
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
@@ -87,18 +139,24 @@ const Signup = () => {
                   {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
                 </div>
               </div>
+              {formik.touched.repassword && formik.errors.repassword && (
+                <p className="text-red-500 text-sm text-left">
+                  {formik.errors.repassword}
+                </p>
+              )}
+
               {error && (
                 <p className="text-red-500 text-sm text-left">{error}</p>
               )}
 
               <Button
+                type="submit"
                 className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
-                onClick={handleSubmit}
               >
                 Sign Up
               </Button>
             </div>
-          </div>
+          </form>
           <div className="flex justify-center">
             <p>{`Already have an account?`}</p>
             <Link href={`/`}>
