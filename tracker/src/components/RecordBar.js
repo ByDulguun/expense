@@ -193,7 +193,7 @@ const RecordBar = ({ userId }) => {
               <p className="text-red-500">{formik.errors.amount}</p>
             ) : null}
 
-            {/* <div className="grid h-fit gap-2">
+            <div className="grid h-fit gap-2">
               <p>Category</p>
               <div>
                 <Select onValueChange={(value) => setCategory(value)}>
@@ -253,7 +253,7 @@ const RecordBar = ({ userId }) => {
               {formik.errors.category ? (
                 <p className="text-red-500">{formik.errors.category} </p>
               ) : null}
-            </div> */}
+            </div>
             <div className="flex w-full gap-4">
               <div className="flex-1 grid h-fit gap-2 ">
                 <p>Date</p>
