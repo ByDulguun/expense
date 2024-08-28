@@ -70,7 +70,7 @@ export const Header = () => {
                       <AvatarImage src="https://github.com/shadcn.png" />
                       <AvatarFallback>DN</AvatarFallback>
                     </Avatar>
-                    <p className="text-black">{user?.username}</p>
+                    <p className="text-black">{user?.name}</p>
                   </div>
 
                   <Button

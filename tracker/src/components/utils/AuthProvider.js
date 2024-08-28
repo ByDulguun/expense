@@ -38,9 +38,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (username, email, password) => {
+  const register = async (name, email, password) => {
     try {
-      await api.post("/auth/signup", { username, email, password }); //бүртгүүлэх: Шинэ хэрэглэгчийг бүртгэхийн тулд POST хүсэлт илгээдэг асинхрон функц.
+      await api.post("/auth/signup", { name, email, password }); //бүртгүүлэх: Шинэ хэрэглэгчийг бүртгэхийн тулд POST хүсэлт илгээдэг асинхрон функц.
       router.push("/"); // Амжилттай бүртгүүлсний дараа хэрэглэгчийг нүүр хуудас руу шилжүүлнэ.
       toast.success("Аккоунт нээгдсэн ,Hэвтэрнэ үү ");
     } catch (err) {

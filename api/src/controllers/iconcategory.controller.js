@@ -1,35 +1,49 @@
 const { v4 } = require("uuid");
 const { readJson, saveJson } = require("../utils");
+const { db } = require("../database/index.js");
+const { v4: uuidv4 } = require("uuid");
+const { iconcategories } = require("../database/schema.js");
 
-// Function to get all icon categories
 const getAllIconCategory = async (req, res) => {
   try {
-    const iconcategories = await readJson("iconcategories.json"); //Бүх дүрсний ангиллыг агуулсан iconcategories.json-аас өгөгдлийг уншина
+    const iconcategory = await db.query.iconcategories.findMany();
 
-    const userIconCategories = iconcategories.filter(
-      (item) => item.userId === req.user.id
-    ); //Зөвхөн одоогийн хэрэглэгчдэд хамаарах (req.user.id-р тодорхойлогдсон) дүрсний ангиллыг шүүн
-    res.json(userIconCategories); //Дүрс ангиллын шүүсэн жагсаалтыг JSON хариулт болгон илгээдэг
+    res.json(iconcategory);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" }); //Процессын явцад гарсан аливаа алдааг барьж, бүртгэж, серверийн дотоод алдааг илтгэх 500 статусын кодоор хариу өгдөг.
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-// Function to create a new icon category
 const createIconCategory = async (req, res) => {
+  const { amount, category, date, time, payee, note, status, userId } =
+    req.body;
+
   try {
-    const iconcategories = await readJson("iconcategories.json"); //Процессын явцад гарсан аливаа алдааг барьж, бүртгэж, серверийн дотоод алдааг илтгэх 500 статусын кодоор хариу өгдөг.
+    const iconcategory = await db
+      .insert(iconcategories)
+      .values({
+        id: uuidv4(), // Generate a new UUID for the record
+        amount,
+        category,
+        date,
+        time,
+        payee,
+        note,
+        status,
+        userId: req.user.id,
+      })
+      .returning(); // Return the inserted record
 
-    const newIconCategory = { ...req.body, id: v4(), userId: req.user.id };
-
-    iconcategories.push(newIconCategory); //req.body-н өгөгдлийг шинэ өвөрмөц ID (uuid.v4() ашиглан) болон одоогийн хэрэглэгчийн ID (req.user.id)-тай нэгтгэж шинэ дүрсний ангилал үүсгэдэг
-
-    await saveJson("iconcategories.json", iconcategories); //Дүрс ангиллын шинэчлэгдсэн жагсаалтыг iconcategories.json руу буцааж хадгална.
-    res.json(newIconCategory);
+    res.json(iconcategory);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" }); //Аливаа алдааг олж, бүртгэж, 500 статусын кодоор хариу өгдөг
+    if (error.code === "23505") {
+      // Unique violation error code
+      res.status(409).json({ error: "Record already exists" });
+    } else {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 };
 

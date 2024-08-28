@@ -15,15 +15,15 @@ const Signup = () => {
 
   const formik = useFormik({
     initialValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
       repassword: "",
     },
     validate: (values) => {
       const errors = {};
-      if (!values.username) {
-        errors.username = "Нэр заавал оруулна уу ";
+      if (!values.name) {
+        errors.name = "Нэр заавал оруулна уу ";
       }
       if (!values.email) {
         errors.email = "Имэйл шаардлагатай";
@@ -50,7 +50,7 @@ const Signup = () => {
         setError("Password таарахгүй байна");
         return;
       }
-      register(values.username, values.email, values.password);
+      register(values.name, values.email, values.password);
     },
   });
 
@@ -71,16 +71,16 @@ const Signup = () => {
             <div className="h-fit grid gap-4 justify-center">
               <input
                 type="text"
-                name="username"
+                name="name"
                 placeholder="Name"
                 className="p-4 w-[350px] border border-[#D1D5DB] rounded-[8px] bg-[#F3F4F6] outline-none"
-                value={formik.values.username}
+                value={formik.values.name}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.username && formik.errors.username && (
+              {formik.touched.name && formik.errors.name && (
                 <p className="text-red-500 text-sm text-left">
-                  {formik.errors.username}
+                  {formik.errors.name}
                 </p>
               )}
 
