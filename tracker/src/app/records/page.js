@@ -186,7 +186,7 @@ const Records = () => {
                         <div className="cursor-pointer">
                           {visibleEye === record.id ? (
                             <IoMdEye size={24} />
-                          ) : (
+                          ) : ( 
                             <IoEyeOff size={24} />
                           )}
                         </div>

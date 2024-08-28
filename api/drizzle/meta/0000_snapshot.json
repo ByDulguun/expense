@@ -1,5 +1,5 @@
 {
-  "id": "2a5fea27-8619-40ad-b285-ae7bfa90d43d",
+  "id": "8065d916-d357-41c0-8d6c-4f3b6e30453a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -13,7 +13,7 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "'407dbbeb-7e4b-4d92-ba37-d35ea3d59c80'"
+          "default": "'08c1a8e2-a5f6-4d14-8442-d5353fb77413'"
         },
         "name": {
           "name": "name",
@@ -56,7 +56,7 @@
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
-          "default": "'b8f81b9c-6ea1-4443-8789-ae57a4627f7c'"
+          "default": "'1b501a1d-99cd-462f-8ce6-eb282c934b95'"
         },
         "title": {
           "name": "title",
@@ -72,6 +72,71 @@
         },
         "iconColor": {
           "name": "iconColor",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.iconcategories": {
+      "name": "iconcategories",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "'c5e3ef1d-1d20-4741-92b4-3779b9a72f3f'"
+        },
+        "amount": {
+          "name": "amount",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category": {
+          "name": "category",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date": {
+          "name": "date",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        " time": {
+          "name": " time",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "payee": {
+          "name": "payee",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "note ": {
+          "name": "note ",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
           "type": "varchar(256)",
           "primaryKey": false,
           "notNull": false

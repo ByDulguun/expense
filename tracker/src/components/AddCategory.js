@@ -140,10 +140,10 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
                 <SelectContent className="bg-white border border-[#D1D5DB] rounded-[8px] grid grid-cols-3">
                   <div className="h-fit">
                     <div className="grid grid-cols-6 p-4">
-                      {hardDataIcons.map((el) => {
+                      {hardDataIcons.map((el, index) => {
                         const IconComponent = Icons[el.iconName];
                         return (
-                          <SelectItem key={el.iconName} value={el.iconName}>
+                          <SelectItem key={index} value={el.iconName}>
                             <IconComponent
                               color={iconColor}
                               className={classNames("cursor-pointer w-6 h-6")}

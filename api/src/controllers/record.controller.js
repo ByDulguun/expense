@@ -3,65 +3,66 @@ const { readJson, saveJson } = require("../utils");
 const { records } = require("../database/schema");
 const { db } = require("../database/index.js");
 
+// const getAllRecords = async (req, res) => {
+//   try {
+//     const records = await readJson("records.json");
+
+//     const userRecords = records.filter((item) => item.userId === req.user.id);
+
+//     res.json(userRecords);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+
 const getAllRecords = async (req, res) => {
   try {
-    const records = await readJson("records.json");
+    const records = await db.query.records.findMany();
 
-    const userRecords = records.filter((item) => item.userId === req.user.id);
-
-    res.json(userRecords);
+    res.json(records);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-// const getAllRecords = async (_req, res) => {
-//   try {
-//     const records = await db.query.records.findMany();
-
-//     res.json(records);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// };
-const createRecord = async (req, res) => {
-  try {
-    const records = await readJson("records.json");
-
-    const newRecord = {
-      ...req.body,
-      id: v4(),
-      userId: req.user.id,
-    };
-
-    records.push(newRecord);
-
-    await saveJson("records.json", records);
-
-    res.json(newRecord);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
-
 // const createRecord = async (req, res) => {
 //   try {
-//     const { title, content, userId } = req.body;
+//     const records = await readJson("records.json");
 
-//     const record = await db
-//       .insert(records)
-//       .values({ title, content, userId })
-//       .returning();
+//     const newRecord = {
+//       ...req.body,
+//       id: v4(),
+//       userId: req.user.id,
+//     };
 
-//     res.json(record);
+//     records.push(newRecord);
+
+//     await saveJson("records.json", records);
+
+//     res.json(newRecord);
 //   } catch (error) {
 //     console.error(error);
 //     res.status(500).json({ error: "Internal Server Error" });
 //   }
 // };
+
+const createRecord = async (req, res) => {
+  const { title, icon, iconcolor, userId } = req.body;
+
+  try {
+    const record = await db
+      .insert(records)
+      .values({ title, icon, iconcolor, userId: req.user.id })
+      .returning();
+
+    res.json(record);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // const updateRecord = async (req, res) => {
 //   try {
 //     const id = req.params.id;
