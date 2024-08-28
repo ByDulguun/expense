@@ -7,7 +7,6 @@ import { ChevronRight } from "@/assets/icon/ChevronRight";
 import { PlusIcon } from "@/assets/icon/PlusIcon";
 import { PlusIconBlue } from "@/assets/icon/PlusIconBlue";
 import { Header } from "@/components/Header";
-import RecordAdd from "@/components/RecordAdd";
 import RecordsCategory from "@/components/RecordsCategory";
 import { Today } from "@/components/Today";
 import { Button } from "@/components/ui/button";
@@ -23,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
+import { RecordAdd } from "@/components/RecordAdd";
 
 const Records = () => {
   const token = localStorage.getItem("token");

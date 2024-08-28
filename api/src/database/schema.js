@@ -1,26 +1,31 @@
-import { relations } from "drizzle-orm";
-import { integer, pgTable, serial, varchar } from "drizzle-orm/pg-core";
+const { relations } = require("drizzle-orm");
+const { pgTable, varchar, uuid, integer } = require("drizzle-orm/pg-core");
+const { v4: uuidv4 } = require("uuid"); // Import the UUID v4 generator
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
+const users = pgTable("users", {
+  id: uuid("id").primaryKey().default(uuidv4()), // Generate UUID here
   name: varchar("name", { length: 256 }),
-  email: varchar("email", { length: 256 }),
+  email: varchar("email", { length: 256 }).unique().notNull(),
+  password: varchar("password", { length: 256 }), // Add the password column
 });
 
-export const posts = pgTable("posts", {
-  id: serial("id").primaryKey(),
+const records = pgTable("records", {
+  id: uuid("id").primaryKey().default(uuidv4()),
   title: varchar("title", { length: 256 }),
-  content: varchar("content", { length: 256 }),
-  userId: integer("userId"),
+  icon: varchar("icon", { length: 256 }),
+  iconColor: varchar("iconColor", { length: 256 }),
+  userId: varchar("userId"),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
-  posts: many(posts),
+const usersRelations = relations(users, ({ many }) => ({
+  records: many(records),
 }));
 
-export const postsRelations = relations(posts, ({ one }) => ({
+const recordsRelations = relations(records, ({ one }) => ({
   user: one(users, {
-    fields: [posts.userId],
+    fields: [records.userId],
     references: [users.id],
   }),
 }));
+
+module.exports = { users, records, usersRelations, recordsRelations };

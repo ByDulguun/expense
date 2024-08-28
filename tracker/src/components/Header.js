@@ -6,11 +6,11 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import RecordAdd from "./RecordAdd";
 import { useState } from "react";
 import { CloseIcon } from "@/assets/icon/CloseIcon";
 import { useAuth } from "./utils/AuthProvider";
 import { IoIosLogOut } from "react-icons/io";
+import { RecordAdd } from "./RecordAdd";
 
 export const Header = () => {
   const [open, setOpen] = useState(true);
@@ -68,7 +68,7 @@ export const Header = () => {
                   <div className="flex items-center gap-2 ">
                     <Avatar className="" onClick={() => setOpenAdd(!openAdd)}>
                       <AvatarImage src="https://github.com/shadcn.png" />
-                      <AvatarFallback>CN</AvatarFallback>
+                      <AvatarFallback>DN</AvatarFallback>
                     </Avatar>
                     <p className="text-black">{user?.username}</p>
                   </div>

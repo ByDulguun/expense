@@ -1,5 +1,7 @@
 const { v4 } = require("uuid");
 const { readJson, saveJson } = require("../utils");
+const { records } = require("../database/schema");
+const { db } = require("../database/index.js");
 
 const getAllRecords = async (req, res) => {
   try {
@@ -14,6 +16,16 @@ const getAllRecords = async (req, res) => {
   }
 };
 
+// const getAllRecords = async (_req, res) => {
+//   try {
+//     const records = await db.query.records.findMany();
+
+//     res.json(records);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 const createRecord = async (req, res) => {
   try {
     const records = await readJson("records.json");
@@ -35,37 +47,52 @@ const createRecord = async (req, res) => {
   }
 };
 
-const updateRecord = async (req, res) => {
-  try {
-    const id = req.params.id;
+// const createRecord = async (req, res) => {
+//   try {
+//     const { title, content, userId } = req.body;
 
-    const records = await readJson("records.json");
+//     const record = await db
+//       .insert(records)
+//       .values({ title, content, userId })
+//       .returning();
 
-    let updatedRecord;
+//     res.json(record);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
+// const updateRecord = async (req, res) => {
+//   try {
+//     const id = req.params.id;
 
-    const updatedRecords = records.map((record) => {
-      if (record.id === id && record.userId === req.user.id) {
-        updatedRecord = {
-          ...record,
-          ...req.body,
-        };
-        return updatedRecord;
-      }
-      return record;
-    });
+//     const records = await readJson("records.json");
 
-    await saveJson("records.json", updatedRecords);
+//     let updatedRecord;
 
-    if (updatedRecord) {
-      res.json(updatedRecord);
-    } else {
-      res.status(404).json({ error: "Record not found or unauthorized" });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
+//     const updatedRecords = records.map((record) => {
+//       if (record.id === id && record. === req.user.id) {
+//         updatedRecord = {
+//           ...record,
+//           ...req.body,
+//         };
+//         return updatedRecord;
+//       }
+//       return record;
+//     });
+
+//     await saveJson("records.json", updatedRecords);
+
+//     if (updatedRecord) {
+//       res.json(updatedRecord);
+//     } else {
+//       res.status(404).json({ error: "Record not found or unauthorized" });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 
 const deleteRecord = async (req, res) => {
   try {
@@ -95,6 +122,6 @@ const deleteRecord = async (req, res) => {
 module.exports = {
   getAllRecords,
   createRecord,
-  updateRecord,
+  // updateRecord,
   deleteRecord,
 };

@@ -12,16 +12,16 @@ import {
 
 import * as React from "react";
 
-import RecordsCategory from "./RecordsCategory";
 import axios from "axios";
 import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
-import { AddCategory } from "@/assets/icon/AddCategory";
 import { Context } from "./utils/recordContext";
 import { useFormik } from "formik";
+import RecordsCategory from "./RecordsCategory";
+import { AddCategory } from "@/assets/icon/AddCategoryIcon";
 
-export const RecordBar = ({ userId }) => {
+const RecordBar = ({ userId }) => {
   const { records } = useContext(Context);
 
   const token = localStorage.getItem("token");
@@ -137,6 +137,7 @@ export const RecordBar = ({ userId }) => {
         <div> Add Record</div>
         <div></div>
       </div>
+
       <div>
         <form className="flex flex-wrap w-full">
           <div className="flex-1  px-6 h-fit grid gap-6 my-6">
@@ -192,7 +193,7 @@ export const RecordBar = ({ userId }) => {
               <p className="text-red-500">{formik.errors.amount}</p>
             ) : null}
 
-            <div className="grid h-fit gap-2">
+            {/* <div className="grid h-fit gap-2">
               <p>Category</p>
               <div>
                 <Select onValueChange={(value) => setCategory(value)}>
@@ -252,7 +253,7 @@ export const RecordBar = ({ userId }) => {
               {formik.errors.category ? (
                 <p className="text-red-500">{formik.errors.category} </p>
               ) : null}
-            </div>
+            </div> */}
             <div className="flex w-full gap-4">
               <div className="flex-1 grid h-fit gap-2 ">
                 <p>Date</p>
@@ -262,13 +263,11 @@ export const RecordBar = ({ userId }) => {
                   onChange={(event) => setDate(event.target.value)}
                   className=" font-normal bg-white border border-[#D1D5DB] rounded-[8px] outline-none pl-3.5 pr-3 py-1.5"
                 />
-
-                {/* // value={formik.values.amount}
-                // onChange={formik.handleChange} */}
                 {formik.errors.date ? (
                   <p className="text-red-500">{formik.errors.date}</p>
                 ) : null}
               </div>
+
               <div className="flex-1  ">
                 <div className="w-full grid h-fit gap-2 ">
                   <label htmlFor="time">Time</label>
@@ -333,3 +332,4 @@ export const RecordBar = ({ userId }) => {
     </div>
   );
 };
+export default RecordBar;

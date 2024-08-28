@@ -1,8 +1,7 @@
 import { CloseIcon } from "@/assets/icon/CloseIcon";
-import { useState } from "react";
-import { RecordBar } from "./RecordBar";
+import RecordBar from "./RecordBar";
 
-const RecordAdd = ({ open, setOpen }) => {
+export const RecordAdd = ({ open, setOpen }) => {
   return (
     <div
       className={`  top-0  w-screen h-screen bg-[#00000080] fixed z-20 border ${
@@ -24,4 +23,3 @@ const RecordAdd = ({ open, setOpen }) => {
     </div>
   );
 };
-export default RecordAdd;
