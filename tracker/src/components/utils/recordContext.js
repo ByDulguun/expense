@@ -25,7 +25,14 @@ export const ContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <Context.Provider value={{ newCategory, setNewCategory, records, getData }}>
+    <Context.Provider
+      value={{
+        newCategory,
+        setNewCategory,
+        records,
+        getData,
+      }}
+    >
       {children}
     </Context.Provider>
   );
