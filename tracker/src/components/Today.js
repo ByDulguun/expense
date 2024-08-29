@@ -1,34 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import * as Icons from "react-icons/pi";
-import classNames from "classnames";
+
+import { RecordContext } from "./utils/recordContext";
+import { CategoryContext } from "./utils/CategoryContext";
 
 export const Today = ({ filterType, visibleEye }) => {
   const [categories, setCategories] = useState([]);
-  const [records, setRecords] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const token = localStorage.getItem("token");
-
-  const renderIcon = (recordCategoryId) => {
-    const record = records?.find((el) => el.id === recordCategoryId);
-
-    if (record) {
-      const IconComponent = Icons[record.icon];
-      return (
-        <div className="flex gap-2 relative mx-2 my-2">
-          <IconComponent
-            className={classNames("cursor-pointer w-10 h-10 my-2")}
-            color={record.iconColor}
-          />
-          <p className="text-lg font-normal">{record.title}</p>
-        </div>
-      );
-    }
-
-    return null;
-  };
+  const { renderIcon } = useContext(RecordContext);
+  const { getCategoriesData } = useContext(CategoryContext);
 
   useEffect(() => {
     const getCategoriesData = async () => {
@@ -47,21 +30,7 @@ export const Today = ({ filterType, visibleEye }) => {
       }
     };
 
-    const getRecordsData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/records", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        setRecords(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     getCategoriesData();
-    getRecordsData();
   }, [token]);
 
   const handleSelectAll = () => {

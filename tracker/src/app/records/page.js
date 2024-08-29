@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { ChevronLeft } from "@/assets/icon/ChevronLeft";
 import { ChevronRight } from "@/assets/icon/ChevronRight";
@@ -23,82 +23,16 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { RecordAdd } from "@/components/RecordAdd";
+import { RecordContext } from "@/components/utils/recordContext";
+import { CategoryContext } from "@/components/utils/CategoryContext";
 
 const Records = () => {
-  const token = localStorage.getItem("token");
   const [open, setOpen] = useState(true);
-  const [records, setRecords] = useState([]);
   const [openAdd, setOpenAdd] = useState(true);
-  const [selectedIconCategoryId, setSelectedIconCategoryId] = useState(null);
-  const [selectedRecordId, setSelectedRecordId] = useState(null);
   const [filterType, setFilterType] = useState("all");
-  const [visibleEye, setVisibleEye] = useState(null); // Store accountId here
-
-  const deleteRecord = async () => {
-    if (selectedRecordId) {
-      await axios.delete(`http://localhost:5000/records/${selectedRecordId}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      setRecords(records.filter((record) => record.id !== selectedRecordId));
-      setSelectedRecordId(null);
-    }
-  }; //Сервер рүү УСТГАХ хүсэлтийг ашиглан бүртгэлийг ID-аар нь устгана.
-  //Амжилттай устгасны дараа устгасан бичлэгийг устгахын тулд бичлэгийн төлөвийг шинэчилж, сонгосонRecordId-г дахин тохируулна.
-
-  const deleteIconCategory = async () => {
-    if (selectedIconCategoryId) {
-      await axios.delete(
-        `http://localhost:5000/iconcategories/${selectedIconCategoryId}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-      setCategories(
-        categories.filter((category) => category.id !== selectedIconCategoryId)
-      );
-      setSelectedIconCategoryId(null);
-    }
-  }; //Энэхүү useEffect дэгээ нь бүрэлдэхүүн хэсэг холбогдож, GET хүсэлтийг ашиглан серверээс бичлэгийн жагсаалтыг авч, бичлэгийн төлөвийг тохируулах үед ажилладаг.
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/records", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        setRecords(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []); //Энэхүү useEffect дэгээ нь бүрэлдэхүүн хэсэг холбогдож, GET хүсэлтийг ашиглан дүрс ангиллын жагсаалтыг серверээс авч, ангиллын төлөвийг тохируулах үед ажилладаг.
-
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5000/iconcategories",
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getData();
-  }, []);
+  const [visibleEye, setVisibleEye] = useState(null);
+  const { records, setRecords, getData } = useContext(RecordContext);
+  const { iconcategories, setCategories } = useContext(CategoryContext);
 
   const renderIcon = (recordCategoryId) => {
     const record = records?.find((el) => el.id === recordCategoryId);
@@ -186,7 +120,7 @@ const Records = () => {
                         <div className="cursor-pointer">
                           {visibleEye === record.id ? (
                             <IoMdEye size={24} />
-                          ) : ( 
+                          ) : (
                             <IoEyeOff size={24} />
                           )}
                         </div>

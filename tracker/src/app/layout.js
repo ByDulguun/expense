@@ -8,7 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import LoadingPage from "./loading";
-import { ContextProvider } from "@/components/utils/recordContext";
+import { RecordProvider } from "@/components/utils/recordContext";
+import { CategoryProvider } from "@/components/utils/CategoryContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,9 +30,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ContextProvider value={{ token }}>
-          <AuthProvider>{children}</AuthProvider>
-        </ContextProvider>
+        <RecordProvider value={{ token }}>
+          <CategoryProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </CategoryProvider>
+        </RecordProvider>
         <ToastContainer />
       </body>
     </html>

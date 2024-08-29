@@ -1,4 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+"use client";
+
+import { useContext, useState } from "react";
 import axios from "axios";
 import {
   Select,
@@ -12,28 +14,12 @@ import { useFormik } from "formik";
 import classNames from "classnames";
 import { FaCircle } from "react-icons/fa";
 import * as Icons from "react-icons/pi";
-import { Context } from "./utils/recordContext";
+import { RecordContext } from "./utils/recordContext";
 
-const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
-  const { records, setRecords, getData } = useContext(Context);
+const AddCategory = ({ setOpenAdd, userId }) => {
+  const { records, setRecords, getData, hardDataIcons, colors } =
+    useContext(RecordContext);
   const [iconColor, setIconColor] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/records", {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        });
-        setRecords(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -77,52 +63,9 @@ const AddCategory = ({ setOpenAdd, openAdd, userId }) => {
     },
   });
 
-  const colors = [
-    "#0166FF",
-    "#01B3FF",
-    "#41CC00",
-    "#F9D100",
-    "#FF7B01",
-    "#AE01FF",
-    "#FF0101",
-  ];
-
   const handleColorClick = (color) => {
     setIconColor(color);
   };
-
-  const hardDataIcons = [
-    { iconName: "PiHouseFill" },
-    { iconName: "PiHouseLineFill" },
-    { iconName: "PiIdentificationBadgeFill" },
-    { iconName: "PiIdentificationCardFill" },
-    { iconName: "PiLadderFill" },
-    { iconName: "PiIntersectSquareFill" },
-    { iconName: "PiImageSquareFill" },
-    { iconName: "PiMagnifyingGlassPlusFill" },
-    { iconName: "PiMicrophoneFill" },
-    { iconName: "PiMicrosoftExcelLogoFill" },
-    { iconName: "PiNotepadFill" },
-    { iconName: "PiListPlusFill" },
-    { iconName: "PiLeafFill" },
-    { iconName: "PiNumberFiveFill" },
-    { iconName: "PiNumberCircleSevenFill" },
-    { iconName: "PiRoadHorizonFill" },
-    { iconName: "PiHourglassSimpleMediumFill" },
-    { iconName: "PiAnchorSimpleFill" },
-    { iconName: "PiBezierCurveFill" },
-    { iconName: "PiExcludeFill" },
-    { iconName: "PiVignetteFill" },
-    { iconName: "PiBaseballFill" },
-    { iconName: "PiQuestionFill" },
-    { iconName: "PiExamFill" },
-    { iconName: "PiWatchFill" },
-    { iconName: "PiGlobeSimpleFill" },
-    { iconName: "PiOrangeSliceFill" },
-    { iconName: "PiPeaceFill" },
-    { iconName: "PiToiletPaperFill" },
-    { iconName: "PiPencilFill" },
-  ];
 
   return (
     <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto rounded-xl">
