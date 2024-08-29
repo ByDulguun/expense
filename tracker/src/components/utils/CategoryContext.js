@@ -46,23 +46,23 @@ export const CategoryProvider = ({ children }) => {
     return format(date, "HH:mm, MMM dd yyyy");
   };
 
-  // const todayCategories = categories.filter((category) => {
-  //   return isToday(category.date);
-  // });
+  const todayCategories = categories.filter((category) => {
+    return isToday(category.date);
+  });
 
-  // const yesterdayCategories = categories.filter((category) =>
-  //   isYesterday(category.date)
-  // );
+  const yesterdayCategories = categories.filter((category) =>
+    isYesterday(category.date)
+  );
 
-  // const otherCategories = categories.filter(
-  //   (category) => !isToday(category.date) && !isYesterday(category.date)
-  // );
+  const otherCategories = categories.filter(
+    (category) => !isToday(category.date) && !isYesterday(category.date)
+  );
 
-  // const category = [
-  //   { category: todayCategories, text: "Today" },
-  //   { category: yesterdayCategories, text: "Yesterday" },
-  //   { category: otherCategories, text: "Other" },
-  // ];
+  const category = [
+    { category: todayCategories, text: "Today" },
+    { category: yesterdayCategories, text: "Yesterday" },
+    { category: otherCategories, text: "Other" },
+  ];
 
   return (
     <CategoryContext.Provider
@@ -75,6 +75,7 @@ export const CategoryProvider = ({ children }) => {
         setIconCategories,
         getCategoriesData,
         formatDate,
+        category,
       }}
     >
       {children}

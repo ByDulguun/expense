@@ -34,18 +34,6 @@ const Records = () => {
   const { records, setRecords, getData } = useContext(RecordContext);
   const { iconcategories, setCategories } = useContext(CategoryContext);
 
-  const renderIcon = (recordCategoryId) => {
-    const record = records?.find((el) => el.id === recordCategoryId);
-    if (record) {
-      return (
-        <div className="flex gap-2 relative mx-2 my-2">
-          <p className="text-lg font-normal">{record.title}</p>
-        </div>
-      );
-    }
-    return null;
-  }; //Энэ функц нь recordCategoryId-г аргумент болгон авч, бичлэгийн массиваас харгалзах бичлэгийг олж, бичлэгийн гарчгийг харуулсан JSX элементийг буцаана. Хэрэв бичлэг олдохгүй бол энэ нь null утгыг буцаана.
-
   return (
     <div className="w-screen bg-[#F3F4F6] ">
       <Header />
