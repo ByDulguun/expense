@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-
+import { format, isToday, isYesterday, isThisYear } from "date-fns";
+import axios from "axios";
 export const CategoryContext = createContext(null);
 
 export const CategoryProvider = ({ children }) => {
@@ -17,17 +18,51 @@ export const CategoryProvider = ({ children }) => {
           "http://localhost:5000/iconcategories",
           {
             headers: {
-              Authorization: "Bearer " + token,
+              Authorization: "Bearer " + localStorage.getItem("token"),
             },
           }
         );
+        console.log(response.date, "response");
+
         setCategories(response.data);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     };
     getData();
   }, []);
+  const formatDate = (date) => {
+    if (isToday(date)) {
+      return format(date, "HH:mm");
+    }
+
+    if (isYesterday(date)) {
+      return format(date, "HH:mm");
+    }
+
+    if (isThisYear(date)) {
+      return format(date, "HH:mm, MMM dd");
+    }
+    return format(date, "HH:mm, MMM dd yyyy");
+  };
+
+  // const todayCategories = categories.filter((category) => {
+  //   return isToday(category.date);
+  // });
+
+  // const yesterdayCategories = categories.filter((category) =>
+  //   isYesterday(category.date)
+  // );
+
+  // const otherCategories = categories.filter(
+  //   (category) => !isToday(category.date) && !isYesterday(category.date)
+  // );
+
+  // const category = [
+  //   { category: todayCategories, text: "Today" },
+  //   { category: yesterdayCategories, text: "Yesterday" },
+  //   { category: otherCategories, text: "Other" },
+  // ];
 
   return (
     <CategoryContext.Provider
@@ -39,6 +74,7 @@ export const CategoryProvider = ({ children }) => {
         categories,
         setIconCategories,
         getCategoriesData,
+        formatDate,
       }}
     >
       {children}

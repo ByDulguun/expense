@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { RecordContext } from "./utils/recordContext";
-import { format, isToday, isYesterday, isThisYear } from "date-fns";
 import { CategoryContext } from "./utils/CategoryContext";
 
 export const Today = ({ filterType, visibleEye }) => {
@@ -11,7 +10,7 @@ export const Today = ({ filterType, visibleEye }) => {
   const [totalAmount, setTotalAmount] = useState(0);
   const token = localStorage.getItem("token");
   const { renderIcon } = useContext(RecordContext);
-  const { formatDate } = useContext(CategoryContext);
+  const { formatDate, category } = useContext(CategoryContext);
 
   useEffect(() => {
     const getCategoriesData = async () => {
@@ -67,7 +66,42 @@ export const Today = ({ filterType, visibleEye }) => {
     if (filterType === "all") return true;
     return category.status === filterType;
   });
-
+  const recordBoxes = (records) => {
+    return records.category.map((el) => (
+      <div
+        key={el.id}
+        className={`bg-white border border-[#E5E7EB] rounded-xl my-2 ${
+          visibleEye && visibleEye !== el.category ? "invisible" : "visible"
+        }`}
+      >
+        <div className="flex justify-between mx-4 items-center">
+          <div className="flex relative items-center">
+            <input
+              type="checkbox"
+              className="w-6 h-6"
+              checked={selectedItems.includes(el.id)}
+              onChange={() => handleItemSelect(el.id)}
+            />
+            <div className="relative">{renderIcon(el.category)}</div>
+            <div>
+              <div className="mx-12 absolute top-10 left-8 text-[12px] text-[#6B7280] flex gap-2">
+                <p className="w-[300px] flex">{formatDate(el.date)}</p>
+              </div>
+            </div>
+          </div>
+          <div
+            className={`${
+              el.status === "income" ? "text-[#23E01F]" : "text-[#F54949]"
+            }`}
+          >
+            <p>
+              {el.status === "income" ? `+ ${el.amount}` : `- ${el.amount}`}₮
+            </p>
+          </div>
+        </div>
+      </div>
+    ));
+  };
   return (
     <div>
       <div className="bg-white my-4 rounded-xl border border-[#E5E7EB]">
@@ -86,46 +120,12 @@ export const Today = ({ filterType, visibleEye }) => {
           </div>
         </div>
       </div>
-      <p className="mb-3 font-semibold text-[16px]">Today</p>
-      {filteredCategories?.map((el, index) => {
-        const formattedDate = el.date ? formatDate(new Date(el.date)) : "";
-
-        return (
-          <div
-            key={el.id + index}
-            className={`bg-white border border-[#E5E7EB] rounded-xl my-2 ${
-              visibleEye && visibleEye !== el.category ? "invisible" : "visible"
-            }`}
-          >
-            <div className="flex justify-between mx-4 items-center">
-              <div className="flex relative items-center">
-                <input
-                  type="checkbox"
-                  className="w-6 h-6"
-                  checked={selectedItems.includes(el.id)}
-                  onChange={() => handleItemSelect(el.id)}
-                />
-                <div className="relative">{renderIcon(el.category)}</div>
-                <div>
-                  <div className="mx-12 absolute top-10 left-8 text-[12px] text-[#6B7280] flex gap-2">
-                    <p className=" w-[300px] flex">{formattedDate}</p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className={`${
-                  el.status === "income" ? "text-[#23E01F]" : "text-[#F54949]"
-                }`}
-              >
-                <p>
-                  {el.status === "income" ? `+ ${el.amount}` : `- ${el.amount}`}
-                  ₮
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {category?.map((records, index) => (
+        <div key={index}>
+          <p>{records.text}</p>
+          {recordBoxes(records)}
+        </div>
+      ))}
     </div>
   );
 };
