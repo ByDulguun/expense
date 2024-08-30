@@ -76,6 +76,7 @@ export const CategoryProvider = ({ children }) => {
         getCategoriesData,
         formatDate,
         category,
+        todayCategories,
       }}
     >
       {children}

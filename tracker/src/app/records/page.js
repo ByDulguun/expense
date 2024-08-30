@@ -25,6 +25,13 @@ import { Slider } from "@/components/ui/slider";
 import { RecordAdd } from "@/components/RecordAdd";
 import { RecordContext } from "@/components/utils/recordContext";
 import { CategoryContext } from "@/components/utils/CategoryContext";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 const Records = () => {
   const [open, setOpen] = useState(true);
@@ -158,24 +165,24 @@ const Records = () => {
         </div>
         <div className="mx-12 flex-1 ">
           <div className="flex items-baseline justify-between">
-            <div className="flex gap-3 my-2">
-              <button className="bg-[#E5E7EB] rounded-[8px]">
-                <ChevronLeft />
-              </button>
-              <p>Last 30 Days</p>
-              <button className="bg-[#E5E7EB] rounded-[8px]">
-                <ChevronRight />
-              </button>
+            <div className="flex gap-3 my-2 mx-12">
+              <Carousel>
+                <CarouselContent className="w-[115px]">
+                  <CarouselItem className="w-fit">Last 10 Days</CarouselItem>
+                  <CarouselItem>Last 20 Days</CarouselItem>
+                  <CarouselItem>Last 30 Days</CarouselItem>
+                </CarouselContent>
+                <CarouselPrevious className="bg-[#E5E7EB] rounded-[8px] w-8 h-8" />
+                <CarouselNext className="bg-[#E5E7EB] rounded-[8px] w-8 h-8 border border-black" />
+              </Carousel>
             </div>
             <div>
               <Select>
                 <SelectTrigger className="w-[180px] bg-white rounded-xl border border-[#D1D5DB]">
                   <SelectValue placeholder="Newest first" />
                 </SelectTrigger>
-                <SelectContent className="bg-white">
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
+                <SelectContent className="bg-white border border-[#E5E7EB] rounded-[8px]">
+                  <SelectItem value="Last first">Last first</SelectItem>
                 </SelectContent>
               </Select>
             </div>

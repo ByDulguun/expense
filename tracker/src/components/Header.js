@@ -11,6 +11,17 @@ import { CloseIcon } from "@/assets/icon/CloseIcon";
 import { useAuth } from "./utils/AuthProvider";
 import { IoIosLogOut } from "react-icons/io";
 import { RecordAdd } from "./RecordAdd";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 
 export const Header = () => {
   const [open, setOpen] = useState(true);
@@ -58,6 +69,7 @@ export const Header = () => {
               <AvatarImage src="https://github.com/shadcn.png" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
+
             <div
               className={`  w-fit h-fit fixed  z-20 ${
                 openAdd ? "invisible" : "visible"
@@ -73,16 +85,36 @@ export const Header = () => {
                     <p className="text-black">{user?.name}</p>
                   </div>
 
-                  <Button
-                    className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-red-400 px-12"
-                    onClick={logout}
-                  >
-                    <div className="flex gap-2">
-                      <p>Log Out</p>
-                      <div>
-                        <IoIosLogOut size={24} />
-                      </div>
-                    </div>
+                  <Button className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-red-400 px-12">
+                    <AlertDialog>
+                      <AlertDialogTrigger>
+                        <div className="flex gap-2">
+                          <p>Log Out</p>
+                          <div>
+                            <IoIosLogOut size={24} />
+                          </div>
+                        </div>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent className="bg-white  rounded-[12px]">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Гарахдаа итгэлтэй байна уу?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription></AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="bg-[#0166FF] rounded-[8px] border-[#0166FF] text-white hover-bg-[#0166FF]">
+                            Үгүй
+                          </AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={logout}
+                            className="border rounded-[8px] border-[#0166FF]"
+                          >
+                            Тийм
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                   </Button>
                 </div>
               </div>

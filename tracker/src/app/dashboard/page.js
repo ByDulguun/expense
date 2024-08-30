@@ -8,8 +8,11 @@ import { ShapeLogo } from "@/assets/icon/ShapeLogo";
 import { DonutChard, DonutChart } from "@/components/Charts/DonutChart";
 import { Header } from "@/components/Header";
 import { UpChart } from "@/components/Charts/UpChart";
+import { useContext } from "react";
+import { CategoryContext } from "@/components/utils/CategoryContext";
 
 const dashboard = () => {
+  const { category } = useContext(CategoryContext);
   return (
     <div>
       <Header />
@@ -101,6 +104,14 @@ const dashboard = () => {
                 <DonutChart />
               </div>
             </div>
+          </div>
+          <div className=" bg-[#FFFFFF] border border-[#E2E8F0] rounded-[8px] ">
+            <div className="border-b-[1px] px-6 py-4">
+              <p className="text-[#0F172A] text-lg font-semibold ">
+                last record
+              </p>
+            </div>
+            <div></div>
           </div>
         </div>
       </div>
