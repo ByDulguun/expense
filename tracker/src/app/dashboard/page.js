@@ -5,14 +5,20 @@ import { LeadingDown } from "@/assets/icon/LeadingDown";
 import { LeadingIcon } from "@/assets/icon/LeadingIcon";
 import { Shape } from "@/assets/icon/Shape";
 import { ShapeLogo } from "@/assets/icon/ShapeLogo";
-import { DonutChard, DonutChart } from "@/components/Charts/DonutChart";
+import { DonutChart } from "@/components/Charts/DonutChart";
 import { Header } from "@/components/Header";
-import { UpChart } from "@/components/Charts/UpChart";
+import { IncomeExpenseChart } from "@/components/Charts/IncomeExpenseChart";
 import { useContext } from "react";
 import { CategoryContext } from "@/components/utils/CategoryContext";
+import { RecordContext } from "@/components/utils/recordContext";
 
 const dashboard = () => {
-  const { category } = useContext(CategoryContext);
+  const { categories } = useContext(CategoryContext);
+  const { renderIcon, formattedDate } = useContext(RecordContext);
+  const last5Categories = categories
+    .slice(-5) // Get the last 5 elements
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
+
   return (
     <div>
       <Header />
@@ -27,7 +33,7 @@ const dashboard = () => {
                 <ShapeLogo />
               </div>
               <div>
-                <div className="flex font-semibold text-[18px] text-white align-baseline absolute  top-6 left-6 ">
+                <div className="flex font-semibold text-[18px] text-white align-baseline absolute items-center gap-5  top-6 left-6 ">
                   <GeldIcon /> <p>Geld</p>
                 </div>
                 <div className="absolute bottom-6 left-6">
@@ -87,16 +93,10 @@ const dashboard = () => {
                 Income - Expense
               </p>
               <div className="flex px-6">
-                <div className="grid h-fit gap-[18px] py-8">
-                  <p>{`3’000’000`}</p>
-                  <p>{`2’000’000`}</p>
-                  <p>{`1’000’000`}</p>
-                  <p>{0}</p>
-                </div>
-                <UpChart />
+                <IncomeExpenseChart />
               </div>
             </div>
-            <div className="flex-1 border bg-white rounded-xl">
+            <div className="flex-1  bg-white rounded-xl">
               <p className="text-[16px] font-semibold px-6 py-4 border-b-[1px] border-[#E2E8F0]">
                 Income - Expense
               </p>
@@ -111,7 +111,36 @@ const dashboard = () => {
                 last record
               </p>
             </div>
-            <div></div>
+            <div>
+              {last5Categories.map((el) => {
+                return (
+                  <div className="flex justify-between mx-4 items-center border-b-2">
+                    <div className="flex relative items-center">
+                      <div className="relative">{renderIcon(el.category)}</div>
+                      <div>
+                        <div className="mx-6 absolute top-10 left-8 text-[12px] text-[#6B7280] flex gap-2">
+                          <p className=" w-fit flex">{el.time}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={`${
+                        el.status === "income"
+                          ? "text-[#23E01F]"
+                          : "text-[#F54949]"
+                      }`}
+                    >
+                      <p>
+                        {el.status === "income"
+                          ? `+ ${el.amount}`
+                          : `- ${el.amount}`}
+                        ₮
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

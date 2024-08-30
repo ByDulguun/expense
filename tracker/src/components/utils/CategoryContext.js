@@ -22,7 +22,6 @@ export const CategoryProvider = ({ children }) => {
             },
           }
         );
-        console.log(response.date, "response");
 
         setCategories(response.data);
       } catch (error) {
@@ -37,7 +36,7 @@ export const CategoryProvider = ({ children }) => {
     }
 
     if (isYesterday(date)) {
-      return format(date, "HH:mm");
+      return format(date, "HH:mm ,MMM dd");
     }
 
     if (isThisYear(date)) {
@@ -63,6 +62,7 @@ export const CategoryProvider = ({ children }) => {
     { category: yesterdayCategories, text: "Yesterday" },
     { category: otherCategories, text: "Other" },
   ];
+  console.log(categories);
 
   return (
     <CategoryContext.Provider

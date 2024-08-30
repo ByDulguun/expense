@@ -1,30 +1,30 @@
-const jwt = require("jsonwebtoken"); //Энэ мөр нь JSON Web Tokens (JWT) боловсруулахад хэрэглэгддэг jsonwebtoken номын санг импортолдог. JWT нь хоёр талын нэхэмжлэлийг төлөөлөх авсаархан, URL аюулгүй хэрэгсэл юм
+const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
+  // Allow unauthenticated access to routes starting with "/auth"
+  if (req.path.startsWith("/auth")) return next();
 
+  const authHeader = req.headers.authorization;
 
-  //authMiddleware нь req (хүсэлтийн объект), res (хариултын объект) болон дараагийн (стек дэх дараагийн завсрын програм эсвэл чиглүүлэлтийн зохицуулагч руу удирдлагыг дамжуулдаг функц) гэсэн гурван параметрийг авдаг функц юм.
-  if (req.path.startsWith("/auth")) return next(); //Хэрэв хүсэлтийн зам нь "/auth"-ээр эхэлсэн бол завсрын программ нь дараагийн() руу шууд залгаснаар баталгаажуулалт шаардахгүйгээр хүсэлтийг дамжуулах боломжийг олгодог. Энэ нь ихэвчлэн нэвтрэх эсвэл бүртгүүлэх гэх мэт баталгаажуулалттай холбоотой маршрутуудад танигдаагүй хандалтыг зөвшөөрөхөд ашиглагддаг.
+  // Check if the Authorization header is present
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "Нэвтрэнэ үү!" });
+  }
 
-  const auth = req.headers.authorization;
-  //Дунд програм нь ирж буй хүсэлтээс Authorization толгой хэсгийг гаргаж авдаг. Энэ толгой хэсэгт ихэвчлэн "Bearer" гэсэн үг, дараа нь хоосон зай, дараа нь JWT жетон байдаг.
-  //console.log(auth); мөр нь задалсан зөвшөөрлийн толгой хэсгийг консол руу бүртгэдэг бөгөөд энэ нь дибаг хийхэд хэрэг болно.
+  // Extract the token from the Authorization header
+  const token = authHeader.split(" ")[1];
 
-  const token = auth?.split(" ")[1]; //Энэ мөр нь auth байгаа эсэхийг шалгаад дараа нь мөрийг зайгаар хувааж, тэмдэгтийг задалдаг (энэ нь мөрийн хоёр дахь хэсэг байх төлөвтэй байна). Хэрэв auth тодорхойгүй бол токен мөн тодорхойгүй болно
-
-  if (!token) return res.status(401).json({ error: "Нэвтрэнэ үү!" });
-  //Хэрэв жетон байхгүй бол (Зөвшөөрлийн толгой хэсэг дутуу эсвэл буруу форматлагдсаны улмаас) дунд программ нь 401 Зөвшөөрөгдөөгүй хариултыг монгол хэлээр алдааны мэдэгдэлтэй буцаана ("Нэвтрэнэ үү!" гэж орчуулбал "Нэвтрэх үү!").
+  if (!token) {
+    return res.status(401).json({ error: "Нэвтрэнэ үү!" });
+  }
 
   try {
+    // Verify the token using the secret key
     const user = jwt.verify(token, process.env.JWT_SECRET);
-    //jwt.verify аргыг нууц түлхүүртэй (process.env.JWT_SECRET) эсрэг тэмдэгтийг шалгахын тулд дууддаг. Хэрэв жетон хүчинтэй бол энэ нь жетоныг тайлж, ачааллыг буцаана (ихэвчлэн хэрэглэгчийн мэдээллийг агуулсан), дараа нь хэрэглэгчийн хувьсагчид хадгалагдана.
-    req.user = user;
-
-    next();
+    req.user = user; // Attach the decoded user information to the request object
+    next(); // Proceed to the next middleware or route handler
   } catch (err) {
-    console.log(err);
-    //Хэрэв жетон баталгаажуулалт амжилтгүй болвол (жишээ нь, жетон хугацаа нь дууссан, өөрчилсөн эсвэл хүчингүй болсон) код нь алдаа гаргах бөгөөд энэ нь барих блокт баригдсан болно. Дунд програм нь дибаг хийх зорилгоор алдааг бүртгэж, дараа нь өмнөх алдааны мессежтэй 401 Зөвшөөрөгдөөгүй хариултыг буцаана.
-
+    console.error("JWT verification failed:", err.message);
     return res.status(401).json({ error: "Нэвтрэнэ үү!" });
   }
 };

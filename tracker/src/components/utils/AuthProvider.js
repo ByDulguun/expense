@@ -30,8 +30,8 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", res.data.token); //localStorage.setItem("token", res.data.token);:
       //Хүлээн авсан токеныг хөтчийн дотоод санах ойд хадгална.
       setUser(res.data.user); //setUser(res.data.user);: Баталгаажсан хэрэглэгчийн өгөгдлийг төлөвт тохируулна.
-      toast.success("Аккоунт нэвтэрсэн"); //toast.success болон toast.error: Амжилт эсвэл алдааны мэдэгдлийг харуулах.
       router.replace("/dashboard"); //router.replace("/dashboard");: Амжилттай нэвтэрсний дараа хэрэглэгчийг /dashboard хуудас руу шилжүүлнэ.
+      toast.success("Аккоунт нэвтэрсэн"); //toast.success болон toast.error: Амжилт эсвэл алдааны мэдэгдлийг харуулах.
     } catch (err) {
       console.log(err);
       toast.error("Майл эсвэл код буруу байна");
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.removeItem("token");
       setUser(null);
       router.replace("/");
-      toast.error("Аккоунт гарсан");
+      toast.success("Аккоунт гарсан");
     } catch (err) {
       console.log(err);
     } //Гарах: Орон нутгийн сангаас токеныг устгаж, хэрэглэгчийн төлөвийг арилгаж, нүүр хуудас руу дахин чиглүүлэх
