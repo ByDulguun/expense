@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-"scripts": {
+  "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "build": "nodemon src/index.js",
     "drizzle:generate": "drizzle-kit generate --config=drizzle.config.js"
   },
-
   "keywords": [],
   "author": "",
   "license": "ISC",
