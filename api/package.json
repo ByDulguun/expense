@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "dg": "drizzle-kit generate --config=drizzle.config.js",
-    "build" : "jsc -p ."
+    "build": "webpack --config webpack.config.js"
+
   },
   "keywords": [],
   "author": "",
