@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "dg": "drizzle-kit generate --config=drizzle.config.js",
-    "build": "webpack --config webpack.config.js"
-
+    "build": "nodemon src/index.js",
+    "dg": "drizzle-kit generate --config=drizzle.config.js"
   },
   "keywords": [],
   "author": "",
