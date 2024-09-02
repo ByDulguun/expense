@@ -1,14 +1,17 @@
-const { v4 } = require("uuid");
-const { readJson, saveJson } = require("../utils");
-const { records } = require("../database/schema");
-const { db } = require("../database/index.js");
 const { v4: uuidv4 } = require("uuid");
+const { readJson, saveJson } = require("../utils");
+const { records: recordsSchema } = require("../database/schema"); // Renamed for clarity
+const { db } = require("../database/index.js");
+const { eq } = require("drizzle-orm");
 
 const getAllRecords = async (req, res) => {
+  const { id } = req.user;
   try {
-    const records = await db.query.records.findMany();
+    const userRecords = await db.query.records.findMany({
+      where: eq(recordsSchema.userId, id), // Use the renamed constant here
+    });
 
-    res.json(records);
+    res.json(userRecords);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -17,10 +20,9 @@ const getAllRecords = async (req, res) => {
 
 const createRecord = async (req, res) => {
   const { title, icon, iconColor, userId } = req.body;
-
   try {
     const record = await db
-      .insert(records)
+      .insert(recordsSchema) // Use the renamed constant here
       .values({
         id: uuidv4(), // Generate a new UUID for the record
         title,
