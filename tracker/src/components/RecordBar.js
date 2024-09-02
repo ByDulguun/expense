@@ -132,7 +132,7 @@ const RecordBar = ({ userId }) => {
     getData();
   }, []);
   return (
-    <div className="bg-[#FFFFFF] w-[750px] h-fit m-auto    rounded-xl">
+    <div className="bg-[#FFFFFF]  md:w-[750px] md:h-fit m-auto max-md:h-screen    rounded-xl">
       <div className="flex justify-between py-5 px-6 border-b-[1px] border-[#D1D5DB]">
         <div> Add Record</div>
         <div></div>
@@ -302,7 +302,7 @@ const RecordBar = ({ userId }) => {
                 <p className="text-red-500">{formik.errors.payee}</p>
               ) : null}
             </div>
-            <div>
+            <div className=" max-md:hidden">
               <p className="mb-1">Note</p>
               <input
                 type="text"
@@ -318,7 +318,7 @@ const RecordBar = ({ userId }) => {
             </div>
           </div>
           <Button
-            className={`bg-[#0166FF] text-white w-fit relative bottom-4 left-12 flex gap-1 rounded-[20px] text-[16px] hover:bg-[#0166FF]  px-28  ${
+            className={`bg-[#0166FF] text-white w-fit relative bottom-4 left-12 flex gap-1 rounded-[20px] text-[16px] hover:bg-[#0166FF]  px-28 max-md:top-5  ${
               click ? "bg-[#0166FF] " : "bg-[#16A34A] "
             }`}
             onClick={createCategories}

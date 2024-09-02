@@ -22,10 +22,10 @@ const dashboard = () => {
   return (
     <div>
       <Header />
-      <div className="w-screen h-screen bg-[#F3F4F6] ">
-        <div className="w-[1440px] m-auto py-12 ">
+      <div className="md:w-screen md:h-screen bg-[#F3F4F6] ">
+        <div className="md:w-[1440px] md:m-auto md:py-12 ">
           <div className="flex gap-4  ">
-            <div className=" flex-1 h-[220px] bg-[#0166FF] relative rounded-[18px]">
+            <div className=" flex-1 h-[220px] bg-[#0166FF] relative rounded-[18px] md:visible max-md:hidden">
               <div className=" absolute right-0 bottom-0">
                 <Shape />
               </div>
@@ -42,7 +42,7 @@ const dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 h-fit bg-white rounded-xl">
+            <div className="flex-1 h-fit bg-white rounded-xl md:visible max-md:hidden">
               <div className="flex items-baseline gap-2 py-4 px-6 border-b-[1px] border-[#E2E8F0]">
                 <div className="w-[8px] h-[8px] bg-[#84CC16] rounded-xl"></div>
                 <p className="font-semibold">Your Income</p>
@@ -64,7 +64,7 @@ const dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 h-fit bg-white rounded-xl">
+            <div className="flex-1 h-fit bg-white rounded-xl md:visible max-md:hidden">
               <div className="flex items-baseline gap-2 py-4 px-6 border-b-[1px] border-[#E2E8F0]">
                 <div className="w-[8px] h-[8px] bg-[#0166FF] rounded-xl"></div>
                 <p className="font-semibold">Your Income</p>
@@ -88,7 +88,7 @@ const dashboard = () => {
             </div>
           </div>
           <div className="flex gap-8 my-8">
-            <div className="flex-1 border bg-white rounded-xl">
+            <div className="flex-1 border bg-white rounded-xl ">
               <p className="text-[16px] font-semibold px-6 py-4 border-b-[1px] border-[#E2E8F0]">
                 Income - Expense
               </p>
@@ -96,7 +96,7 @@ const dashboard = () => {
                 <IncomeExpenseChart />
               </div>
             </div>
-            <div className="flex-1  bg-white rounded-xl">
+            <div className="flex-1  bg-white rounded-xl md:visible max-md:hidden">
               <p className="text-[16px] font-semibold px-6 py-4 border-b-[1px] border-[#E2E8F0]">
                 Income - Expense
               </p>

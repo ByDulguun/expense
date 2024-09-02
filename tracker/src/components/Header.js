@@ -40,8 +40,8 @@ export const Header = () => {
     },
   ];
   return (
-    <div className="flex w-screen  py-4 bg-white ">
-      <div className="w-[1440px] m-auto flex justify-between  ">
+    <div className="flex md:w-screen  py-4 bg-white ">
+      <div className="md:w-[1440px] md:m-auto flex md:justify-between  max-md:px-3 ">
         <div className="flex w-[226px] gap-6 align-baseline ">
           <HeaderLogo />
           {paths.map((path, index) => (
@@ -59,7 +59,7 @@ export const Header = () => {
         </div>
         <div className="flex gap-6 px-12 ">
           <Button
-            className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-blue-400 "
+            className="bg-[#0166FF] text-white w-fit flex gap-1 rounded-[20px] text-[16px] hover:bg-blue-400 md:visible max-md:hidden "
             onClick={() => setOpen(!open)}
           >
             <PlusIcon /> Record

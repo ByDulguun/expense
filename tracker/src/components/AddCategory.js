@@ -68,7 +68,7 @@ const AddCategory = ({ setOpenAdd, userId }) => {
   };
 
   return (
-    <div className="bg-[#FFFFFF] w-[450px] h-fit m-auto rounded-xl">
+    <div className="bg-[#FFFFFF] md:w-[450px] h-fit m-auto rounded-xl">
       <p className="py-5 px-6 border-b-[1px] border-[#D1D5DB]">Add Category</p>
       <form onSubmit={formik.handleSubmit}>
         <div className="gap-[32px] px-6 py-5 h-fit grid">

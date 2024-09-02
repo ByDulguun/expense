@@ -4,7 +4,7 @@ import RecordBar from "./RecordBar";
 export const RecordAdd = ({ open, setOpen }) => {
   return (
     <div
-      className={`  top-0  w-screen h-screen bg-[#00000080] fixed z-20 border ${
+      className={`  top-0  md:w-screen h-screen bg-[#00000080] fixed z-20 border ${
         open ? "invisible" : "visible"
       }    flex items-center justify-center`}
     >

@@ -90,13 +90,14 @@ const Login = () => {
                   {formik.errors.password}
                 </p>
               )}
-
-              <Button
-                type="submit"
-                className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
-              >
-                Log in
-              </Button>
+              <Link href="/dashboard">
+                <Button
+                  type="submit"
+                  className="bg-[#0166FF] w-full hover:bg-blue-500 text-white rounded-[20px] h-12"
+                >
+                  Log in
+                </Button>
+              </Link>
             </div>
           </form>
           <div className="flex justify-center">

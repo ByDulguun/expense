@@ -42,9 +42,9 @@ const Records = () => {
   const { iconcategories, setCategories } = useContext(CategoryContext);
 
   return (
-    <div className="w-screen bg-[#F3F4F6] ">
+    <div className="md:w-screen bg-[#F3F4F6] ">
       <Header />
-      <div className="flex w-[1440px] m-auto py-12 ">
+      <div className="md:flex md:w-[1440px] md:m-auto py-12 ">
         <div className="py-6 px-4 flex-none grid h-fit gap-6 bg-white border border-[#E5E7EB] rounded-xl ">
           <div className="h-fit grid gap-6 ">
             <h1 className="text-2xl font-semibold ">Records</h1>
@@ -54,7 +54,7 @@ const Records = () => {
               </Button>
             </div>
           </div>
-          <div className="text-[#A3A3A3] w-fit h-fit py-1 border rounded-xl bg-[#F3F4F6]">
+          <div className="text-[#A3A3A3] w-fit h-fit py-1 border rounded-xl bg-[#F3F4F6] md:visible max-md:hidden">
             <input
               className="mx-12 bg-[#F3F4F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 "
               type="search"
@@ -141,7 +141,7 @@ const Records = () => {
               </div>
             </div>
           </div>
-          <div className="h-fit grid gap-4">
+          <div className="h-fit grid gap-4 md:visible max-md:hidden">
             <p className="text-[16px] font-semibold">Amount range</p>
             <div className="h-fit grid gap-6">
               <div className="flex w-[280px] gap-4">
@@ -164,7 +164,7 @@ const Records = () => {
           </div>
         </div>
         <div className="mx-12 flex-1 ">
-          <div className="flex items-baseline justify-between">
+          <div className="flex items-baseline justify-between md:visible max-md:hidden">
             <div className="flex gap-3 my-2 mx-12">
               <Carousel>
                 <CarouselContent className="w-[115px]">
