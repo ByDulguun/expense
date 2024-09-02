@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply w-[1440px];
+    @apply md:w-[1440px];
   }
 }
 

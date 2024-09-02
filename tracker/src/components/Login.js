@@ -40,8 +40,8 @@ const Login = () => {
 
   return (
     <div className="w-screen h-screen">
-      <div className="w-[1440px] shadow-2xl m-auto flex my-[80px]">
-        <div className="w-screen flex-1 my-[300px] h-fit grid gap-10">
+      <div className="md:w-[1440px] md:shadow-2xl m-auto flex my-[80px]">
+        <div className="w-screen flex-1 md:my-[300px] h-fit grid gap-10">
           <div className="flex font-semibold text-[18px] justify-center">
             <HeaderLogo /> <p>Geld</p>
           </div>
@@ -108,7 +108,7 @@ const Login = () => {
             </Link>
           </div>
         </div>
-        <div className="flex-1 bg-[#0166FF] overflow-hidden"></div>
+        <div className="flex-1 bg-[#0166FF] overflow-hidden max-md:hidden  md:visible"></div>
       </div>
     </div>
   );

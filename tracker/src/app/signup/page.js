@@ -55,9 +55,9 @@ const Signup = () => {
   });
 
   return (
-    <div className="w-screen h-screen">
-      <div className="w-[1440px] shadow-2xl m-auto flex my-[80px]">
-        <div className="w-screen flex-1 my-[200px] h-fit grid gap-10">
+    <div className="md:w-screen md:h-screen max-md:w-full">
+      <div className="md:w-[1440px] max-md:w-screen md:shadow-2xl md:m-auto md:flex md:my-[80px] border">
+        <div className="w-screen flex-1 md:my-[200px] h-fit grid gap-10">
           <div className="flex font-semibold text-[18px] justify-center">
             <HeaderLogo /> <p>Geld</p>
           </div>
@@ -166,7 +166,7 @@ const Signup = () => {
             </Link>
           </div>
         </div>
-        <div className="flex-1 bg-[#0166FF] overflow-hidden"></div>
+        <div className="flex-1 bg-[#0166FF] overflow-hidden max-md:hidden md:visible "></div>
       </div>
     </div>
   );
