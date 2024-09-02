@@ -98,7 +98,7 @@ const RecordBar = ({ userId }) => {
 
     try {
       const response = await api.post(
-        `/iconcategories/`,
+        `/iconcategories`,
         newCategory,
         {
           headers: {
