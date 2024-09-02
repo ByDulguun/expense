@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { RecordContext } from "./utils/recordContext";
 import { CategoryContext } from "./utils/CategoryContext";
+import { api } from "@/lib/axios";
 
 export const Today = ({ filterType, visibleEye }) => {
   const [selectAll, setSelectAll] = useState(false);
@@ -14,7 +15,7 @@ export const Today = ({ filterType, visibleEye }) => {
   useEffect(() => {
     const getCategoriesData = async () => {
       try {
-        await axios.get("http://localhost:5000/iconcategories", {
+        await api.get("/iconcategories", {
           headers: {
             Authorization: "Bearer " + token,
           },

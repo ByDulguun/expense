@@ -5,6 +5,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
+import { api } from "@/lib/axios";
 
 export const RecordContext = createContext(null);
 
@@ -13,7 +14,7 @@ export const RecordProvider = ({ children }) => {
   const [records, setRecords] = useState([]);
   const getData = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/records", {
+      const response = await api.get("/records", {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
@@ -71,8 +72,8 @@ export const RecordProvider = ({ children }) => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:5000/records",
+        const response = await api.post(
+          "/records",
           newRecord,
           {
             headers: {

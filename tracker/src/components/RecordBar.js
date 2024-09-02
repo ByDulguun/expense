@@ -20,6 +20,7 @@ import { useFormik } from "formik";
 import RecordsCategory from "./RecordsCategory";
 import { AddCategory } from "@/assets/icon/AddCategoryIcon";
 import { RecordContext } from "./utils/recordContext";
+import { api } from "@/lib/axios";
 
 const RecordBar = ({ userId }) => {
   const { records } = useContext(RecordContext);
@@ -96,8 +97,8 @@ const RecordBar = ({ userId }) => {
     };
 
     try {
-      const response = await axios.post(
-        `http://localhost:5000/iconcategories/`,
+      const response = await api.post(
+        `/iconcategories/`,
         newCategory,
         {
           headers: {
@@ -114,8 +115,8 @@ const RecordBar = ({ userId }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/iconcategories",
+        const response = await api.get(
+          "/iconcategories",
           {
             headers: {
               Authorization: "Bearer " + token,

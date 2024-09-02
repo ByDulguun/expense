@@ -2,7 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 import { format, isToday, isYesterday, isThisYear } from "date-fns";
-import axios from "axios";
+import { api } from "@/lib/axios";
 export const CategoryContext = createContext(null);
 
 export const CategoryProvider = ({ children }) => {
@@ -14,8 +14,8 @@ export const CategoryProvider = ({ children }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/iconcategories",
+        const response = await api.get(
+          "/iconcategories",
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token"),

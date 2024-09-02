@@ -1,7 +1,6 @@
 "use client";
 
 import { useContext, useState } from "react";
-import axios from "axios";
 import {
   Select,
   SelectContent,
@@ -15,6 +14,7 @@ import classNames from "classnames";
 import { FaCircle } from "react-icons/fa";
 import * as Icons from "react-icons/pi";
 import { RecordContext } from "./utils/recordContext";
+import { api } from "@/lib/axios";
 
 const AddCategory = ({ setOpenAdd, userId }) => {
   const { records, setRecords, getData, hardDataIcons, colors } =
@@ -34,15 +34,11 @@ const AddCategory = ({ setOpenAdd, userId }) => {
       };
 
       try {
-        const response = await axios.post(
-          "http://localhost:5000/records",
-          newRecord,
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
+        const response = await api.post("/records", newRecord, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
         setOpenAdd(true);
         getData();
         setRecords([...records, response.data]);
