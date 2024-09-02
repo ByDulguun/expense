@@ -19,7 +19,7 @@ const getAllRecords = async (req, res) => {
 };
 
 const createRecord = async (req, res) => {
-  const { title, icon, iconColor, userId } = req.body;
+  const { title, icon, iconColor } = req.body;
   try {
     const record = await db
       .insert(recordsSchema) // Use the renamed constant here

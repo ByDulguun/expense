@@ -32,7 +32,8 @@ const AddCategory = ({ setOpenAdd, userId }) => {
         iconColor,
         userId,
       };
-
+      
+      console.log(newRecord);
       try {
         const response = await api.post("/records", newRecord, {
           headers: {

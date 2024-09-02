@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
     try {
       localStorage.removeItem("token");
       setUser(null);
-      // router.replace("/");
+      router.replace("/");
       toast.success("Аккоунт гарсан");
     } catch (err) {
       console.log(err);
@@ -91,7 +91,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (authPaths.includes(pathname)) return;
     if (!isReady) return;
-    // if (!user) router.replace("/"); //Замын нэр, хэрэглэгч эсвэл isReady өөрчлөгдөх бүрт энэ эффект ажиллана.
+    if (!user) router.replace("/"); //Замын нэр, хэрэглэгч эсвэл isReady өөрчлөгдөх бүрт энэ эффект ажиллана.
     //Хэрэв одоогийн зам нь authPaths-д байхгүй бөгөөд хэрэглэгчийг баталгаажуулаагүй
     // бол энэ нь хэрэглэгчийг нүүр хуудас руу дахин чиглүүлдэг ("/").
   }, [pathname, user, isReady]);
