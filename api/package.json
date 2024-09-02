@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
- "scripts": {
-  "start": "node src/index.js",
-  "dev": "nodemon src/index.js",
-  "drizzle:generate": "drizzle-kit generate --config=drizzle.config.js"
-},
-
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "drizzle:generate": "drizzle-kit generate --config=drizzle.config.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -23,10 +22,7 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "postgres": "^3.4.4",
-    "uuid": "^10.0.0",
-    "nodemon": "^3.1.4"
-
-    
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "drizzle-kit": "^0.24.2",
