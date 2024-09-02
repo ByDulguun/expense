@@ -8,8 +8,7 @@
   "dev": "nodemon src/index.js", 
   "build": "node src/index.js", 
   "dg": "drizzle-kit generate --config=drizzle.config.js"
-}
-
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
