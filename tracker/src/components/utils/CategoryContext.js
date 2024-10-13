@@ -14,14 +14,11 @@ export const CategoryProvider = ({ children }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await api.get(
-          "/iconcategories",
-          {
-            headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-            },
-          }
-        );
+        const response = await api.get("/iconcategories", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
 
         setCategories(response.data);
       } catch (error) {
@@ -30,6 +27,7 @@ export const CategoryProvider = ({ children }) => {
     };
     getData();
   }, []);
+
   const formatDate = (date) => {
     if (isToday(date)) {
       return format(date, "HH:mm");
@@ -63,6 +61,7 @@ export const CategoryProvider = ({ children }) => {
     { category: otherCategories, text: "Other" },
   ];
   console.log(categories);
+  console.log(todayCategories);
 
   return (
     <CategoryContext.Provider

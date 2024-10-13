@@ -38,8 +38,10 @@ const Records = () => {
   const [openAdd, setOpenAdd] = useState(true);
   const [filterType, setFilterType] = useState("all");
   const [visibleEye, setVisibleEye] = useState(null);
+  const [minAmount, setMinAmount] = useState(0); // Minimum amount range
+  const [maxAmount, setMaxAmount] = useState(100); // Maximum amount range
   const { records, setRecords, getData } = useContext(RecordContext);
-  const { iconcategories, setCategories } = useContext(CategoryContext);
+  const { setCategories, categories } = useContext(CategoryContext);
 
   return (
     <div className="md:w-screen bg-[#F3F4F6] ">
@@ -146,18 +148,33 @@ const Records = () => {
             <div className="h-fit grid gap-6">
               <div className="flex w-[280px] gap-4">
                 <div className="flex-1">
-                  <Input className="rounded-[8px]" type="0" />
+                  <Input
+                    className="rounded-[8px]"
+                    type="number"
+                    value={minAmount}
+                    onChange={(e) => setMinAmount(Number(e.target.value))}
+                  />
                 </div>
                 <div className="flex-1">
-                  <Input className="rounded-[8px] text-black" type="100" />
+                  <Input
+                    className="rounded-[8px] text-black"
+                    type="number"
+                    value={maxAmount}
+                    onChange={(e) => setMaxAmount(Number(e.target.value))}
+                  />
                 </div>
               </div>
               <div>
                 <Slider
-                  defaultValue={[33]}
+                  defaultValue={[minAmount, maxAmount]}
+                  min={0}
                   max={100}
                   step={1}
                   className="bg-[#0166FF] border-[#0166FF]"
+                  onValueChange={([min, max]) => {
+                    setMinAmount(min);
+                    setMaxAmount(max);
+                  }}
                 />
               </div>
             </div>
@@ -179,21 +196,23 @@ const Records = () => {
             <div>
               <Select>
                 <SelectTrigger className="w-[180px] bg-white rounded-xl border border-[#D1D5DB]">
-                  <SelectValue placeholder="Newest first" />
+                  <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-[#E5E7EB] rounded-[8px]">
-                  <SelectItem value="Last first">Last first</SelectItem>
+                  <SelectItem value="newest">Newest first</SelectItem>
+                  <SelectItem value="latest">Latest first</SelectItem>
                 </SelectContent>
               </Select>
             </div>
           </div>
-          <div>
-            <Today filterType={filterType} visibleEye={visibleEye} />
-          </div>
+          <Today
+            filterType={filterType}
+            minAmount={minAmount}
+            maxAmount={maxAmount}
+            records={records}
+          />
         </div>
       </div>
-      <RecordsCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />
-      <RecordAdd open={open} setOpen={setOpen} setCategories={setCategories} />
     </div>
   );
 };

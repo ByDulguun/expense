@@ -33,7 +33,6 @@ const AddCategory = ({ setOpenAdd, userId }) => {
         userId,
       };
       
-      console.log(newRecord);
       try {
         const response = await api.post("/records", newRecord, {
           headers: {
