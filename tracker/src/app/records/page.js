@@ -38,10 +38,10 @@ const Records = () => {
   const [openAdd, setOpenAdd] = useState(true);
   const [filterType, setFilterType] = useState("all");
   const [visibleEye, setVisibleEye] = useState(null);
-  const [minAmount, setMinAmount] = useState(0); // Minimum amount range
-  const [maxAmount, setMaxAmount] = useState(100); // Maximum amount range
   const { records, setRecords, getData } = useContext(RecordContext);
   const { setCategories, categories } = useContext(CategoryContext);
+  const [minAmount, setMinAmount] = useState(0); // Initialize with a default value (0 in this case)
+  const [maxAmount, setMaxAmount] = useState(10000); // Initialize maxAmount similarly
 
   return (
     <div className="md:w-screen bg-[#F3F4F6] ">
@@ -168,7 +168,7 @@ const Records = () => {
                 <Slider
                   defaultValue={[minAmount, maxAmount]}
                   min={0}
-                  max={100}
+                  max={1000}
                   step={1}
                   className="bg-[#0166FF] border-[#0166FF]"
                   onValueChange={([min, max]) => {
@@ -205,14 +205,13 @@ const Records = () => {
               </Select>
             </div>
           </div>
-          <Today
-            filterType={filterType}
-            minAmount={minAmount}
-            maxAmount={maxAmount}
-            records={records}
-          />
+          <div>
+            <Today filterType={filterType} visibleEye={visibleEye} />
+          </div>
         </div>
       </div>
+      <RecordsCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />
+      <RecordAdd open={open} setOpen={setOpen} setCategories={setCategories} />
     </div>
   );
 };
