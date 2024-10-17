@@ -39,9 +39,9 @@ const Login = () => {
   });
 
   return (
-    <div className="w-screen h-screen">
-      <div className="md:w-[1440px] md:shadow-2xl m-auto flex my-[80px]">
-        <div className="w-screen flex-1 md:my-[300px] h-fit grid gap-10">
+    <div className="w-screen h-fit">
+      <div className="md:w-[1440px] md:shadow-2xl m-auto flex ">
+        <div className="w-screen flex-1  h-screen items-center grid gap-10">
           <div className="flex font-semibold text-[18px] justify-center">
             <HeaderLogo /> <p>Geld</p>
           </div>
