@@ -65,9 +65,7 @@ export function DonutChart() {
                         textAnchor="middle"
                         dominantBaseline="middle"
                         className="text-lg font-bold"
-                      >
-                        {`Total: ${totalAmount}`}
-                      </text>
+                      ></text>
                     );
                   }
                   return null;

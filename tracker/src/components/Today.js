@@ -15,7 +15,7 @@ export const Today = ({ filterType, visibleEye }) => {
   useEffect(() => {
     const getCategoriesData = async () => {
       try {
-        await api.get("/iconcategories", {
+        await api.get("/iconcategories/", {
           headers: {
             Authorization: "Bearer " + token,
           },

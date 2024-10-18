@@ -16,20 +16,28 @@ const dashboard = () => {
 
   const totalIncome = categories
     .filter((el) => el.status === "income")
-    .reduce((acc, el) => acc + el.amount, 0);
+    .reduce((acc, el) => acc + Number(el.amount), 0); // Number() ашиглаж хөрвүүлнэ
+
   const totalExpense = categories
     .filter((el) => el.status === "expense")
-    .reduce((acc, el) => acc + el.amount, 0);
+    .reduce((acc, el) => acc + Number(el.amount), 0); // Number() ашиглаж хөрвүүлнэ
+
+  // Нийт дүн (зарлагаас орлогыг хасаж байна)
+  const totalAmount = totalIncome - totalExpense;
+
+  // Тоог гоё форматтай харуулах (₮ тэмдэгт нэмэх)
+  const formattedTotalIncome = `${totalIncome.toLocaleString()}₮`;
+  const formattedTotalExpense = `${totalExpense.toLocaleString()}₮`;
+  const formattedTotalAmount = `${totalAmount.toLocaleString()}₮`;
 
   const last5Categories = categories
     .slice(-5)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-  const totalAmount = totalIncome - totalExpense;
   return (
     <div>
       <Header />
-      <div className="md:w-screen md:h-screen bg-[#F3F4F6]">
+      <div className="md:w-screen md:h-fit h-fit bg-[#F3F4F6]">
         <div className="md:w-[1440px] md:m-auto md:py-12">
           <div className="flex gap-4">
             <div className="flex-1 h-[220px] bg-[#0166FF] relative rounded-[18px] md:visible max-md:hidden">
@@ -46,7 +54,7 @@ const dashboard = () => {
                 <div className="absolute bottom-6 left-6">
                   <p className="text-[16px] opacity-50 text-white">Cash</p>
                   <p className="text-2xl font-semibold text-white">
-                    {totalAmount}
+                    {formattedTotalAmount}
                   </p>
                 </div>
               </div>
@@ -60,9 +68,8 @@ const dashboard = () => {
                 <div>
                   <div className="flex">
                     <p className="text-[36px] font-semibold">
-                      {Number(totalIncome).toLocaleString()}
+                      {formattedTotalIncome}
                     </p>
-                    <p className="text-[36px] font-semibold">₮</p>
                   </div>
                   <p>Your Income Amount</p>
                 </div>
@@ -77,9 +84,8 @@ const dashboard = () => {
                 <div>
                   <div className="flex">
                     <p className="text-[36px] font-semibold">
-                      - {Number(totalExpense).toLocaleString()}
+                      - {formattedTotalExpense}
                     </p>
-                    <p className="text-[36px] font-semibold">₮</p>
                   </div>
                   <p>Your Expense Amount</p>
                 </div>

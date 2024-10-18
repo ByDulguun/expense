@@ -12,7 +12,6 @@ import {
 
 import * as React from "react";
 
-import axios from "axios";
 import { Button } from "./ui/button";
 import * as Icons from "react-icons/pi";
 import classNames from "classnames";
@@ -44,12 +43,7 @@ const RecordBar = ({ userId }) => {
       date: "",
       time: "",
     },
-    onSubmit: (values) => {
-      alert(
-        `hello ${formik.values.amount} ${formik.values.category} ${formik.values.date} ${formik.values.time} ${formik.values.payee} ${formik.values.note}`
-      );
-      console.log("first message ", formik.values);
-    },
+
     validate: (values) => {
       let errors = {};
 
@@ -97,16 +91,13 @@ const RecordBar = ({ userId }) => {
     };
 
     try {
-      const response = await api.post(
-        `/iconcategories`,
-        newCategory,
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const response = await api.post(`/iconcategories/`, newCategory, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
       setCategories([...categories, response.data]);
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -115,14 +106,11 @@ const RecordBar = ({ userId }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await api.get(
-          "/iconcategories",
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+        const response = await api.get("/iconcategories/", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
 
         setCategories(response.data);
       } catch (error) {
@@ -140,7 +128,7 @@ const RecordBar = ({ userId }) => {
       </div>
 
       <div>
-        <form className="flex flex-wrap w-full">
+        <div className="flex flex-wrap w-full">
           <div className="flex-1  px-6 h-fit grid gap-6 my-6">
             <div
               className="flex  rounded-[20px] bg-[#F3F4F6]  relative "
@@ -319,6 +307,7 @@ const RecordBar = ({ userId }) => {
             </div>
           </div>
           <Button
+            type="submit"
             className={`bg-[#0166FF] text-white w-fit relative bottom-4 left-12 flex gap-1 rounded-[20px] text-[16px] hover:bg-[#0166FF]  px-28 max-md:top-5  ${
               click ? "bg-[#0166FF] " : "bg-[#16A34A] "
             }`}
@@ -326,7 +315,7 @@ const RecordBar = ({ userId }) => {
           >
             Add record
           </Button>
-        </form>
+        </div>
       </div>
 
       <RecordsCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />

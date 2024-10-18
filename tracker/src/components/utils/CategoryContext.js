@@ -14,7 +14,7 @@ export const CategoryProvider = ({ children }) => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await api.get("/iconcategories", {
+        const response = await api.get("/iconcategories/", {
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
           },

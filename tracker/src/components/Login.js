@@ -42,14 +42,16 @@ const Login = () => {
     <div className="w-screen h-fit">
       <div className="md:w-[1440px] md:shadow-2xl m-auto flex ">
         <div className="w-screen flex-1  h-screen items-center grid gap-10">
-          <div className="flex font-semibold text-[18px] justify-center">
-            <HeaderLogo /> <p>Geld</p>
-          </div>
-          <div className="text-center">
-            <h1 className="text-[24px] font-semibold">Welcome Back</h1>
-            <p className="text-[#334155]">
-              Welcome back, Please enter your details
-            </p>
+          <div className="h-fit grid gap-2">
+            <div className="flex font-semibold text-[18px] justify-center">
+              <HeaderLogo /> <p>Geld</p>
+            </div>
+            <div className="text-center">
+              <h1 className="text-[24px] font-semibold">Welcome Back</h1>
+              <p className="text-[#334155]">
+                Welcome back, Please enter your details
+              </p>
+            </div>
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="h-fit grid gap-4 justify-center">

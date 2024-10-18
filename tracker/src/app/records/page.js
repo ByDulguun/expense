@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { ChevronLeft } from "@/assets/icon/ChevronLeft";
 import { ChevronRight } from "@/assets/icon/ChevronRight";
 import { PlusIcon } from "@/assets/icon/PlusIcon";
 import { PlusIconBlue } from "@/assets/icon/PlusIconBlue";

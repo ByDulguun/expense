@@ -4,9 +4,9 @@ import AddCategory from "./AddCategory";
 const RecordsCategory = ({ setOpenAdd, openAdd }) => {
   return (
     <div
-      className={`  top-0  w-screen h-screen bg-[#00000080] fixed  border z-20 ${
+      className={`  top-0  w-screen h-screen bg-[#00000080] fixed  left-0 z-20 ${
         openAdd ? "invisible" : "visible"
-      }   flex items-center justify-center`}
+      }   flex items-center justify-center  `}
     >
       <div className="relative">
         <AddCategory openAdd={openAdd} setOpenAdd={setOpenAdd} />
